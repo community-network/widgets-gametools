@@ -1,0 +1,56 @@
+
+@use 'defaults';
+
+@import url(//db.onlinewebfonts.com/c/180a810d159c3c0f5754bf6e072e6efa?family=FuturaBookC);
+
+body {
+  margin: 0;
+  padding: 0;
+  
+  h1 {
+    font-family: Futura Hv BT;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 36px;
+    line-height: 164.87%;
+  }
+
+  h2 {
+    font-family: Futura Hv BT;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  h3 {
+    font-family: Futura Hv BT;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+  }
+
+  p {
+    font-family: FuturaBookC;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 164.87%;
+  }
+
+  b {
+    font-family: Futura Md BT;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 164.9%;
+    /* or 30px */
+      
+    display: flex;
+    align-items: center;
+  }
+
+}
