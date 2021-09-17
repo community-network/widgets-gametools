@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { hot } from "react-hot-loader";
 import "../assets/scss/App.scss";
 import { QueryClient, QueryClientProvider } from "react-query";
-import ServerBox from "./Servers";
+import { BlackServerBox, WhiteServerBox } from "./Servers";
 
 const queryClient = new QueryClient();
 
@@ -15,8 +15,13 @@ class App extends React.Component<Record<string, unknown>, undefined> {
           <Switch>
             <Route
               exact
-              path="/servers/:gameid/:type/:sname/:platform"
-              component={ServerBox}
+              path="/servers/white/:gameid/:type/:sname/:platform"
+              component={WhiteServerBox}
+            />
+            <Route
+              exact
+              path="/servers/black/:gameid/:type/:sname/:platform"
+              component={BlackServerBox}
             />
           </Switch>
         </QueryClientProvider>
