@@ -31,7 +31,7 @@ const ServerImage = styled.div<IServerImage>`
   height: 48px;
   background-image: url("${(props) => props.background}");
   border-radius: 38px;
-  margin-right: 0.5rem;
+  margin-right: 0.55rem;
 `;
 
 const Blur = styled.div`
