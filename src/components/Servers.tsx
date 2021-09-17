@@ -47,22 +47,11 @@ const Blur = styled.div`
 
 const Server = styled.div`
   background: #f2f2f2;
-  border-radius: 28px;
-  border-width: 10px 13px;
+  border-radius: 24px;
+  border-width: 5px 8px;
   border-style: solid;
   border-color: #f2f2f2;
-  padding: 0.1rem 0.5rem 0.1rem 0;
-  display: flex;
-  align-items: center;
-`;
-
-const BServer = styled.div`
-  background: #f2f2f2;
-  border-radius: 28px;
-  border-width: 10px 13px;
-  border-style: solid;
-  border-color: #f2f2f2;
-  padding: 0.1rem 0.5rem 0.1rem 0;
+  padding: 0.1rem 1.3rem 0.1rem 0;
   display: flex;
   align-items: center;
 `;
@@ -168,7 +157,7 @@ export function BlackServerBox({
       queueString = `[${queue}]`;
     }
     return (
-      <BServer style={{ background: "#202020", borderColor: "#202020" }}>
+      <Server style={{ background: "#141d26", borderColor: "#141d26" }}>
         <ServerImage background={stats.currentMapImage}>
           <Blur>
             <ServerText>{stats.smallmode}</ServerText>
@@ -181,15 +170,80 @@ export function BlackServerBox({
         <b style={{ marginLeft: "auto", paddingLeft: "1rem", color: "white" }}>
           {stats.playerAmount}/{stats.maxPlayerAmount} {queueString}
         </b>
-      </BServer>
+      </Server>
     );
   } else {
     return (
       <Server>
         <Circle />
-        <b>Loading...</b>
+        <b style={{ color: "white" }}>Loading...</b>
         <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>0/0</b>
       </Server>
+    );
+  }
+}
+
+const BigServer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const BigServerImage = styled.div<IServerImage>`
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 150px;
+  height: 90px;
+  background-image: url("${(props) => props.background}");
+  margin-right: 0.8rem;
+`;
+
+export function DetailedServerBox({
+  match,
+}: RouteComponentProps<TParams>): React.ReactElement {
+  const gameId = match.params.gameid;
+  const serverName = decodeURIComponent(match.params.sname);
+
+  const { isLoading: loading, isError: error, data: stats } = useQuery(
+    "servers" + gameId + serverName + match.params.platform,
+    () =>
+      GetStats.server({
+        game: gameId,
+        getter: match.params.type,
+        serverName: serverName,
+        lang: getLanguage(),
+        platform: match.params.platform,
+      }),
+  );
+  if (!loading && !error) {
+    if (stats == undefined) {
+      return <div>resultNotFound</div>;
+    }
+    let queue: number = undefined;
+    queue = stats.inQueue;
+    let queueString = "";
+    if (queue !== undefined && queue !== 0) {
+      queueString = `[${queue}]`;
+    }
+    return (
+      <BigServer>
+        <BigServerImage background={stats.currentMapImage} />
+        <p style={{ margin: 0 }}>
+          <b>{stats.prefix}</b>
+          {stats.mode}: {stats.currentMap}
+        </p>
+        <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>
+          {stats.playerAmount}/{stats.maxPlayerAmount} {queueString}
+        </b>
+      </BigServer>
+    );
+  } else {
+    return (
+      <BigServer>
+        <Circle />
+        <b>Loading...</b>
+        <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>0/0</b>
+      </BigServer>
     );
   }
 }
