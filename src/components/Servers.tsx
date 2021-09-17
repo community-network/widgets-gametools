@@ -47,7 +47,7 @@ const Blur = styled.div`
 
 const Server = styled.div`
   background: #f2f2f2;
-  border-radius: 24px;
+  border-radius: 28px;
   border-width: 5px 8px;
   border-style: solid;
   border-color: #f2f2f2;
