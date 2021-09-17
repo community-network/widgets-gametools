@@ -51,7 +51,7 @@ const Server = styled.div`
   border-width: 5px 8px;
   border-style: solid;
   border-color: #f2f2f2;
-  padding: 0.1rem 1.3rem 0.1rem 0;
+  padding: 0.1rem 1.2rem 0.1rem 0;
   display: flex;
   align-items: center;
 `;
