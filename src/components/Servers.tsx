@@ -31,7 +31,7 @@ const ServerImage = styled.div<IServerImage>`
   height: 48px;
   background-image: url("${(props) => props.background}");
   border-radius: 38px;
-  margin-right: 1rem;
+  margin-right: 0.8rem;
 `;
 
 const Blur = styled.div`
@@ -47,22 +47,22 @@ const Blur = styled.div`
 
 const Server = styled.div`
   background: #f2f2f2;
-  border-radius: 80px;
-  border-width: 10px 20px;
+  border-radius: 28px;
+  border-width: 10px 13px;
   border-style: solid;
   border-color: #f2f2f2;
-  padding: 0.3rem 0 0.3rem 0;
+  padding: 0.1rem 0.5rem 0.1rem 0;
   display: flex;
   align-items: center;
 `;
 
 const BServer = styled.div`
   background: #f2f2f2;
-  border-radius: 80px;
-  border-width: 10px 20px;
+  border-radius: 28px;
+  border-width: 10px 13px;
   border-style: solid;
   border-color: #f2f2f2;
-  padding: 0.3rem 0 0.3rem 0;
+  padding: 0.1rem 0.5rem 0.1rem 0;
   display: flex;
   align-items: center;
 `;
@@ -120,7 +120,10 @@ export function WhiteServerBox({
             <ServerText>{stats.smallmode}</ServerText>
           </Blur>
         </ServerImage>
-        <b>{stats.prefix}</b>
+        <p style={{ margin: 0 }}>
+          <b>{stats.prefix}</b>
+          {stats.mode}: {stats.currentMap}
+        </p>
         <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>
           {stats.playerAmount}/{stats.maxPlayerAmount} {queueString}
         </b>
@@ -171,7 +174,10 @@ export function BlackServerBox({
             <ServerText>{stats.smallmode}</ServerText>
           </Blur>
         </ServerImage>
-        <b style={{ color: "white" }}>{stats.prefix}</b>
+        <p style={{ color: "white", margin: 0 }}>
+          <b>{stats.prefix}</b>
+          {stats.mode}: {stats.currentMap}
+        </p>
         <b style={{ marginLeft: "auto", paddingLeft: "1rem", color: "white" }}>
           {stats.playerAmount}/{stats.maxPlayerAmount} {queueString}
         </b>
