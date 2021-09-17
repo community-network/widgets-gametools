@@ -239,12 +239,6 @@ export function AmgServerBox({
     if (stats == undefined) {
       return <div>resultNotFound</div>;
     }
-    let queue: number = undefined;
-    queue = stats.inQueue;
-    let queueString = "";
-    if (queue !== undefined && queue !== 0) {
-      queueString = `[${queue}]`;
-    }
     return (
       <BigServer>
         <BigServerImage background={stats.currentMapImage} />
