@@ -65,7 +65,7 @@ const ServerText = styled.h1`
 `;
 
 {
-  /* <img align="center" src="http://localhost:3001/" alt="GatitoUwU's Github Stats" style="max-width: 100%;"></img> */
+  /* <img align="center" src="https://widgets-gametools.pages.dev/servers/bf1/name/%5BBoB%5D%231%20EU%20Popular%20CQ%20Maps!%20join%20us%3Adiscord.gg%2FBoB/pc" alt="GatitoUwU's Github Stats" style="max-width: 100%;"></img> */
 }
 
 type TParams = {
