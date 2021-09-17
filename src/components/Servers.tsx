@@ -7,10 +7,6 @@ import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
 import { RouteComponentProps } from "react-router-dom";
 
-interface Region {
-  region: string;
-}
-
 interface IServerImage {
   background: string;
 }
@@ -185,7 +181,7 @@ export function BlackServerBox({
 
 const BigServer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const BigServerImage = styled.div<IServerImage>`
@@ -195,10 +191,34 @@ const BigServerImage = styled.div<IServerImage>`
   width: 150px;
   height: 90px;
   background-image: url("${(props) => props.background}");
-  margin-right: 0.8rem;
+  margin-right: 0.7rem;
 `;
 
-export function DetailedServerBox({
+const Column = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 1rem;
+`;
+
+const Row = styled.div`
+  flex: 1;
+  margin-right: 0.5rem;
+`;
+
+const Title = styled.h4`
+  margin: 0;
+  color: white;
+`;
+
+const Description = styled.p`
+  margin: 0;
+  color: gray;
+  white-space: nowrap;
+`;
+
+export function AmgServerBox({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
   const gameId = match.params.gameid;
@@ -228,13 +248,31 @@ export function DetailedServerBox({
     return (
       <BigServer>
         <BigServerImage background={stats.currentMapImage} />
-        <p style={{ margin: 0 }}>
-          <b>{stats.prefix}</b>
-          {stats.mode}: {stats.currentMap}
-        </p>
-        <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>
-          {stats.playerAmount}/{stats.maxPlayerAmount} {queueString}
-        </b>
+        <div>
+          <h4 style={{ margin: 0, marginTop: "0.6rem", color: "white" }}>
+            {stats.prefix}
+          </h4>
+          <Column>
+            <Row>
+              <Title>Players</Title>
+              <Description>
+                {stats.playerAmount}/{stats.maxPlayerAmount}
+              </Description>
+            </Row>
+            <Row>
+              <Title>Queue</Title>
+              <Description>{stats.inQueue}/10</Description>
+            </Row>
+            <Row>
+              <Title>Map</Title>
+              <Description>{stats.currentMap}</Description>
+            </Row>
+            <Row>
+              <Title>Mode</Title>
+              <Description>{stats.mode}</Description>
+            </Row>
+          </Column>
+        </div>
       </BigServer>
     );
   } else {
