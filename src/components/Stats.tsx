@@ -8,16 +8,27 @@ import { getLanguage } from "../locales/config";
 import { RouteComponentProps } from "react-router-dom";
 import useWindowDimension from "use-window-dimensions";
 
-type TParams = { plat: string; type: string; eaid: string; gameid: string };
+type TParams = {
+  plat: string;
+  type: string;
+  eaid: string;
+  gameid: string;
+  zoom: number;
+};
 
 interface IGameImage {
   background: string;
 }
 
-const Main = styled.div`
+interface IZoom {
+  zoom: number;
+}
+
+const Main = styled.div<IZoom>`
   position: fixed;
   width: 100%;
   height: 100%;
+  zoom: ${(props) => props.zoom}%;
 `;
 
 const Background = styled.div<IGameImage>`
@@ -199,7 +210,7 @@ export function Stats({
       return <div>resultNotFound</div>;
     }
     return (
-      <Main>
+      <Main zoom={match.params.zoom}>
         <Background
           background={`https://cdn.gametools.network/backgrounds/${match.params.gameid}/1.jpg`}
         >
