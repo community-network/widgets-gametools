@@ -258,6 +258,10 @@ export function DetailedServerBox({
               <Description>{stats.inQueue}/10</Description>
             </Row>
             <Row>
+              <Title>Favorites</Title>
+              <Description>{stats.favorites}</Description>
+            </Row>
+            <Row>
               <Title>Map</Title>
               <Description>{stats.currentMap}</Description>
             </Row>
