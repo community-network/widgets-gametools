@@ -74,7 +74,7 @@ const BarText = styled.p`
 
 const Bar = styled.hr`
   position: fixed;
-  width: calc(100vw - 588px);
+  right: 303px;
   left: 285px;
   top: 58px;
 
