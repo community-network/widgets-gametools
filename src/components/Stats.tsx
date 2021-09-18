@@ -249,7 +249,9 @@ export function Stats({
             }
           />
           <Rank>Rank {stats.rank}</Rank>
-          {width > 700 ? (
+          {width <= 700 && match.params.zoom === "100" ? (
+            <></>
+          ) : (
             <>
               <GameImg
                 src={`https://cdn.gametools.network/games/${game}.png`}
@@ -258,8 +260,6 @@ export function Stats({
                 src={`https://cdn.gametools.network/platforms/${match.params.plat}.png`}
               />
             </>
-          ) : (
-            <></>
           )}
           {game !== "bfh" ? (
             <Column>
