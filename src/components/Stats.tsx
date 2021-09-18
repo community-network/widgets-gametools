@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
 import { RouteComponentProps } from "react-router-dom";
 import useWindowDimension from "use-window-dimensions";
+import { shortName } from "../api/static";
 
 type TParams = {
   plat: string;
@@ -193,6 +194,7 @@ export function Stats({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
   const game = match.params.gameid;
+  const gameid = shortName[game];
   const { width } = useWindowDimension();
   const { isLoading: loading, isError: error, data: stats } = useQuery(
     "stats" + game + match.params.eaid,
@@ -215,10 +217,14 @@ export function Stats({
           background={`https://cdn.gametools.network/backgrounds/${game}/1.jpg`}
         >
           <Blur>
-            <BarText style={{ left: "30px" }}>BATTLEFIELD 1 STATS</BarText>
-            {width > 600 ? (
+            <BarText style={{ left: "30px" }}>
+              BATTLEFIELD {gameid} STATS
+            </BarText>
+            {width <= 700 && match.params.zoom === "100" ? (
+              <></>
+            ) : (
               <>
-                <Bar />
+                {game === "bfh" ? <Bar style={{ left: "380px" }} /> : <Bar />}
                 <BarText
                   style={{
                     right: "30px",
@@ -229,8 +235,6 @@ export function Stats({
                   GAMETOOLS.NETWORK
                 </BarText>
               </>
-            ) : (
-              <></>
             )}
           </Blur>
         </Background>

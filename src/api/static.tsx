@@ -7,3 +7,11 @@ export const platformGames = {
 };
 
 export const frostbite3 = ["bf4", "bf1", "bfv"];
+
+export const shortName = {
+  bf3: "3",
+  bf4: "4",
+  bfh: "HARDLINE",
+  bf1: "1",
+  bfv: "5",
+};
