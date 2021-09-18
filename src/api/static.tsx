@@ -8,6 +8,13 @@ export const platformGames = {
 
 export const frostbite3 = ["bf4", "bf1", "bfv"];
 
+export const platformImage = {
+  pc: "pc",
+  xboxone: "xbox",
+  xbox360: "xbox",
+  ps4: "psn",
+  ps3: "psn",
+};
 export const shortName = {
   bf3: "3",
   bf4: "4",

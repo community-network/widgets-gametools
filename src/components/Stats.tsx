@@ -7,7 +7,7 @@ import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
 import { RouteComponentProps } from "react-router-dom";
 import useWindowDimension from "use-window-dimensions";
-import { shortName } from "../api/static";
+import { platformImage, shortName } from "../api/static";
 
 type TParams = {
   plat: string;
@@ -257,7 +257,9 @@ export function Stats({
                 src={`https://cdn.gametools.network/games/${game}.png`}
               />
               <Platform
-                src={`https://cdn.gametools.network/platforms/${match.params.plat}.png`}
+                src={`https://cdn.gametools.network/platforms/${
+                  platformImage[match.params.plat]
+                }.png`}
               />
             </>
           )}
