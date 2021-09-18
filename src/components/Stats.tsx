@@ -192,12 +192,13 @@ const Description = styled.p`
 export function Stats({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
+  const game = match.params.gameid;
   const { width } = useWindowDimension();
   const { isLoading: loading, isError: error, data: stats } = useQuery(
-    "stats" + match.params.gameid + match.params.eaid,
+    "stats" + game + match.params.eaid,
     () =>
       GetStats.stats({
-        game: match.params.gameid,
+        game: game,
         type: "stats",
         getter: match.params.type,
         userName: match.params.eaid,
@@ -211,7 +212,7 @@ export function Stats({
     return (
       <Main zoom={match.params.zoom}>
         <Background
-          background={`https://cdn.gametools.network/backgrounds/${match.params.gameid}/1.jpg`}
+          background={`https://cdn.gametools.network/backgrounds/${game}/1.jpg`}
         >
           <Blur>
             <BarText style={{ left: "30px" }}>BATTLEFIELD 1 STATS</BarText>
@@ -237,13 +238,17 @@ export function Stats({
           <Img src={stats.avatar} />
           <PlayerName>{stats.userName}</PlayerName>
           <RankImg
-            src={`https://cdn.gametools.network/${match.params.gameid}/${stats.rank}.png`}
+            src={
+              stats.rankImg !== undefined
+                ? stats.rankImg
+                : `https://cdn.gametools.network/${game}/${stats.rank}.png`
+            }
           />
           <Rank>Rank {stats.rank}</Rank>
           {width > 700 ? (
             <>
               <GameImg
-                src={`https://cdn.gametools.network/games/${match.params.gameid}.png`}
+                src={`https://cdn.gametools.network/games/${game}.png`}
               />
               <Platform
                 src={`https://cdn.gametools.network/platforms/${match.params.plat}.png`}
@@ -252,64 +257,152 @@ export function Stats({
           ) : (
             <></>
           )}
-          <Column>
-            <Row>
-              <Title>KPM</Title>
-              <Description>{stats.killsPerMinute}</Description>
-            </Row>
-            <Row>
-              <Title>SPM</Title>
-              <Description>{stats.scorePerMinute}</Description>
-            </Row>
-            <Row>
-              <Title>Skill</Title>
-              <Description>{stats.skill}</Description>
-            </Row>
-            <Row>
-              <Title>KD</Title>
-              <Description>{stats.killDeath}</Description>
-            </Row>
-            <Row>
-              <Title>Longest headshot</Title>
-              <Description>{stats.longestHeadShot}</Description>
-            </Row>
-            <Row>
-              <Title>Win</Title>
-              <Description>{stats.winPercent}</Description>
-            </Row>
-            <Row>
-              <Title>Headshots</Title>
-              <Description>{stats.headshots}</Description>
-            </Row>
-            <Row>
-              <Title>Accuracy</Title>
-              <Description>{stats.accuracy}</Description>
-            </Row>
-            <Row>
-              <Title>Best class</Title>
-              <Description>{stats.bestClass}</Description>
-            </Row>
-            <Row>
-              <Title>Highest Killsteak</Title>
-              <Description>{stats.highestKillStreak}</Description>
-            </Row>
-            <Row>
-              <Title>Revives</Title>
-              <Description>{stats.revives}</Description>
-            </Row>
-            <Row>
-              <Title>Infan K/D</Title>
-              <Description>{stats.infantryKillDeath}</Description>
-            </Row>
-            <Row>
-              <Title>Infan KPM</Title>
-              <Description>{stats.infantryKillsPerMinute}</Description>
-            </Row>
-            <Row>
-              <Title>Time Played</Title>
-              <Description>{stats.timePlayed}</Description>
-            </Row>
-          </Column>
+          {game !== "bfh" ? (
+            <Column>
+              <Row>
+                <Title>KPM</Title>
+                <Description>{stats.killsPerMinute}</Description>
+              </Row>
+              <Row>
+                <Title>SPM</Title>
+                <Description>{stats.scorePerMinute}</Description>
+              </Row>
+              {game == "bfv" ? (
+                <Row>
+                  <Title>Savior kills</Title>
+                  <Description>{stats.saviorKills}</Description>
+                </Row>
+              ) : (
+                <Row>
+                  <Title>Skill</Title>
+                  <Description>{stats.skill}</Description>
+                </Row>
+              )}
+              <Row>
+                <Title>KD</Title>
+                <Description>{stats.killDeath}</Description>
+              </Row>
+              <Row>
+                <Title>Longest headshot</Title>
+                <Description>{stats.longestHeadShot}</Description>
+              </Row>
+              <Row>
+                <Title>Win</Title>
+                <Description>{stats.winPercent}</Description>
+              </Row>
+              <Row>
+                <Title>Headshots</Title>
+                <Description>
+                  {stats.headshots !== undefined
+                    ? stats.headshots
+                    : stats.headShots}
+                </Description>
+              </Row>
+              <Row>
+                <Title>Accuracy</Title>
+                <Description>{stats.accuracy}</Description>
+              </Row>
+              <Row>
+                <Title>Best class</Title>
+                <Description>{stats.bestClass}</Description>
+              </Row>
+              <Row>
+                <Title>Highest Killsteak</Title>
+                <Description>{stats.highestKillStreak}</Description>
+              </Row>
+              <Row>
+                <Title>Revives</Title>
+                <Description>{stats.revives}</Description>
+              </Row>
+              {game === "bf1" || game === "bfv" ? (
+                <>
+                  <Row>
+                    <Title>Infan K/D</Title>
+                    <Description>{stats.infantryKillDeath}</Description>
+                  </Row>
+                  <Row>
+                    <Title>Infan KPM</Title>
+                    <Description>{stats.infantryKillsPerMinute}</Description>
+                  </Row>
+                </>
+              ) : (
+                <>
+                  <Row>
+                    <Title>Repairs</Title>
+                    <Description>{stats.repairs}</Description>
+                  </Row>
+                  <Row>
+                    <Title>Resupplies</Title>
+                    <Description>{stats.resupplies}</Description>
+                  </Row>
+                </>
+              )}
+              <Row>
+                <Title>Time Played</Title>
+                <Description>{stats.timePlayed}</Description>
+              </Row>
+            </Column>
+          ) : (
+            // bfh
+            <Column>
+              <Row>
+                <Title>KPM</Title>
+                <Description>{stats.killsPerMinute}</Description>
+              </Row>
+              <Row>
+                <Title>SPM</Title>
+                <Description>{stats.scorePerMinute}</Description>
+              </Row>
+              <Row>
+                <Title>Win</Title>
+                <Description>{stats.winPercent}</Description>
+              </Row>
+              <Row>
+                <Title>KD</Title>
+                <Description>{stats.killDeath}</Description>
+              </Row>
+              <Row>
+                <Title>Accuracy</Title>
+                <Description>{stats.accuracy}</Description>
+              </Row>
+              <Row>
+                <Title>Enforcer</Title>
+                <Description>{stats.enforcer}</Description>
+              </Row>
+              <Row>
+                <Title>Mechanic</Title>
+                <Description>{stats.mechanic}</Description>
+              </Row>
+              <Row>
+                <Title>Operator</Title>
+                <Description>{stats.operator}</Description>
+              </Row>
+              <Row>
+                <Title>Professional</Title>
+                <Description>{stats.professional}</Description>
+              </Row>
+              <Row>
+                <Title>Hacker</Title>
+                <Description>{stats.hacker}</Description>
+              </Row>
+              <Row>
+                <Title>Best class</Title>
+                <Description>{stats.bestClass}</Description>
+              </Row>
+              <Row>
+                <Title>Cash per min</Title>
+                <Description>{stats.cashPerMinute}</Description>
+              </Row>
+              <Row>
+                <Title>Kill assists</Title>
+                <Description>{stats.killAssists}</Description>
+              </Row>
+              <Row>
+                <Title>Time Played</Title>
+                <Description>{stats.timePlayed}</Description>
+              </Row>
+            </Column>
+          )}
         </Body>
       </Main>
     );
