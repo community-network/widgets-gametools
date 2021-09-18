@@ -340,6 +340,16 @@ export function SteamStat({
         userName: match.params.eaid,
         lang: getLanguage(),
       }),
+    {
+      retry: 2,
+      staleTime: 1000 * 30, // 30 seconds
+      cacheTime: 1000 * 30, //30 seconds
+      refetchOnMount: "always",
+      refetchOnWindowFocus: "always",
+      refetchOnReconnect: "always",
+      refetchInterval: 1000 * 30, //30 seconds
+      refetchIntervalInBackground: true,
+    },
   );
   if (!loading && !error) {
     if (stats == undefined) {
