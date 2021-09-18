@@ -194,6 +194,12 @@ const Description = styled.p`
 export function Stats({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
+  const { t, i18n } = useTranslation();
+
+  React.useState(() => {
+    i18n.changeLanguage(match.params.lang);
+  });
+
   const game = match.params.gameid;
   const gameid = shortName[game];
   const { width } = useWindowDimension();
@@ -267,38 +273,38 @@ export function Stats({
           {game !== "bfh" ? (
             <Column>
               <Row>
-                <Title>KPM</Title>
+                <Title>{t("stats.killsPerMinute")}</Title>
                 <Description>{stats.killsPerMinute}</Description>
               </Row>
               <Row>
-                <Title>SPM</Title>
+                <Title>{t("stats.killsPerMinute")}</Title>
                 <Description>{stats.scorePerMinute}</Description>
               </Row>
               {game == "bfv" ? (
                 <Row>
-                  <Title>Savior kills</Title>
+                  <Title>{t("stats.saviorKills")}</Title>
                   <Description>{stats.saviorKills}</Description>
                 </Row>
               ) : (
                 <Row>
-                  <Title>Skill</Title>
+                  <Title>{t("stats.skill")}</Title>
                   <Description>{stats.skill}</Description>
                 </Row>
               )}
               <Row>
-                <Title>KD</Title>
+                <Title>{t("stats.killDeath")}</Title>
                 <Description>{stats.killDeath}</Description>
               </Row>
               <Row>
-                <Title>Longest headshot</Title>
+                <Title>{t("stats.longestHeadShot")}</Title>
                 <Description>{stats.longestHeadShot}</Description>
               </Row>
               <Row>
-                <Title>Win</Title>
+                <Title>{t("stats.winPercent")}</Title>
                 <Description>{stats.winPercent}</Description>
               </Row>
               <Row>
-                <Title>Headshots</Title>
+                <Title>{t("stats.headshotPercent")}</Title>
                 <Description>
                   {stats.headshots !== undefined
                     ? stats.headshots
@@ -306,46 +312,46 @@ export function Stats({
                 </Description>
               </Row>
               <Row>
-                <Title>Accuracy</Title>
+                <Title>{t("stats.accuracy")}</Title>
                 <Description>{stats.accuracy}</Description>
               </Row>
               <Row>
-                <Title>Best class</Title>
+                <Title>{t("stats.bestClass")}</Title>
                 <Description>{stats.bestClass}</Description>
               </Row>
               <Row>
-                <Title>Highest Killsteak</Title>
+                <Title>{t("stats.highestKillStreak")}</Title>
                 <Description>{stats.highestKillStreak}</Description>
               </Row>
               <Row>
-                <Title>Revives</Title>
+                <Title>{t("stats.revives")}</Title>
                 <Description>{stats.revives}</Description>
               </Row>
               {game === "bf1" || game === "bfv" ? (
                 <>
                   <Row>
-                    <Title>Infan K/D</Title>
+                    <Title>{t("stats.infantryKillDeath")}</Title>
                     <Description>{stats.infantryKillDeath}</Description>
                   </Row>
                   <Row>
-                    <Title>Infan KPM</Title>
+                    <Title>{t("stats.infantryKillsPerMinute")}</Title>
                     <Description>{stats.infantryKillsPerMinute}</Description>
                   </Row>
                 </>
               ) : (
                 <>
                   <Row>
-                    <Title>Repairs</Title>
+                    <Title>{t("stats.repairs")}</Title>
                     <Description>{stats.repairs}</Description>
                   </Row>
                   <Row>
-                    <Title>Resupplies</Title>
+                    <Title>{t("stats.resupplies")}</Title>
                     <Description>{stats.resupplies}</Description>
                   </Row>
                 </>
               )}
               <Row>
-                <Title>Time Played</Title>
+                <Title>{t("stats.timePlayed")}</Title>
                 <Description>{stats.timePlayed}</Description>
               </Row>
             </Column>
@@ -353,59 +359,59 @@ export function Stats({
             // bfh
             <Column>
               <Row>
-                <Title>KPM</Title>
+                <Title>{t("stats.killsPerMinute")}</Title>
                 <Description>{stats.killsPerMinute}</Description>
               </Row>
               <Row>
-                <Title>SPM</Title>
+                <Title>{t("stats.killsPerMinute")}</Title>
                 <Description>{stats.scorePerMinute}</Description>
               </Row>
               <Row>
-                <Title>Win</Title>
+                <Title>{t("stats.winPercent")}</Title>
                 <Description>{stats.winPercent}</Description>
               </Row>
               <Row>
-                <Title>KD</Title>
+                <Title>{t("stats.killDeath")}</Title>
                 <Description>{stats.killDeath}</Description>
               </Row>
               <Row>
-                <Title>Accuracy</Title>
+                <Title>{t("stats.accuracy")}</Title>
                 <Description>{stats.accuracy}</Description>
               </Row>
               <Row>
-                <Title>Enforcer</Title>
+                <Title>{t("stats.enforcer")}</Title>
                 <Description>{stats.enforcer}</Description>
               </Row>
               <Row>
-                <Title>Mechanic</Title>
+                <Title>{t("stats.mechanic")}</Title>
                 <Description>{stats.mechanic}</Description>
               </Row>
               <Row>
-                <Title>Operator</Title>
+                <Title>{t("stats.operator")}</Title>
                 <Description>{stats.operator}</Description>
               </Row>
               <Row>
-                <Title>Professional</Title>
+                <Title>{t("stats.professional")}</Title>
                 <Description>{stats.professional}</Description>
               </Row>
               <Row>
-                <Title>Hacker</Title>
+                <Title>{t("stats.hacker")}</Title>
                 <Description>{stats.hacker}</Description>
               </Row>
               <Row>
-                <Title>Best class</Title>
+                <Title>{t("stats.bestClass")}</Title>
                 <Description>{stats.bestClass}</Description>
               </Row>
               <Row>
-                <Title>Cash per min</Title>
+                <Title>{t("stats.cashPerMinute")}</Title>
                 <Description>{stats.cashPerMinute}</Description>
               </Row>
               <Row>
-                <Title>Kill assists</Title>
+                <Title>{t("stats.killAssists")}</Title>
                 <Description>{stats.killAssists}</Description>
               </Row>
               <Row>
-                <Title>Time Played</Title>
+                <Title>{t("stats.timePlayed")}</Title>
                 <Description>{stats.timePlayed}</Description>
               </Row>
             </Column>

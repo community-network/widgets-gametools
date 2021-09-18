@@ -1,0 +1,28 @@
+{
+    "stats": {
+        "killsPerMinute": "KPM",
+        "scorePerMinute": "SPM",
+        "saviorKills": "Saviour kills",
+        "skill": "Beceri",
+        "killDeath": "K/D",
+        "longestHeadShot": "En uzun kafadan vuruş",
+        "winPercent": "kazanma",
+        "headshotPercent": ",Kafadan vurma",
+        "accuracy": "İsabet",
+        "bestClass": "En iyi sınıf",
+        "highestKillStreak": "En yüksek ölüm serisi",
+        "revives": "Canlandırma",
+        "infantryKillDeath": "Piyade K/D",
+        "infantryKillsPerMinute": "Piyade KPM",
+        "repairs": "Tamirler",
+        "resupplies": "Resupplies",
+        "timePlayed": "Oynanan süre",
+        "enforcer": "Enforcer",
+        "mechanic": "Mechanic",
+        "operator": "Operator",
+        "professional": "Profesyonel",
+        "hacker": "hileci",
+        "cashPerMinute": "Cash per min",
+        "killAssists": "Öldürme yardımı"
+    }
+}
