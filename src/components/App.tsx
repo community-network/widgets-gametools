@@ -31,12 +31,12 @@ class App extends React.Component<Record<string, unknown>, undefined> {
             />
             <Route
               exact
-              path="/stats/:plat/:type/:eaid/:gameid/:zoom"
+              path="/stats/:plat/:type/:eaid/:gameid/:lang/:zoom"
               component={Stats}
             />
             <Route
               exact
-              path="/stream/:plat/:type/:eaid/:gameid/:zoom"
+              path="/stream/:plat/:type/:eaid/:gameid/:lang/:zoom"
               component={SteamStat}
             />
           </Switch>

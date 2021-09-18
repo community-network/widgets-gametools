@@ -14,6 +14,7 @@ type TParams = {
   type: string;
   eaid: string;
   gameid: string;
+  lang: string;
   zoom: string;
 };
 
