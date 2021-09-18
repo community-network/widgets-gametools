@@ -259,6 +259,7 @@ export function DetailedServerBox({
         href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
           match.params.sname,
         )}/${match.params.platform}`}
+        target="_blank"
       >
         <BigServerImage background={stats.currentMapImage} />
         <div>
