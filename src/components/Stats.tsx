@@ -198,7 +198,7 @@ export function Stats({
     () =>
       GetStats.stats({
         game: match.params.gameid,
-        type: "all",
+        type: "stats",
         getter: match.params.type,
         userName: match.params.eaid,
         lang: getLanguage(),
@@ -335,7 +335,7 @@ export function SteamStat({
     () =>
       GetStats.stats({
         game: match.params.gameid,
-        type: "all",
+        type: "stats",
         getter: match.params.type,
         userName: match.params.eaid,
         lang: getLanguage(),
