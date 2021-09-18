@@ -285,10 +285,14 @@ export function DetailedServerBox({
               <Title>Map</Title>
               <Description>{stats.currentMap}</Description>
             </Row>
-            <Row>
-              <Title>Mode</Title>
-              <Description>{stats.mode}</Description>
-            </Row>
+            {gameId == "bf1" ? (
+              <Row>
+                <Title>Mode</Title>
+                <Description>{stats.mode}</Description>
+              </Row>
+            ) : (
+              <></>
+            )}
           </Column>
         </div>
       </BigServer>
