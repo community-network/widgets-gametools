@@ -218,7 +218,7 @@ const Description = styled.p`
   white-space: nowrap;
 `;
 
-export function AmgServerBox({
+export function DetailedServerBox({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
   const gameId = match.params.gameid;
