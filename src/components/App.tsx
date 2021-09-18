@@ -4,7 +4,7 @@ import { hot } from "react-hot-loader";
 import "../assets/scss/App.scss";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BlackServerBox, WhiteServerBox, DetailedServerBox } from "./Servers";
-import { Stats } from "./Stats";
+import { Stats, SteamStat } from "./Stats";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +33,11 @@ class App extends React.Component<Record<string, unknown>, undefined> {
               exact
               path="/stats/:plat/:type/:eaid/:gameid/:zoom"
               component={Stats}
+            />
+            <Route
+              exact
+              path="/stream/:plat/:type/:eaid/:gameid/:zoom"
+              component={SteamStat}
             />
           </Switch>
         </QueryClientProvider>

@@ -204,7 +204,6 @@ export function Stats({
         lang: getLanguage(),
       }),
   );
-  console.log(width);
   if (!loading && !error) {
     if (stats == undefined) {
       return <div>resultNotFound</div>;
@@ -312,6 +311,100 @@ export function Stats({
             </Row>
           </Column>
         </Body>
+      </Main>
+    );
+  } else {
+    return <div></div>;
+  }
+}
+
+const StreamColumn = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  margin: 0 auto;
+  margin-left: 1rem;
+  margin-top: 1rem;
+`;
+
+export function SteamStat({
+  match,
+}: RouteComponentProps<TParams>): React.ReactElement {
+  const { isLoading: loading, isError: error, data: stats } = useQuery(
+    "stats" + match.params.gameid + match.params.eaid,
+    () =>
+      GetStats.stats({
+        game: match.params.gameid,
+        type: "all",
+        getter: match.params.type,
+        userName: match.params.eaid,
+        lang: getLanguage(),
+      }),
+  );
+  if (!loading && !error) {
+    if (stats == undefined) {
+      return <div>resultNotFound</div>;
+    }
+    return (
+      <Main zoom={match.params.zoom}>
+        <StreamColumn>
+          <Row>
+            <Title>KPM</Title>
+            <Description>{stats.killsPerMinute}</Description>
+          </Row>
+          <Row>
+            <Title>SPM</Title>
+            <Description>{stats.scorePerMinute}</Description>
+          </Row>
+          <Row>
+            <Title>Skill</Title>
+            <Description>{stats.skill}</Description>
+          </Row>
+          <Row>
+            <Title>KD</Title>
+            <Description>{stats.killDeath}</Description>
+          </Row>
+          <Row>
+            <Title>Longest headshot</Title>
+            <Description>{stats.longestHeadShot}</Description>
+          </Row>
+          <Row>
+            <Title>Win</Title>
+            <Description>{stats.winPercent}</Description>
+          </Row>
+          <Row>
+            <Title>Headshots</Title>
+            <Description>{stats.headshots}</Description>
+          </Row>
+          <Row>
+            <Title>Accuracy</Title>
+            <Description>{stats.accuracy}</Description>
+          </Row>
+          <Row>
+            <Title>Best class</Title>
+            <Description>{stats.bestClass}</Description>
+          </Row>
+          <Row>
+            <Title>Highest Killsteak</Title>
+            <Description>{stats.highestKillStreak}</Description>
+          </Row>
+          <Row>
+            <Title>Revives</Title>
+            <Description>{stats.revives}</Description>
+          </Row>
+          <Row>
+            <Title>Infan K/D</Title>
+            <Description>{stats.infantryKillDeath}</Description>
+          </Row>
+          <Row>
+            <Title>Infan KPM</Title>
+            <Description>{stats.infantryKillsPerMinute}</Description>
+          </Row>
+          <Row>
+            <Title>Time Played</Title>
+            <Description>{stats.timePlayed}</Description>
+          </Row>
+        </StreamColumn>
       </Main>
     );
   } else {
