@@ -436,6 +436,12 @@ const StreamColumn = styled.div`
 export function SteamStat({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
+  const { t, i18n } = useTranslation();
+
+  React.useState(() => {
+    i18n.changeLanguage(match.params.lang);
+  });
+
   const { isLoading: loading, isError: error, data: stats } = useQuery(
     "stats" + match.params.gameid + match.params.eaid,
     () =>
@@ -465,59 +471,59 @@ export function SteamStat({
       <Main zoom={match.params.zoom}>
         <StreamColumn>
           <Row>
-            <Title>KPM</Title>
+            <Title>{t("stats.killsPerMinute")}</Title>
             <Description>{stats.killsPerMinute}</Description>
           </Row>
           <Row>
-            <Title>SPM</Title>
+            <Title>{t("stats.killsPerMinute")}</Title>
             <Description>{stats.scorePerMinute}</Description>
           </Row>
           <Row>
-            <Title>Skill</Title>
+            <Title>{t("stats.skill")}</Title>
             <Description>{stats.skill}</Description>
           </Row>
           <Row>
-            <Title>KD</Title>
+            <Title>{t("stats.killDeath")}</Title>
             <Description>{stats.killDeath}</Description>
           </Row>
           <Row>
-            <Title>Longest headshot</Title>
+            <Title>{t("stats.longestHeadShot")}</Title>
             <Description>{stats.longestHeadShot}</Description>
           </Row>
           <Row>
-            <Title>Win</Title>
+            <Title>{t("stats.winPercent")}</Title>
             <Description>{stats.winPercent}</Description>
           </Row>
           <Row>
-            <Title>Headshots</Title>
+            <Title>{t("stats.headshotPercent")}</Title>
             <Description>{stats.headshots}</Description>
           </Row>
           <Row>
-            <Title>Accuracy</Title>
+            <Title>{t("stats.accuracy")}</Title>
             <Description>{stats.accuracy}</Description>
           </Row>
           <Row>
-            <Title>Best class</Title>
+            <Title>{t("stats.bestClass")}</Title>
             <Description>{stats.bestClass}</Description>
           </Row>
           <Row>
-            <Title>Highest Killsteak</Title>
+            <Title>{t("stats.highestKillStreak")}</Title>
             <Description>{stats.highestKillStreak}</Description>
           </Row>
           <Row>
-            <Title>Revives</Title>
+            <Title>{t("stats.revives")}</Title>
             <Description>{stats.revives}</Description>
           </Row>
           <Row>
-            <Title>Infan K/D</Title>
+            <Title>{t("stats.infantryKillDeath")}</Title>
             <Description>{stats.infantryKillDeath}</Description>
           </Row>
           <Row>
-            <Title>Infan KPM</Title>
+            <Title>{t("stats.infantryKillsPerMinute")}</Title>
             <Description>{stats.infantryKillsPerMinute}</Description>
           </Row>
           <Row>
-            <Title>Time Played</Title>
+            <Title>{t("stats.timePlayed")}</Title>
             <Description>{stats.timePlayed}</Description>
           </Row>
         </StreamColumn>
