@@ -13,7 +13,7 @@ type TParams = {
   type: string;
   eaid: string;
   gameid: string;
-  zoom: number;
+  zoom: string;
 };
 
 interface IGameImage {
@@ -21,7 +21,7 @@ interface IGameImage {
 }
 
 interface IZoom {
-  zoom: number;
+  zoom: string;
 }
 
 const Main = styled.div<IZoom>`
