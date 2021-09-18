@@ -40,21 +40,21 @@ const Background = styled.div<IGameImage>`
   background-image: url("${(props) => props.background}");
   height: 100%;
   width: 100%;
-  transform: translate(0, -20%);
+  transform: translate(0, -196px);
 `;
 
 const Blur = styled.div`
   width: 100%;
-  height: 30%;
-  transform: translate(0, 55%);
+  height: 196px;
+  transform: translate(0, 196px);
   background: linear-gradient(180deg, rgba(21, 24, 41, 0) 0%, #151829 100%);
 `;
 
 const Body = styled.div`
   position: fixed;
   width: 100%;
-  height: 74%;
-  top: 26%;
+  height: 100%;
+  top: 196px;
 
   background: #151829;
 `;
