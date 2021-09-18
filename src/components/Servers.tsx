@@ -42,7 +42,7 @@ const Blur = styled.div`
 `;
 
 const Server = styled.a`
-  color: white;
+  color: black;
   text-decoration: none;
   background: #f2f2f2;
   border-radius: 28px;
