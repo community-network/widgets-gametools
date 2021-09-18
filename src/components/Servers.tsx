@@ -104,7 +104,7 @@ export function WhiteServerBox({
       <Server
         href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
           match.params.sname,
-        )}}/${match.params.platform}`}
+        )}/${match.params.platform}`}
         target="_blank"
       >
         <ServerImage background={stats.currentMapImage}>
