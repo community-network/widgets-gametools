@@ -41,7 +41,9 @@ const Blur = styled.div`
   );
 `;
 
-const Server = styled.div`
+const Server = styled.a`
+  color: white;
+  text-decoration: none;
   background: #f2f2f2;
   border-radius: 28px;
   border-width: 5px 8px;
@@ -99,7 +101,12 @@ export function WhiteServerBox({
       queueString = `[${queue}]`;
     }
     return (
-      <Server>
+      <Server
+        href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
+          match.params.sname,
+        )}}/${match.params.platform}`}
+        target="_blank"
+      >
         <ServerImage background={stats.currentMapImage}>
           <Blur>
             <ServerText>{stats.smallmode}</ServerText>
@@ -153,7 +160,13 @@ export function BlackServerBox({
       queueString = `[${queue}]`;
     }
     return (
-      <Server style={{ background: "#141d26", borderColor: "#141d26" }}>
+      <Server
+        href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
+          match.params.sname,
+        )}/${match.params.platform}`}
+        target="_blank"
+        style={{ background: "#141d26", borderColor: "#141d26" }}
+      >
         <ServerImage background={stats.currentMapImage}>
           <Blur>
             <ServerText>{stats.smallmode}</ServerText>
@@ -179,7 +192,9 @@ export function BlackServerBox({
   }
 }
 
-const BigServer = styled.div`
+const BigServer = styled.a`
+  color: white;
+  text-decoration: none;
   display: flex;
   align-items: flex-start;
 `;
@@ -240,7 +255,11 @@ export function DetailedServerBox({
       return <div>resultNotFound</div>;
     }
     return (
-      <BigServer>
+      <BigServer
+        href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
+          match.params.sname,
+        )}/${match.params.platform}`}
+      >
         <BigServerImage background={stats.currentMapImage} />
         <div>
           <h4 style={{ margin: 0, marginTop: "0.6rem", color: "white" }}>
