@@ -42,7 +42,6 @@ const Blur = styled.div`
 `;
 
 const Server = styled.a`
-  font-family: Futura PT;
   color: black;
   text-decoration: none;
   background: #f2f2f2;
@@ -56,7 +55,6 @@ const Server = styled.a`
 `;
 
 const ServerText = styled.h1`
-  font-family: Futura PT;
   color: white;
   font-size: 1.2rem;
   text-align: center;
@@ -195,7 +193,6 @@ export function BlackServerBox({
 }
 
 const BigServer = styled.a`
-  font-family: Futura PT;
   color: white;
   text-decoration: none;
   display: flex;
@@ -226,13 +223,11 @@ const Row = styled.div`
 `;
 
 const Title = styled.h4`
-  font-family: Futura PT;
   margin: 0;
   color: white;
 `;
 
 const Description = styled.p`
-  font-family: Futura PT;
   margin: 0;
   color: gray;
   white-space: nowrap;
