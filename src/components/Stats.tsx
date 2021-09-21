@@ -26,8 +26,9 @@ interface IZoom {
   zoom: string;
 }
 
-const Main = styled.div<IZoom>`
+const Main = styled.a<IZoom>`
   position: fixed;
+  text-decoration: none;
   width: 100%;
   height: 100%;
   zoom: ${(props) => props.zoom}%;
@@ -212,6 +213,7 @@ export function Stats({
         getter: match.params.type,
         userName: match.params.eaid,
         lang: getLanguage(),
+        platform: match.params.plat,
       }),
   );
   if (!loading && !error) {
@@ -219,7 +221,13 @@ export function Stats({
       return <div>resultNotFound</div>;
     }
     return (
-      <Main zoom={match.params.zoom}>
+      <Main
+        zoom={match.params.zoom}
+        href={`https://gametools.network/stats/${match.params.plat}/${
+          match.params.type
+        }/${encodeURIComponent(match.params.eaid)}`}
+        target="_blank"
+      >
         <Background
           background={`https://cdn.gametools.network/backgrounds/${game}/1.jpg`}
         >
