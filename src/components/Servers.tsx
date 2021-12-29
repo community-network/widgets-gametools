@@ -100,6 +100,10 @@ export function WhiteServerBox({
     if (queue !== undefined && queue !== 0) {
       queueString = `[${queue}]`;
     }
+    let mode = "";
+    if (stats.mode !== undefined) {
+      mode = `{stats.mode}: `;
+    }
     return (
       <Server
         href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
@@ -114,10 +118,12 @@ export function WhiteServerBox({
         </ServerImage>
         <p style={{ margin: 0 }}>
           <b>{stats.prefix}</b>
-          {stats.mode}: {stats.currentMap}
+          {mode}
+          {stats.currentMap}
         </p>
         <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>
-          {stats.playerAmount}/{stats.maxPlayerAmount} {queueString}
+          {stats.playerAmount}/{stats.maxPlayerAmount}
+          {stats.maxPlayers} {queueString}
         </b>
       </Server>
     );
@@ -159,6 +165,10 @@ export function BlackServerBox({
     if (queue !== undefined && queue !== 0) {
       queueString = `[${queue}]`;
     }
+    let mode = "";
+    if (stats.mode !== undefined) {
+      mode = `{stats.mode}: `;
+    }
     return (
       <Server
         href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
@@ -174,10 +184,12 @@ export function BlackServerBox({
         </ServerImage>
         <p style={{ color: "white", margin: 0 }}>
           <b>{stats.prefix}</b>
-          {stats.mode}: {stats.currentMap}
+          {mode}
+          {stats.currentMap}
         </p>
         <b style={{ marginLeft: "auto", paddingLeft: "1rem", color: "white" }}>
-          {stats.playerAmount}/{stats.maxPlayerAmount} {queueString}
+          {stats.playerAmount}/{stats.maxPlayerAmount}
+          {stats.maxPlayers} {queueString}
         </b>
       </Server>
     );
@@ -271,16 +283,23 @@ export function DetailedServerBox({
               <Title>Players</Title>
               <Description>
                 {stats.playerAmount}/{stats.maxPlayerAmount}
+                {stats.maxPlayers}
               </Description>
             </Row>
-            <Row>
-              <Title>Queue</Title>
-              <Description>{stats.inQueue}/10</Description>
-            </Row>
-            <Row>
-              <Title>Favorites</Title>
-              <Description>{stats.favorites}</Description>
-            </Row>
+            {gameId !== "bf2042" ? (
+              <>
+                <Row>
+                  <Title>Queue</Title>
+                  <Description>{stats.inQueue}/10</Description>
+                </Row>
+                <Row>
+                  <Title>Favorites</Title>
+                  <Description>{stats.favorites}</Description>
+                </Row>
+              </>
+            ) : (
+              <></>
+            )}
             <Row>
               <Title>Map</Title>
               <Description>{stats.currentMap}</Description>
