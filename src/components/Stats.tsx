@@ -285,7 +285,7 @@ export function Stats({
                 <Description>{stats.killsPerMinute}</Description>
               </Row>
               <Row>
-                <Title>{t("stats.killsPerMinute")}</Title>
+                <Title>{t("stats.scorePerMinute")}</Title>
                 <Description>{stats.scorePerMinute}</Description>
               </Row>
               {game == "bfv" ? (
