@@ -1,6 +1,5 @@
 import * as React from "react";
 import "../locales/config";
-import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
@@ -77,7 +76,7 @@ export function WhiteServerBox({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
   const gameId = match.params.gameid;
-  const serverName = decodeURIComponent(match.params.sname);
+  const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
 
   const { isLoading: loading, isError: error, data: stats } = useQuery(
     "servers" + gameId + serverName + match.params.platform,
@@ -102,11 +101,11 @@ export function WhiteServerBox({
     }
     let mode = "";
     if (stats.mode !== undefined) {
-      mode = `{stats.mode}: `;
+      mode = `${stats.mode}: `;
     }
     return (
       <Server
-        href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
+        href={`https://gametools.network/servers/${gameId}/name/${encodeURI(
           match.params.sname,
         )}/${match.params.platform}`}
         target="_blank"
@@ -142,7 +141,7 @@ export function BlackServerBox({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
   const gameId = match.params.gameid;
-  const serverName = decodeURIComponent(match.params.sname);
+  const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
 
   const { isLoading: loading, isError: error, data: stats } = useQuery(
     "servers" + gameId + serverName + match.params.platform,
@@ -167,7 +166,7 @@ export function BlackServerBox({
     }
     let mode = "";
     if (stats.mode !== undefined) {
-      mode = `{stats.mode}: `;
+      mode = `${stats.mode}: `;
     }
     return (
       <Server
@@ -249,7 +248,7 @@ export function DetailedServerBox({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
   const gameId = match.params.gameid;
-  const serverName = decodeURIComponent(match.params.sname);
+  const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
 
   const { isLoading: loading, isError: error, data: stats } = useQuery(
     "servers" + gameId + serverName + match.params.platform,
