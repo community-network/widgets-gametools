@@ -1,4 +1,5 @@
 {
+    "loading": "读取中",
     "stats": {
         "killsPerMinute": "KPM",
         "scorePerMinute": "得分/分钟",
@@ -23,6 +24,9 @@
         "professional": "专业的",
         "hacker": "骇客",
         "cashPerMinute": "每分钟现金",
-        "killAssists": "协助击杀"
+        "killAssists": "协助击杀",
+        "score": "分数",
+        "kills": "击杀",
+        "deaths": "死亡"
     }
 }

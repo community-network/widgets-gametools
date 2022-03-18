@@ -1,4 +1,5 @@
 {
+    "loading": "Laden...",
     "stats": {
         "killsPerMinute": "KPM",
         "scorePerMinute": "SPM",
@@ -23,6 +24,13 @@
         "professional": "Professional",
         "hacker": "Hacker",
         "cashPerMinute": "Cash per min",
-        "killAssists": "Kill assists"
+        "killAssists": "Kill assists",
+        "kills": "Kills",
+        "deaths": "Deaths",
+        "score": "Score"
+    },
+    "streamer": {
+        "noserver": "Is niet in een server",
+        "noplayer": "Speler niet gevonden in de server"
     }
 }

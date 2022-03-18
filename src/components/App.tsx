@@ -5,7 +5,8 @@ import "../assets/scss/App.scss";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BlackServerBox, WhiteServerBox, DetailedServerBox } from "./Servers";
 import { OldGameOne } from "./Amg";
-import { Stats, SteamStat } from "./Stats";
+import { Stats } from "./Stats";
+import { GameSteamStat, SteamStat } from "./Streamer";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,11 @@ class App extends React.Component<Record<string, unknown>, undefined> {
               exact
               path="/stream/:plat/:type/:eaid/:gameid/:lang/:zoom"
               component={SteamStat}
+            />
+            <Route
+              exact
+              path="/ingamestream/:id/:player/:lang/:zoom"
+              component={GameSteamStat}
             />
           </Switch>
         </QueryClientProvider>

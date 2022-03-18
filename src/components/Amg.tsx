@@ -63,13 +63,15 @@ const Description = styled.p`
 `;
 
 export function OldGameOne(): React.ReactElement {
-  const { isLoading: loading, isError: error, data: stats } = useQuery(
-    "servers" + "amg" + "1",
-    () =>
-      GetStatsOldGames.server({
-        group: "amg",
-        number: "1",
-      }),
+  const {
+    isLoading: loading,
+    isError: error,
+    data: stats,
+  } = useQuery("servers" + "amg" + "1", () =>
+    GetStatsOldGames.server({
+      group: "amg",
+      number: "1",
+    }),
   );
   if (!loading && !error) {
     if (stats == undefined) {

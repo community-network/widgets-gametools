@@ -8,6 +8,7 @@ import { getLanguage } from "../locales/config";
 import { RouteComponentProps } from "react-router-dom";
 import useWindowDimension from "use-window-dimensions";
 import { platformImage, shortName } from "../api/static";
+import { Description, Main, Row, Title } from "./Materials";
 
 type TParams = {
   plat: string;
@@ -21,18 +22,6 @@ type TParams = {
 interface IGameImage {
   background: string;
 }
-
-interface IZoom {
-  zoom: string;
-}
-
-const Main = styled.a<IZoom>`
-  position: fixed;
-  text-decoration: none;
-  width: 100%;
-  height: 100%;
-  zoom: ${(props) => props.zoom}%;
-`;
 
 const Background = styled.div<IGameImage>`
   background-position: left;
@@ -159,39 +148,6 @@ const Column = styled.div`
   margin-top: 1rem;
 `;
 
-const Row = styled.div`
-  /* flex: 1; */
-  margin-right: 0.5rem;
-`;
-
-const Title = styled.h4`
-  margin: 0;
-  margin-right: 5rem;
-  font-family: Futura PT;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 34px;
-  line-height: 44px;
-  display: flex;
-  align-items: center;
-  color: rgba(255, 255, 255, 0.67);
-`;
-
-const Description = styled.p`
-  margin: 0;
-  margin-right: 5rem;
-  margin-bottom: 3rem;
-  font-family: Futura PT;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 38px;
-  line-height: 49px;
-  display: flex;
-  align-items: center;
-
-  color: rgba(255, 255, 255, 0.92);
-`;
-
 export function Stats({
   match,
 }: RouteComponentProps<TParams>): React.ReactElement {
@@ -204,17 +160,19 @@ export function Stats({
   const game = match.params.gameid;
   const gameid = shortName[game];
   const { width } = useWindowDimension();
-  const { isLoading: loading, isError: error, data: stats } = useQuery(
-    "stats" + game + match.params.eaid,
-    () =>
-      GetStats.stats({
-        game: game,
-        type: "stats",
-        getter: match.params.type,
-        userName: match.params.eaid,
-        lang: getLanguage(),
-        platform: match.params.plat,
-      }),
+  const {
+    isLoading: loading,
+    isError: error,
+    data: stats,
+  } = useQuery("stats" + game + match.params.eaid, () =>
+    GetStats.stats({
+      game: game,
+      type: "stats",
+      getter: match.params.type,
+      userName: match.params.eaid,
+      lang: getLanguage(),
+      platform: match.params.plat,
+    }),
   );
   if (!loading && !error) {
     if (stats == undefined) {
@@ -425,116 +383,6 @@ export function Stats({
             </Column>
           )}
         </Body>
-      </Main>
-    );
-  } else {
-    return <div></div>;
-  }
-}
-
-const StreamColumn = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  width: 100%;
-  margin: 0 auto;
-  margin-left: 1rem;
-  margin-top: 1rem;
-`;
-
-export function SteamStat({
-  match,
-}: RouteComponentProps<TParams>): React.ReactElement {
-  const { t, i18n } = useTranslation();
-
-  React.useState(() => {
-    i18n.changeLanguage(match.params.lang);
-  });
-
-  const { isLoading: loading, isError: error, data: stats } = useQuery(
-    "stats" + match.params.gameid + match.params.eaid,
-    () =>
-      GetStats.stats({
-        game: match.params.gameid,
-        type: "stats",
-        getter: match.params.type,
-        userName: match.params.eaid,
-        lang: getLanguage(),
-      }),
-    {
-      retry: 2,
-      staleTime: 1000 * 30, // 30 seconds
-      cacheTime: 1000 * 30, //30 seconds
-      refetchOnMount: "always",
-      refetchOnWindowFocus: "always",
-      refetchOnReconnect: "always",
-      refetchInterval: 1000 * 30, //30 seconds
-      refetchIntervalInBackground: true,
-    },
-  );
-  if (!loading && !error) {
-    if (stats == undefined) {
-      return <div>resultNotFound</div>;
-    }
-    return (
-      <Main zoom={match.params.zoom}>
-        <StreamColumn>
-          <Row>
-            <Title>{t("stats.killsPerMinute")}</Title>
-            <Description>{stats.killsPerMinute}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.killsPerMinute")}</Title>
-            <Description>{stats.scorePerMinute}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.skill")}</Title>
-            <Description>{stats.skill}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.killDeath")}</Title>
-            <Description>{stats.killDeath}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.longestHeadShot")}</Title>
-            <Description>{stats.longestHeadShot}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.winPercent")}</Title>
-            <Description>{stats.winPercent}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.headshotPercent")}</Title>
-            <Description>{stats.headshots}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.accuracy")}</Title>
-            <Description>{stats.accuracy}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.bestClass")}</Title>
-            <Description>{stats.bestClass}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.highestKillStreak")}</Title>
-            <Description>{stats.highestKillStreak}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.revives")}</Title>
-            <Description>{stats.revives}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.infantryKillDeath")}</Title>
-            <Description>{stats.infantryKillDeath}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.infantryKillsPerMinute")}</Title>
-            <Description>{stats.infantryKillsPerMinute}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.timePlayed")}</Title>
-            <Description>{stats.timePlayed}</Description>
-          </Row>
-        </StreamColumn>
       </Main>
     );
   } else {

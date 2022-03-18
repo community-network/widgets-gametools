@@ -1,5 +1,7 @@
 {
+    "loading": "Loading...",
     "stats": {
+        "main": "Stats",
         "killsPerMinute": "KPM",
         "scorePerMinute": "SPM",
         "saviorKills": "Saviour kills",
@@ -23,6 +25,13 @@
         "professional": "Professional",
         "hacker": "Hacker",
         "cashPerMinute": "Cash per min",
-        "killAssists": "Kill assists"
+        "killAssists": "Kill assists",
+        "kills": "Kills",
+        "deaths": "Deaths",
+        "score": "Score"
+    },
+    "streamer": {
+        "noserver": "Not in a server",
+        "noplayer": "Player not found in the server"
     }
 }

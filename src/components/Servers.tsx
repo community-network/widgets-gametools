@@ -78,16 +78,18 @@ export function WhiteServerBox({
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
 
-  const { isLoading: loading, isError: error, data: stats } = useQuery(
-    "servers" + gameId + serverName + match.params.platform,
-    () =>
-      GetStats.server({
-        game: gameId,
-        getter: match.params.type,
-        serverName: serverName,
-        lang: getLanguage(),
-        platform: match.params.platform,
-      }),
+  const {
+    isLoading: loading,
+    isError: error,
+    data: stats,
+  } = useQuery("servers" + gameId + serverName + match.params.platform, () =>
+    GetStats.server({
+      game: gameId,
+      getter: match.params.type,
+      serverName: serverName,
+      lang: getLanguage(),
+      platform: match.params.platform,
+    }),
   );
   if (!loading && !error) {
     if (stats == undefined) {
@@ -143,16 +145,18 @@ export function BlackServerBox({
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
 
-  const { isLoading: loading, isError: error, data: stats } = useQuery(
-    "servers" + gameId + serverName + match.params.platform,
-    () =>
-      GetStats.server({
-        game: gameId,
-        getter: match.params.type,
-        serverName: serverName,
-        lang: getLanguage(),
-        platform: match.params.platform,
-      }),
+  const {
+    isLoading: loading,
+    isError: error,
+    data: stats,
+  } = useQuery("servers" + gameId + serverName + match.params.platform, () =>
+    GetStats.server({
+      game: gameId,
+      getter: match.params.type,
+      serverName: serverName,
+      lang: getLanguage(),
+      platform: match.params.platform,
+    }),
   );
   if (!loading && !error) {
     if (stats == undefined) {
@@ -250,16 +254,18 @@ export function DetailedServerBox({
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
 
-  const { isLoading: loading, isError: error, data: stats } = useQuery(
-    "servers" + gameId + serverName + match.params.platform,
-    () =>
-      GetStats.server({
-        game: gameId,
-        getter: match.params.type,
-        serverName: serverName,
-        lang: getLanguage(),
-        platform: match.params.platform,
-      }),
+  const {
+    isLoading: loading,
+    isError: error,
+    data: stats,
+  } = useQuery("servers" + gameId + serverName + match.params.platform, () =>
+    GetStats.server({
+      game: gameId,
+      getter: match.params.type,
+      serverName: serverName,
+      lang: getLanguage(),
+      platform: match.params.platform,
+    }),
   );
   if (!loading && !error) {
     if (stats == undefined) {

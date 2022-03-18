@@ -1,4 +1,5 @@
 {
+    "loading": "Yükleniyor...",
     "stats": {
         "killsPerMinute": "KPM",
         "scorePerMinute": "SPM",
@@ -23,6 +24,9 @@
         "professional": "Profesyonel",
         "hacker": "hileci",
         "cashPerMinute": "Cash per min",
-        "killAssists": "Öldürme yardımı"
+        "killAssists": "Öldürme yardımı",
+        "score": "Skor",
+        "kills": "Öldürme",
+        "deaths": "Ölüm"
     }
 }
