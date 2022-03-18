@@ -92,16 +92,16 @@ export function GameSteamStat({
         <Main zoom={match.params.zoom}>
           <StreamColumn>
             <Row>
+              <Title>{t("stats.score")}</Title>
+              <Description>{currentPlayer.score}</Description>
+            </Row>
+            <Row>
               <Title>{t("stats.kills")}</Title>
               <Description>{currentPlayer.kills}</Description>
             </Row>
             <Row>
               <Title>{t("stats.deaths")}</Title>
               <Description>{currentPlayer.deaths}</Description>
-            </Row>
-            <Row>
-              <Title>{t("stats.score")}</Title>
-              <Description>{currentPlayer.score}</Description>
             </Row>
           </StreamColumn>
         </Main>
