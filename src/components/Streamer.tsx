@@ -270,7 +270,7 @@ export function GameStreamScore({
           </Row>
           <Row>
             <Title>{t("stats.score")}</Title>
-            <Description>{teams[1].deaths}</Description>
+            <Description>{teams[1].score}</Description>
           </Row>
         </StreamColumn>
       </Main>
