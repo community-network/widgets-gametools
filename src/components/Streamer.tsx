@@ -67,7 +67,6 @@ const StreamColumn = styled.div`
   flex-flow: row wrap;
   width: 100%;
   margin: 0 auto;
-  margin-left: 1rem;
   margin-top: 1rem;
 `;
 
@@ -138,8 +137,10 @@ export function GameStreamStat({
               <Description>{currentPlayer.kills}</Description>
             </Row>
             <Row>
-              <Title>{t("stats.deaths")}</Title>
-              <Description>{currentPlayer.deaths}</Description>
+              <Title style={{ marginRight: 0 }}>{t("stats.deaths")}</Title>
+              <Description style={{ marginRight: 0 }}>
+                {currentPlayer.deaths}
+              </Description>
             </Row>
           </StreamColumn>
         </Main>
@@ -253,11 +254,13 @@ export function GameStreamScore({
             </Description>
           </Row>
           <Row>
-            <Title>
-              {stats.teams[0].name}
-              <span style={{ color: "white", margin: "0px 2rem" }}>VS</span>
-              {stats.teams[1].name}
-            </Title>
+            <Title>{stats.teams[0].name}</Title>
+          </Row>
+          <Row>
+            <Description>VS</Description>
+          </Row>
+          <Row>
+            <Title>{stats.teams[1].name}</Title>
           </Row>
           <Row>
             <Title>{t("stats.killDeath")}</Title>
