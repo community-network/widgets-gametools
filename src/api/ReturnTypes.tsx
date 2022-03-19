@@ -111,6 +111,7 @@ export type seederTeamList = {
   teamid: string;
   image: string;
   name: string;
+  score: number;
   faction?: string;
   key?: string;
 };
