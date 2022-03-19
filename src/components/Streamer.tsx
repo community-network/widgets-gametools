@@ -28,12 +28,11 @@ export const Row = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 0.5rem;
+  margin: 0rem 1.5rem;
 `;
 
 export const Title = styled.h4`
   margin: 0;
-  margin-right: 3rem;
   font-family: Futura PT;
   font-style: normal;
   font-weight: 600;
@@ -47,7 +46,6 @@ export const Title = styled.h4`
 
 export const Description = styled.p`
   margin: 0;
-  margin-right: 3rem;
   margin-bottom: 3rem;
   font-family: Futura PT;
   font-style: normal;
@@ -137,10 +135,8 @@ export function GameStreamStat({
               <Description>{currentPlayer.kills}</Description>
             </Row>
             <Row>
-              <Title style={{ marginRight: 0 }}>{t("stats.deaths")}</Title>
-              <Description style={{ marginRight: 0 }}>
-                {currentPlayer.deaths}
-              </Description>
+              <Title>{t("stats.deaths")}</Title>
+              <Description>{currentPlayer.deaths}</Description>
             </Row>
           </StreamColumn>
         </Main>
