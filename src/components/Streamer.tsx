@@ -40,7 +40,7 @@ export const Title = styled.h4`
   line-height: 44px;
   display: flex;
   align-items: center;
-  color: rgba(255, 255, 255, 0.67);
+  color: #ABABAB);
   text-shadow: 6px 6px 6px #000000, 6px 6px 6px #000000;
 `;
 
@@ -55,7 +55,7 @@ export const Description = styled.p`
   display: flex;
   align-items: center;
 
-  color: rgba(255, 255, 255, 0.92);
+  color: #ebebeb;
   text-shadow: 6px 6px 6px #000000, 6px 6px 6px #000000;
 `;
 
