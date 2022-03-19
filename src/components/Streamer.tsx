@@ -40,7 +40,8 @@ export const Title = styled.h4`
   line-height: 44px;
   display: flex;
   align-items: center;
-  color: #ABABAB);
+  
+  color: #ababab;
   text-shadow: 6px 6px 6px #000000, 6px 6px 6px #000000;
 `;
 
