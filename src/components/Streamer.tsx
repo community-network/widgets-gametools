@@ -6,7 +6,7 @@ import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
 import { RouteComponentProps } from "react-router-dom";
-import { Description, Main, Row, Title } from "./Materials";
+import { Main } from "./Materials";
 
 type TParams = {
   plat: string;
@@ -24,8 +24,46 @@ type SeederTParams = {
   zoom: string;
 };
 
+export const Row = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 0.5rem;
+`;
+
+export const Title = styled.h4`
+  margin: 0;
+  margin-right: 3rem;
+  font-family: Futura PT;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 44px;
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.67);
+  text-shadow: 6px 6px 6px #000000, 6px 6px 6px #000000;
+`;
+
+export const Description = styled.p`
+  margin: 0;
+  margin-right: 3rem;
+  margin-bottom: 3rem;
+  font-family: Futura PT;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 38px;
+  line-height: 49px;
+  display: flex;
+  align-items: center;
+
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 6px 6px 6px #000000, 6px 6px 6px #000000;
+`;
+
 const StreamColumn = styled.div`
   display: flex;
+  justify-content: center;
   flex-flow: row wrap;
   width: 100%;
   margin: 0 auto;
@@ -34,6 +72,107 @@ const StreamColumn = styled.div`
 `;
 
 export function GameSteamStat({
+  match,
+}: RouteComponentProps<SeederTParams>): React.ReactElement {
+  const { t, i18n } = useTranslation();
+
+  React.useState(() => {
+    i18n.changeLanguage(match.params.lang);
+  });
+
+  const guid = match.params.id;
+  const {
+    isLoading: loading,
+    isError: error,
+    data: stats,
+  } = useQuery(
+    "seederPlayerList" + guid,
+    () =>
+      GetStats.seederPlayerList({
+        game: "bf1",
+        id: guid,
+      }),
+    {
+      retry: 2,
+      staleTime: 1000 * 10, // 30 seconds
+      cacheTime: 1000 * 10, //30 seconds
+      refetchOnMount: "always",
+      refetchOnWindowFocus: "always",
+      refetchOnReconnect: "always",
+      refetchInterval: 1000 * 10, //30 seconds
+      refetchIntervalInBackground: true,
+    },
+  );
+  if (!loading && !error) {
+    // if seederid not found
+    if (stats == undefined || "errors" in stats) {
+      return (
+        <Main zoom={match.params.zoom}>
+          <StreamColumn>
+            <Row>
+              <Title>{t("stats.main")}</Title>
+              <Description>{t("streamer.noserver")}</Description>
+            </Row>
+          </StreamColumn>
+        </Main>
+      );
+    }
+
+    const players = stats.teams[0].players.concat(stats.teams[1].players);
+    let currentPlayer = undefined;
+    players.forEach((player) => {
+      if (player.player_id.toString() == match.params.player) {
+        currentPlayer = player;
+      }
+    });
+    if (currentPlayer != undefined) {
+      return (
+        <Main zoom={match.params.zoom}>
+          <StreamColumn>
+            <Row>
+              <Title>{t("stats.score")}</Title>
+              <Description>{currentPlayer.score}</Description>
+            </Row>
+            <Row>
+              <Title>{t("stats.kills")}</Title>
+              <Description>{currentPlayer.kills}</Description>
+            </Row>
+            <Row>
+              <Title>{t("stats.deaths")}</Title>
+              <Description>{currentPlayer.deaths}</Description>
+            </Row>
+          </StreamColumn>
+        </Main>
+      );
+    } else {
+      // player not in server
+      return (
+        <Main zoom={match.params.zoom}>
+          <StreamColumn>
+            <Row>
+              <Title>{t("stats.main")}</Title>
+              <Description>{t("streamer.noplayer")}</Description>
+            </Row>
+          </StreamColumn>
+        </Main>
+      );
+    }
+  } else {
+    // loading
+    return (
+      <Main zoom={match.params.zoom}>
+        <StreamColumn>
+          <Row>
+            <Title>{t("stats.main")}</Title>
+            <Description>{t("loading")}</Description>
+          </Row>
+        </StreamColumn>
+      </Main>
+    );
+  }
+}
+
+export function GameStreamScore({
   match,
 }: RouteComponentProps<SeederTParams>): React.ReactElement {
   const { t, i18n } = useTranslation();
