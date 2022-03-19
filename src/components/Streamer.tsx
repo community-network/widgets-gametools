@@ -92,12 +92,12 @@ export function GameStreamStat({
       }),
     {
       retry: 2,
-      staleTime: 1000 * 10, // 30 seconds
-      cacheTime: 1000 * 10, //30 seconds
+      staleTime: 1000 * 5, // seconds
+      cacheTime: 1000 * 5, // seconds
       refetchOnMount: "always",
       refetchOnWindowFocus: "always",
       refetchOnReconnect: "always",
-      refetchInterval: 1000 * 10, //30 seconds
+      refetchInterval: 1000 * 5, // seconds
       refetchIntervalInBackground: true,
     },
   );
@@ -200,12 +200,12 @@ export function GameStreamScore({
       }),
     {
       retry: 2,
-      staleTime: 1000 * 10, // 30 seconds
-      cacheTime: 1000 * 10, //30 seconds
+      staleTime: 1000 * 5, // seconds
+      cacheTime: 1000 * 5, // seconds
       refetchOnMount: "always",
       refetchOnWindowFocus: "always",
       refetchOnReconnect: "always",
-      refetchInterval: 1000 * 10, //30 seconds
+      refetchInterval: 1000 * 5, // seconds
       refetchIntervalInBackground: true,
     },
   );
