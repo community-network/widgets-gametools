@@ -71,7 +71,7 @@ const StreamColumn = styled.div`
   margin-top: 1rem;
 `;
 
-export function GameSteamStat({
+export function GameStreamStat({
   match,
 }: RouteComponentProps<SeederTParams>): React.ReactElement {
   const { t, i18n } = useTranslation();
@@ -172,9 +172,16 @@ export function GameSteamStat({
   }
 }
 
+type SeederScoreTParams = {
+  id: string;
+  player: string;
+  lang: string;
+  zoom: string;
+};
+
 export function GameStreamScore({
   match,
-}: RouteComponentProps<SeederTParams>): React.ReactElement {
+}: RouteComponentProps<SeederScoreTParams>): React.ReactElement {
   const { t, i18n } = useTranslation();
 
   React.useState(() => {
@@ -219,45 +226,52 @@ export function GameStreamScore({
       );
     }
 
-    const players = stats.teams[0].players.concat(stats.teams[1].players);
-    let currentPlayer = undefined;
-    players.forEach((player) => {
-      if (player.player_id.toString() == match.params.player) {
-        currentPlayer = player;
-      }
+    const teams = [
+      { score: 0, kills: 0, deaths: 0 },
+      { score: 0, kills: 0, deaths: 0 },
+    ];
+
+    stats.teams.forEach((team, index) => {
+      team.players.forEach((player) => {
+        teams[index].kills += player.kills;
+        teams[index].deaths += player.deaths;
+        teams[index].score += player.score;
+      });
     });
-    if (currentPlayer != undefined) {
-      return (
-        <Main zoom={match.params.zoom}>
-          <StreamColumn>
-            <Row>
-              <Title>{t("stats.score")}</Title>
-              <Description>{currentPlayer.score}</Description>
-            </Row>
-            <Row>
-              <Title>{t("stats.kills")}</Title>
-              <Description>{currentPlayer.kills}</Description>
-            </Row>
-            <Row>
-              <Title>{t("stats.deaths")}</Title>
-              <Description>{currentPlayer.deaths}</Description>
-            </Row>
-          </StreamColumn>
-        </Main>
-      );
-    } else {
-      // player not in server
-      return (
-        <Main zoom={match.params.zoom}>
-          <StreamColumn>
-            <Row>
-              <Title>{t("stats.main")}</Title>
-              <Description>{t("streamer.noplayer")}</Description>
-            </Row>
-          </StreamColumn>
-        </Main>
-      );
-    }
+
+    return (
+      <Main zoom={match.params.zoom}>
+        <StreamColumn>
+          <Row>
+            <Title>{t("stats.score")}</Title>
+            <Description>{teams[0].score}</Description>
+          </Row>
+          <Row>
+            <Title>{t("stats.killDeath")}</Title>
+            <Description>
+              {(teams[0].kills / teams[0].deaths).toFixed(2)}
+            </Description>
+          </Row>
+          <Row>
+            <Title>
+              {stats.teams[0].name}
+              <span style={{ color: "white", margin: "0px 2rem" }}>VS</span>
+              {stats.teams[1].name}
+            </Title>
+          </Row>
+          <Row>
+            <Title>{t("stats.killDeath")}</Title>
+            <Description>
+              {(teams[1].kills / teams[1].deaths).toFixed(2)}
+            </Description>
+          </Row>
+          <Row>
+            <Title>{t("stats.score")}</Title>
+            <Description>{teams[1].deaths}</Description>
+          </Row>
+        </StreamColumn>
+      </Main>
+    );
   } else {
     // loading
     return (
