@@ -28,5 +28,9 @@
         "score": "Skor",
         "kills": "Öldürme",
         "deaths": "Ölüm"
+    },
+    "streamer": {
+        "noserver": "bir sunucuda değil",
+        "noplayer": "Oyuncu sunucuda bulunamadı"
     }
 }
