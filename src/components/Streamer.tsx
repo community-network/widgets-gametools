@@ -143,7 +143,10 @@ export function GameStreamStat({
       // bf1
       const players = stats.teams[0].players.concat(stats.teams[1].players);
       players.forEach((player) => {
-        if (player.player_id.toString() == match.params.player) {
+        if (
+          player.player_id.toString() == match.params.player ||
+          player.name == match.params.player
+        ) {
           currentPlayer = player;
         }
       });
