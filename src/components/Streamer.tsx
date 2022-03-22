@@ -2,11 +2,13 @@ import * as React from "react";
 import "../locales/config";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { GetBfListStats } from "../api/BfList";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
 import { RouteComponentProps } from "react-router-dom";
 import { Main } from "./Materials";
+import { bflistGames } from "../api/static";
 
 type TParams = {
   plat: string;
@@ -79,16 +81,13 @@ export function GameStreamStat({
   });
 
   const guid = match.params.id;
-  const {
-    isLoading: loading,
-    isError: error,
-    data: stats,
-  } = useQuery(
+
+  let result = useQuery(
     "seederPlayerList" + guid,
     () =>
-      GetStats.seederPlayerList({
-        game: "bf1",
-        id: guid,
+      GetBfListStats.stats({
+        game: guid,
+        userName: match.params.player,
       }),
     {
       retry: 2,
@@ -101,6 +100,29 @@ export function GameStreamStat({
       refetchIntervalInBackground: true,
     },
   );
+  if (bflistGames.includes(guid)) {
+    result = useQuery(
+      "seederPlayerList" + guid,
+      () =>
+        GetStats.seederPlayerList({
+          game: "bf1",
+          id: guid,
+        }),
+      {
+        retry: 2,
+        staleTime: 1000 * 3, // seconds
+        cacheTime: 1000 * 3, // seconds
+        refetchOnMount: "always",
+        refetchOnWindowFocus: "always",
+        refetchOnReconnect: "always",
+        refetchInterval: 1000 * 3, // seconds
+        refetchIntervalInBackground: true,
+      },
+    );
+  }
+
+  const { isLoading: loading, isError: error, data: stats } = result;
+
   if (!loading && !error) {
     // if seederid not found
     if (stats == undefined || "errors" in stats) {
@@ -116,13 +138,19 @@ export function GameStreamStat({
       );
     }
 
-    const players = stats.teams[0].players.concat(stats.teams[1].players);
     let currentPlayer = undefined;
-    players.forEach((player) => {
-      if (player.player_id.toString() == match.params.player) {
-        currentPlayer = player;
-      }
-    });
+    if (!bflistGames.includes(guid)) {
+      // bf1
+      const players = stats.teams[0].players.concat(stats.teams[1].players);
+      players.forEach((player) => {
+        if (player.player_id.toString() == match.params.player) {
+          currentPlayer = player;
+        }
+      });
+    } else {
+      // older
+      currentPlayer = stats;
+    }
     if (currentPlayer != undefined) {
       return (
         <Main zoom={match.params.zoom}>
