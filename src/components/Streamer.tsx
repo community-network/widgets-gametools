@@ -72,6 +72,20 @@ const StreamColumn = styled.div`
   margin-top: 1rem;
 `;
 
+function statsSelector(guid: string, username: string): Promise<any> {
+  if (bflistGames.includes(guid)) {
+    return GetBfListStats.stats({
+      game: guid,
+      userName: username,
+    });
+  }
+
+  return GetStats.seederPlayerList({
+    game: "bf1",
+    id: guid,
+  });
+}
+
 export function GameStreamStat({
   match,
 }: RouteComponentProps<SeederTParams>): React.ReactElement {
@@ -84,13 +98,13 @@ export function GameStreamStat({
   const guid = match.params.id;
 
   // Promise<PlayerInfoReturn> | Promise<seederPlayersReturn>
-  let result: any = useQuery(
-    "seederPlayerList" + guid,
-    () =>
-      GetBfListStats.stats({
-        game: guid,
-        userName: match.params.player,
-      }),
+  const {
+    isLoading: loading,
+    isError: error,
+    data: stats,
+  } = useQuery(
+    "seederPlayerList" + guid + match.params.player,
+    () => statsSelector(guid, match.params.player),
     {
       retry: 2,
       staleTime: 1000 * 3, // seconds
@@ -102,28 +116,6 @@ export function GameStreamStat({
       refetchIntervalInBackground: true,
     },
   );
-  if (bflistGames.includes(guid)) {
-    result = useQuery(
-      "seederPlayerList" + guid,
-      () =>
-        GetStats.seederPlayerList({
-          game: "bf1",
-          id: guid,
-        }),
-      {
-        retry: 2,
-        staleTime: 1000 * 3, // seconds
-        cacheTime: 1000 * 3, // seconds
-        refetchOnMount: "always",
-        refetchOnWindowFocus: "always",
-        refetchOnReconnect: "always",
-        refetchInterval: 1000 * 3, // seconds
-        refetchIntervalInBackground: true,
-      },
-    );
-  }
-
-  const { isLoading: loading, isError: error, data: stats } = result;
 
   if (!loading && !error) {
     // if seederid not found
