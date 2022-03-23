@@ -9,6 +9,7 @@ import { getLanguage } from "../locales/config";
 import { RouteComponentProps } from "react-router-dom";
 import { Main } from "./Materials";
 import { bflistGames } from "../api/static";
+import { seederPlayer } from "../api/ReturnTypes";
 
 type TParams = {
   plat: string;
@@ -82,7 +83,8 @@ export function GameStreamStat({
 
   const guid = match.params.id;
 
-  let result = useQuery(
+  // Promise<PlayerInfoReturn> | Promise<seederPlayersReturn>
+  let result: any = useQuery(
     "seederPlayerList" + guid,
     () =>
       GetBfListStats.stats({
@@ -142,10 +144,12 @@ export function GameStreamStat({
     if (!bflistGames.includes(guid)) {
       // bf1
       const players = stats.teams[0].players.concat(stats.teams[1].players);
-      players.forEach((player) => {
+      players.forEach((player: seederPlayer) => {
+        const playerName = player.name.replace(/(?=\[)(.*?)(?<=\])/gm, "");
         if (
           player.player_id.toString() == match.params.player ||
-          player.name == match.params.player
+          player.name == match.params.player ||
+          playerName == match.params.player
         ) {
           currentPlayer = player;
         }
