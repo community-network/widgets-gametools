@@ -4,7 +4,7 @@ import { hot } from "react-hot-loader";
 import "../assets/scss/App.scss";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BlackServerBox, WhiteServerBox, DetailedServerBox } from "./Servers";
-import { OldGameOne } from "./Amg";
+import { OldGameOne, OldGameTwo } from "./Amg";
 import { Stats } from "./Stats";
 import { GameStreamStat, GameStreamScore, SteamStat } from "./Streamer";
 
@@ -35,6 +35,11 @@ class App extends React.Component<Record<string, unknown>, undefined> {
               exact
               path="/oldgames/servers/detailed/amg/1"
               component={OldGameOne}
+            />
+            <Route
+              exact
+              path="/oldgames/servers/detailed/amg/2"
+              component={OldGameTwo}
             />
             <Route
               exact
