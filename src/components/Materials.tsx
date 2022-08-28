@@ -10,6 +10,18 @@ export const Main = styled.a<IZoom>`
   width: 100%;
   height: 100%;
   zoom: ${(props) => props.zoom}%;
+
+  // firefox trickery to support zoom
+  -moz-transform: scale(
+    ${(props) => Number(props.zoom) / 100},
+    ${(props) => Number(props.zoom) / 100}
+  );
+  -moz-transform-origin: 0 0;
+  @supports (-moz-appearance: none) {
+    color: red;
+    width: 200%;
+    height: 200%;
+  }
 `;
 
 export const Row = styled.div`
