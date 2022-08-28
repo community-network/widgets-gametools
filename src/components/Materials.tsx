@@ -18,7 +18,6 @@ export const Main = styled.a<IZoom>`
   );
   -moz-transform-origin: 0 0;
   @supports (-moz-appearance: none) {
-    color: red;
     width: 200%;
     height: 200%;
   }
