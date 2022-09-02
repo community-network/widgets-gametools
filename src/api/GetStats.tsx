@@ -28,6 +28,7 @@ interface ServerInfo {
   lang: string;
   region?: string;
   platform?: string;
+  with_ownername?: boolean;
 }
 
 export class ApiProvider extends JsonClient {
@@ -88,18 +89,29 @@ export class ApiProvider extends JsonClient {
     lang,
     region = "all",
     platform = "pc",
+    with_ownername = true,
   }: ServerInfo): Promise<DetailedServerInfo> {
     const gameStuff = game.split(".");
     if (platform == "all") {
       platform = "pc";
     }
-    if (getter == "gameid") {
+    if ((getter == "gameid" || getter == "serverid") && game == "bf2042") {
+      return await this.getJsonMethod(`/${gameStuff[0]}/detailedserver/`, {
+        serverid: serverName,
+        lang: lang,
+        region: region,
+        platform: platform,
+        service: gameStuff[1],
+        return_ownername: with_ownername.toString(),
+      });
+    } else if (getter == "gameid") {
       return await this.getJsonMethod(`/${gameStuff[0]}/detailedserver/`, {
         gameid: serverName,
         lang: lang,
         region: region,
         platform: platform,
         service: gameStuff[1],
+        return_ownername: with_ownername.toString(),
       });
     }
     return await this.getJsonMethod(`/${gameStuff[0]}/detailedserver/`, {
@@ -108,6 +120,7 @@ export class ApiProvider extends JsonClient {
       region: region,
       platform: platform,
       service: gameStuff[1],
+      return_ownername: with_ownername.toString(),
     });
   }
 }

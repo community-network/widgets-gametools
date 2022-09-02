@@ -89,6 +89,7 @@ export function WhiteServerBox({
       serverName: serverName,
       lang: getLanguage(),
       platform: match.params.platform,
+      with_ownername: false,
     }),
   );
   if (!loading && !error) {
@@ -156,6 +157,7 @@ export function BlackServerBox({
       serverName: serverName,
       lang: getLanguage(),
       platform: match.params.platform,
+      with_ownername: false,
     }),
   );
   if (!loading && !error) {
@@ -265,6 +267,7 @@ export function DetailedServerBox({
       serverName: serverName,
       lang: getLanguage(),
       platform: match.params.platform,
+      with_ownername: false,
     }),
   );
   if (!loading && !error) {
