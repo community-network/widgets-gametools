@@ -27,7 +27,9 @@
         "killAssists": "Öldürme yardımı",
         "score": "Skor",
         "kills": "Öldürme",
-        "deaths": "Ölüm"
+        "deaths": "Ölüm",
+        "vehicles": "Araç",
+        "alive": "Alive"
     },
     "streamer": {
         "noserver": "bir sunucuda değil",

@@ -252,21 +252,38 @@ export function GameStreamScore({
     }
 
     const teams = [
-      { score: 0, kills: 0, deaths: 0 },
-      { score: 0, kills: 0, deaths: 0 },
+      { score: 0, kills: 0, deaths: 0, vehicles: 0, alive: 0 },
+      { score: 0, kills: 0, deaths: 0, vehicles: 0, alive: 0 },
     ];
 
     stats.teams.forEach((team, index) => {
       team.players.forEach((player) => {
+        if (player.vehicle != null) {
+          teams[index].vehicles += 1;
+        }
+        if (player.vehicle != null || player.weapons.length > 0) {
+          teams[index].alive += 1;
+        }
         teams[index].kills += player.kills;
         teams[index].deaths += player.deaths;
         teams[index].score += player.score;
       });
     });
 
+    const kdTeamOne = teams[0].kills / teams[0].deaths || 0.0;
+    const kdTeamTwo = teams[1].kills / teams[1].deaths || 0.0;
+
     return (
       <Main zoom={match.params.zoom}>
         <StreamColumn>
+          <Row>
+            <Title>{t("stats.alive")}</Title>
+            <Description>{teams[0].alive}</Description>
+          </Row>
+          <Row>
+            <Title>{t("stats.vehicles")}</Title>
+            <Description>{teams[0].vehicles}</Description>
+          </Row>
           <Row>
             <Title>{t("stats.score")}</Title>
             <Description>{teams[0].score}</Description>
@@ -274,7 +291,7 @@ export function GameStreamScore({
           <Row>
             <Title>{t("stats.killDeath")}</Title>
             <Description>
-              {(teams[0].kills / teams[0].deaths).toFixed(2)}
+              {(kdTeamOne === Infinity ? teams[0].kills : kdTeamOne).toFixed(2)}
             </Description>
           </Row>
           <Row>
@@ -289,12 +306,20 @@ export function GameStreamScore({
           <Row>
             <Title>{t("stats.killDeath")}</Title>
             <Description>
-              {(teams[1].kills / teams[1].deaths).toFixed(2)}
+              {(kdTeamTwo === Infinity ? teams[1].kills : kdTeamTwo).toFixed(2)}
             </Description>
           </Row>
           <Row>
             <Title>{t("stats.score")}</Title>
             <Description>{teams[1].score}</Description>
+          </Row>
+          <Row>
+            <Title>{t("stats.vehicles")}</Title>
+            <Description>{teams[1].vehicles}</Description>
+          </Row>
+          <Row>
+            <Title>{t("stats.alive")}</Title>
+            <Description>{teams[1].alive}</Description>
           </Row>
         </StreamColumn>
       </Main>

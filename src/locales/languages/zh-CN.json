@@ -27,6 +27,7 @@
         "killAssists": "协助击杀",
         "score": "分数",
         "kills": "击杀",
-        "deaths": "死亡"
+        "deaths": "死亡",
+        "vehicles": "载具"
     }
 }

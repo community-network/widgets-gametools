@@ -125,6 +125,8 @@ export type seederPlayer = {
   kills: number;
   deaths: number;
   score: number;
+  vehicle: string;
+  weapons: string[];
 };
 
 export type MainStats = {

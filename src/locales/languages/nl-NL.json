@@ -27,7 +27,9 @@
         "killAssists": "Kill assists",
         "kills": "Kills",
         "deaths": "Deaths",
-        "score": "Score"
+        "score": "Score",
+        "vehicles": "Voertuigen",
+        "alive": "Levend"
     },
     "streamer": {
         "noserver": "Is niet in een server",
