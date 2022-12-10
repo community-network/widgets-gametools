@@ -22,6 +22,7 @@ const ServerImage = styled.div<IServerImage>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 48px;
   width: 48px;
   height: 48px;
   background-image: url("${(props) => props.background}");
@@ -59,6 +60,19 @@ const ServerText = styled.h1`
   text-align: center;
   padding-top: 1.5rem;
   line-height: 0;
+`;
+
+const ServerBody = styled.p`
+  margin: 0px;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
+const ServerPlayers = styled.b`
+  margin-left: auto;
+  padding-left: 1rem;
+  color: white;
+  white-space: nowrap;
 `;
 
 {
@@ -118,15 +132,15 @@ export function WhiteServerBox({
             <ServerText>{stats.smallmode}</ServerText>
           </Blur>
         </ServerImage>
-        <p style={{ margin: 0 }}>
+        <ServerBody>
           <b>{stats.prefix}</b>
           {mode}
           {stats.currentMap}
-        </p>
-        <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>
+        </ServerBody>
+        <ServerPlayers>
           {stats.playerAmount}/{stats.maxPlayerAmount}
           {stats.maxPlayers} {queueString}
-        </b>
+        </ServerPlayers>
       </Server>
     );
   } else {
@@ -134,7 +148,7 @@ export function WhiteServerBox({
       <Server>
         <Circle />
         <b>Loading...</b>
-        <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>0/0</b>
+        <ServerPlayers>0/0</ServerPlayers>
       </Server>
     );
   }
@@ -187,15 +201,15 @@ export function BlackServerBox({
             <ServerText>{stats.smallmode}</ServerText>
           </Blur>
         </ServerImage>
-        <p style={{ color: "white", margin: 0 }}>
+        <ServerBody style={{ color: "white" }}>
           <b>{stats.prefix}</b>
           {mode}
           {stats.currentMap}
-        </p>
-        <b style={{ marginLeft: "auto", paddingLeft: "1rem", color: "white" }}>
+        </ServerBody>
+        <ServerPlayers style={{ color: "white" }}>
           {stats.playerAmount}/{stats.maxPlayerAmount}
           {stats.maxPlayers} {queueString}
-        </b>
+        </ServerPlayers>
       </Server>
     );
   } else {
@@ -203,7 +217,7 @@ export function BlackServerBox({
       <Server>
         <Circle />
         <b style={{ color: "white" }}>Loading...</b>
-        <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>0/0</b>
+        <ServerPlayers style={{ color: "white" }}>0/0</ServerPlayers>
       </Server>
     );
   }
@@ -221,9 +235,18 @@ const BigServerImage = styled.div<IServerImage>`
   background-repeat: no-repeat;
   background-size: cover;
   width: 150px;
+  min-width: 150px;
   height: 90px;
   background-image: url("${(props) => props.background}");
   margin-right: 0.7rem;
+`;
+
+const BigServerBody = styled.h4`
+  margin: 0;
+  margin-top: 0.6rem;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 const Column = styled.div`
@@ -283,9 +306,7 @@ export function DetailedServerBox({
       >
         <BigServerImage background={stats.currentMapImage} />
         <div>
-          <h4 style={{ margin: 0, marginTop: "0.6rem", color: "white" }}>
-            {stats.prefix}
-          </h4>
+          <BigServerBody>{stats.prefix}</BigServerBody>
           <Column>
             <Row>
               <Title>Players</Title>
