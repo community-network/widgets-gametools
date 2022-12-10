@@ -71,7 +71,6 @@ const ServerBody = styled.p`
 const ServerPlayers = styled.b`
   margin-left: auto;
   padding-left: 1rem;
-  color: white;
   white-space: nowrap;
 `;
 
