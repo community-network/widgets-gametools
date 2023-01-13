@@ -349,15 +349,15 @@ export default function Routing(): React.ReactElement {
   return (
     <Routes>
       <Route
-        path="/servers/white/:gameid/:type/:sname/:platform"
+        path="/white/:gameid/:type/:sname/:platform"
         element={<WhiteServerBox />}
       />
       <Route
-        path="/servers/black/:gameid/:type/:sname/:platform"
+        path="/black/:gameid/:type/:sname/:platform"
         element={<BlackServerBox />}
       />
       <Route
-        path="/servers/detailed/:gameid/:type/:sname/:platform"
+        path="/detailed/:gameid/:type/:sname/:platform"
         element={<DetailedServerBox />}
       />
     </Routes>
