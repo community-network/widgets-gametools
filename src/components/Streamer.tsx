@@ -13,7 +13,7 @@ import {
   seederPlayer,
   seederPlayersReturn,
 } from "../api/ReturnTypes";
-import { useMatch } from "react-router";
+import { Routes, useMatch, Route } from "react-router";
 
 export const Row = styled.div`
   display: flex;
@@ -420,4 +420,23 @@ export function SteamStat(): React.ReactElement {
   } else {
     return <div></div>;
   }
+}
+
+export default function Routing(): React.ReactElement {
+  return (
+    <Routes>
+      <Route
+        path="/stream/:plat/:type/:eaid/:gameid/:lang/:zoom"
+        element={<SteamStat />}
+      />
+      <Route
+        path="/ingamestream/:id/:player/:lang/:zoom"
+        element={<GameStreamStat />}
+      />
+      <Route
+        path="/streamscore/:id/:lang/:zoom"
+        element={<GameStreamScore />}
+      />
+    </Routes>
+  );
 }

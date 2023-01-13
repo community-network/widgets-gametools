@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
-import { useMatch } from "react-router";
+import { Route, Routes, useMatch } from "react-router";
 
 interface IServerImage {
   background: string;
@@ -343,4 +343,23 @@ export function DetailedServerBox(): React.ReactElement {
       </BigServer>
     );
   }
+}
+
+export default function Routing(): React.ReactElement {
+  return (
+    <Routes>
+      <Route
+        path="/servers/white/:gameid/:type/:sname/:platform"
+        element={<WhiteServerBox />}
+      />
+      <Route
+        path="/servers/black/:gameid/:type/:sname/:platform"
+        element={<BlackServerBox />}
+      />
+      <Route
+        path="/servers/detailed/:gameid/:type/:sname/:platform"
+        element={<DetailedServerBox />}
+      />
+    </Routes>
+  );
 }

@@ -5,6 +5,7 @@ import { GetStatsOldGames } from "../api/GetStatsOldGames";
 import { useQuery } from "react-query";
 import forest from "../assets/img/forest.jpg";
 import rust from "../assets/img/rust.jpg";
+import { Routes, Route } from "react-router";
 
 interface IServerImage {
   background: string;
@@ -168,4 +169,13 @@ export function OldGameTwo(): React.ReactElement {
       </BigServer>
     );
   }
+}
+
+export default function Routing(): React.ReactElement {
+  return (
+    <Routes>
+      <Route path="/oldgames/servers/detailed/amg/1" element={<OldGameOne />} />
+      <Route path="/oldgames/servers/detailed/amg/2" element={<OldGameTwo />} />
+    </Routes>
+  );
 }
