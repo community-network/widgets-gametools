@@ -3,6 +3,7 @@ const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  entry: "./index.tsx",
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
@@ -23,37 +24,17 @@ module.exports = {
         use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        use: [
-          "file-loader",
-          {
-            loader: "image-webpack-loader",
-            options: {
-              // bypassOnDebug: true, // webpack@1.x
-              disable: true, // webpack@2.x and newer
-              optipng: {
-                optimizationLevel: 7,
-              },
-              gifsicle: {
-                interlaced: false,
-              },
-            },
-          },
-        ],
+        test: /\.(png|jpe?g|svg)$/,
+        loader: "file-loader",
+        options: {
+          name: "assets/[name].[ext]",
+        },
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "index.html.ejs",
-      inject: false,
     }),
   ],
-  externals: {
-    react: "React",
-    "react-dom": "ReactDOM",
-  },
-  performance: {
-    hints: false,
-  },
 };

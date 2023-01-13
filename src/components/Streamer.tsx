@@ -6,26 +6,14 @@ import { GetBfListStats } from "../api/BfList";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
-import { RouteComponentProps } from "react-router-dom";
 import { Main } from "./Materials";
 import { bflistGames } from "../api/static";
-import { seederPlayer } from "../api/ReturnTypes";
-
-type TParams = {
-  plat: string;
-  type: string;
-  eaid: string;
-  gameid: string;
-  lang: string;
-  zoom: string;
-};
-
-type SeederTParams = {
-  id: string;
-  player: string;
-  lang: string;
-  zoom: string;
-};
+import {
+  MainStats,
+  seederPlayer,
+  seederPlayersReturn,
+} from "../api/ReturnTypes";
+import { Routes, useMatch, Route } from "react-router";
 
 export const Row = styled.div`
   display: flex;
@@ -86,9 +74,8 @@ function statsSelector(guid: string, username: string): Promise<any> {
   });
 }
 
-export function GameStreamStat({
-  match,
-}: RouteComponentProps<SeederTParams>): React.ReactElement {
+export function GameStreamStat(): React.ReactElement {
+  const match = useMatch("/ingamestream/:id/:player/:lang/:zoom");
   const { t, i18n } = useTranslation();
 
   React.useState(() => {
@@ -102,7 +89,7 @@ export function GameStreamStat({
     isLoading: loading,
     isError: error,
     data: stats,
-  } = useQuery(
+  } = useQuery<seederPlayersReturn, unknown, seederPlayersReturn, string>(
     "seederPlayerList" + guid + match.params.player,
     () => statsSelector(guid, match.params.player),
     {
@@ -197,16 +184,8 @@ export function GameStreamStat({
   }
 }
 
-type SeederScoreTParams = {
-  id: string;
-  player: string;
-  lang: string;
-  zoom: string;
-};
-
-export function GameStreamScore({
-  match,
-}: RouteComponentProps<SeederScoreTParams>): React.ReactElement {
+export function GameStreamScore(): React.ReactElement {
+  const match = useMatch("/streamscore/:id/:lang/:zoom");
   const { t, i18n } = useTranslation();
 
   React.useState(() => {
@@ -218,7 +197,7 @@ export function GameStreamScore({
     isLoading: loading,
     isError: error,
     data: stats,
-  } = useQuery(
+  } = useQuery<seederPlayersReturn, unknown, seederPlayersReturn, string>(
     "seederPlayerList" + guid,
     () =>
       GetStats.seederPlayerList({
@@ -339,9 +318,8 @@ export function GameStreamScore({
   }
 }
 
-export function SteamStat({
-  match,
-}: RouteComponentProps<TParams>): React.ReactElement {
+export function SteamStat(): React.ReactElement {
+  const match = useMatch("/stream/:plat/:type/:eaid/:gameid/:lang/:zoom");
   const { t, i18n } = useTranslation();
 
   React.useState(() => {
@@ -352,7 +330,7 @@ export function SteamStat({
     isLoading: loading,
     isError: error,
     data: stats,
-  } = useQuery(
+  } = useQuery<MainStats, unknown, MainStats, string>(
     "stats" + match.params.gameid + match.params.eaid,
     () =>
       GetStats.stats({
@@ -442,4 +420,23 @@ export function SteamStat({
   } else {
     return <div></div>;
   }
+}
+
+export default function Routing(): React.ReactElement {
+  return (
+    <Routes>
+      <Route
+        path="/stream/:plat/:type/:eaid/:gameid/:lang/:zoom"
+        element={<SteamStat />}
+      />
+      <Route
+        path="/ingamestream/:id/:player/:lang/:zoom"
+        element={<GameStreamStat />}
+      />
+      <Route
+        path="/streamscore/:id/:lang/:zoom"
+        element={<GameStreamScore />}
+      />
+    </Routes>
+  );
 }
