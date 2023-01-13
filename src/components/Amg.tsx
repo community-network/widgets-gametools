@@ -174,8 +174,8 @@ export function OldGameTwo(): React.ReactElement {
 export default function Routing(): React.ReactElement {
   return (
     <Routes>
-      <Route path="/oldgames/servers/detailed/amg/1" element={<OldGameOne />} />
-      <Route path="/oldgames/servers/detailed/amg/2" element={<OldGameTwo />} />
+      <Route path="/servers/detailed/amg/1" element={<OldGameOne />} />
+      <Route path="/servers/detailed/amg/2" element={<OldGameTwo />} />
     </Routes>
   );
 }
