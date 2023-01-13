@@ -5,19 +5,10 @@ import styled from "styled-components";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
-import { RouteComponentProps } from "react-router-dom";
 import useWindowDimension from "use-window-dimensions";
 import { platformImage, shortName } from "../api/static";
 import { Description, Main, Row, Title } from "./Materials";
-
-type TParams = {
-  plat: string;
-  type: string;
-  eaid: string;
-  gameid: string;
-  lang: string;
-  zoom: string;
-};
+import { useMatch } from "react-router";
 
 interface IGameImage {
   background: string;
@@ -148,9 +139,8 @@ const Column = styled.div`
   margin-top: 1rem;
 `;
 
-export function Stats({
-  match,
-}: RouteComponentProps<TParams>): React.ReactElement {
+export default function Stats(): React.ReactElement {
+  const match = useMatch("/stats/:plat/:type/:eaid/:gameid/:lang/:zoom");
   const { t, i18n } = useTranslation();
 
   React.useState(() => {

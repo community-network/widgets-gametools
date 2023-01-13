@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { GetStatsOldGames } from "../api/GetStatsOldGames";
 import { useQuery } from "react-query";
 import forest from "../assets/img/forest.jpg";
-import rust from "../assets/img/rust.jpg"
+import rust from "../assets/img/rust.jpg";
 
 interface IServerImage {
   background: string;
@@ -115,7 +115,6 @@ export function OldGameOne(): React.ReactElement {
   }
 }
 
-
 export function OldGameTwo(): React.ReactElement {
   const {
     isLoading: loading,
@@ -132,7 +131,10 @@ export function OldGameTwo(): React.ReactElement {
       return <div>resultNotFound</div>;
     }
     return (
-      <BigServer href={"https://www.gametracker.com/server_info/51.77.77.129:27030/"} target="_blank">
+      <BigServer
+        href={"https://www.gametracker.com/server_info/51.77.77.129:27030/"}
+        target="_blank"
+      >
         <BigServerImage background={rust} />
         <div>
           <h4 style={{ margin: 0, marginTop: "0.6rem", color: "white" }}>

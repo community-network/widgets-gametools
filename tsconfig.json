@@ -1,8 +1,13 @@
 {
     "compilerOptions": {
-        "jsx": "react",
-        "lib": [
-            "es2021"
-      ],
-    }
+      "jsx": "react-jsx",
+      "lib": ["dom", "dom.iterable", "esnext"],
+      "module": "ESNext",
+      "moduleResolution": "node",
+      "outDir": "dist",
+      "target": "ESNext",
+      "sourceMap": true,
+      "resolveJsonModule": true
+    },
+    "include": ["src"]
 }

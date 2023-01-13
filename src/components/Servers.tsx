@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
-import { RouteComponentProps } from "react-router-dom";
+import { useMatch } from "react-router";
 
 interface IServerImage {
   background: string;
@@ -78,16 +78,8 @@ const ServerPlayers = styled.b`
   /* <img align="center" src="https://widgets-gametools.pages.dev/servers/bf1/name/%5BBoB%5D%231%20EU%20Popular%20CQ%20Maps!%20join%20us%3Adiscord.gg%2FBoB/pc" alt="GatitoUwU's Github Stats" style="max-width: 100%;"></img> */
 }
 
-type TParams = {
-  gameid: string;
-  type: string;
-  sname: string;
-  platform: string;
-};
-
-export function WhiteServerBox({
-  match,
-}: RouteComponentProps<TParams>): React.ReactElement {
+export function WhiteServerBox(): React.ReactElement {
+  const match = useMatch("/servers/white/:gameid/:type/:sname/:platform");
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
 
@@ -153,9 +145,8 @@ export function WhiteServerBox({
   }
 }
 
-export function BlackServerBox({
-  match,
-}: RouteComponentProps<TParams>): React.ReactElement {
+export function BlackServerBox(): React.ReactElement {
+  const match = useMatch("/servers/black/:gameid/:type/:sname/:platform");
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
 
@@ -272,9 +263,8 @@ const Description = styled.p`
   white-space: nowrap;
 `;
 
-export function DetailedServerBox({
-  match,
-}: RouteComponentProps<TParams>): React.ReactElement {
+export function DetailedServerBox(): React.ReactElement {
+  const match = useMatch("/servers/detailed/:gameid/:type/:sname/:platform");
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
 

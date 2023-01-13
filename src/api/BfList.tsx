@@ -5,7 +5,7 @@ interface PlayerInfo {
   userName: string;
 }
 
-interface PlayerInfoReturn {
+export interface PlayerInfoReturn {
   name: string;
   team: number;
   squad: number;
