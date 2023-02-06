@@ -30,7 +30,14 @@
         "deaths": "Deaths",
         "score": "Score",
         "vehicles": "Vehicles",
-        "alive": "Alive"
+        "alive": "Alive",
+        "killsPerMatch": "Kills/match",
+        "damagePerMinute": "DPM",
+        "damagePerMatch": "Dmg/match",
+        "matchesPlayed": "Matches played",
+        "objectiveTime": "Objective time",
+        "meleeKills": "Melee kills",
+        "vehicleKills": "Vehicle kills"
     },
     "streamer": {
         "noserver": "Not in a server",

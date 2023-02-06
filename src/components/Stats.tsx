@@ -5,8 +5,8 @@ import styled from "styled-components";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
-import useWindowDimension from "use-window-dimensions";
-import { platformImage, shortName } from "../api/static";
+import { useWindowWidth } from "@react-hook/window-size";
+import { differentWidth, gameStats, platformImage, shortName } from "../api/static";
 import { Description, Main, Row, Title } from "./Materials";
 import { useMatch } from "react-router";
 
@@ -149,7 +149,7 @@ export default function Stats(): React.ReactElement {
 
   const game = match.params.gameid;
   const gameid = shortName[game];
-  const { width } = useWindowDimension();
+  const width = useWindowWidth();
   const {
     isLoading: loading,
     isError: error,
@@ -187,7 +187,11 @@ export default function Stats(): React.ReactElement {
               <></>
             ) : (
               <>
-                {game === "bfh" ? <Bar style={{ left: "380px" }} /> : <Bar />}
+                {["bfh", "bf2042"].includes(game) ? (
+                  <Bar style={{ left: differentWidth?.[game] }} />
+                ) : (
+                  <Bar />
+                )}
                 <BarText
                   style={{
                     right: "30px",
@@ -204,174 +208,62 @@ export default function Stats(): React.ReactElement {
         <Body>
           <Img src={stats.avatar} />
           <PlayerName>{stats.userName}</PlayerName>
-          <RankImg
-            src={
-              stats.rankImg !== undefined
-                ? stats.rankImg
-                : `https://cdn.gametools.network/${game}/${stats.rank}.png`
-            }
-          />
-          <Rank>Rank {stats.rank}</Rank>
-          {width <= 700 && match.params.zoom === "100" ? (
-            <></>
-          ) : (
+          {game !== "bf2042" ? (
             <>
-              <GameImg
-                src={`https://cdn.gametools.network/games/${game}.png`}
+              <RankImg
+                src={
+                  stats.rankImg !== undefined
+                    ? stats.rankImg
+                    : `https://cdn.gametools.network/${game}/${stats.rank}.png`
+                }
               />
-              <Platform
-                src={`https://cdn.gametools.network/platforms/${
-                  platformImage[match.params.plat]
-                }.png`}
-              />
+              <Rank>Rank {stats.rank}</Rank>
+              {width <= 700 && match.params.zoom === "100" ? (
+                <></>
+              ) : (
+                <>
+                  <GameImg
+                    src={`https://cdn.gametools.network/games/${game}.png`}
+                  />
+                  <Platform
+                    src={`https://cdn.gametools.network/platforms/${
+                      platformImage[match.params.plat]
+                    }.png`}
+                  />
+                </>
+              )}
             </>
-          )}
-          {game !== "bfh" ? (
-            <Column>
-              <Row>
-                <Title>{t("stats.killsPerMinute")}</Title>
-                <Description>{stats.killsPerMinute}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.scorePerMinute")}</Title>
-                <Description>{stats.scorePerMinute}</Description>
-              </Row>
-              {game == "bfv" ? (
-                <Row>
-                  <Title>{t("stats.saviorKills")}</Title>
-                  <Description>{stats.saviorKills}</Description>
-                </Row>
-              ) : (
-                <Row>
-                  <Title>{t("stats.skill")}</Title>
-                  <Description>{stats.skill}</Description>
-                </Row>
-              )}
-              <Row>
-                <Title>{t("stats.killDeath")}</Title>
-                <Description>{stats.killDeath}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.longestHeadShot")}</Title>
-                <Description>{stats.longestHeadShot}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.winPercent")}</Title>
-                <Description>{stats.winPercent}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.headshotPercent")}</Title>
-                <Description>
-                  {stats.headshots !== undefined
-                    ? stats.headshots
-                    : stats.headShots}
-                </Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.accuracy")}</Title>
-                <Description>{stats.accuracy}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.bestClass")}</Title>
-                <Description>{stats.bestClass}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.highestKillStreak")}</Title>
-                <Description>{stats.highestKillStreak}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.revives")}</Title>
-                <Description>{stats.revives}</Description>
-              </Row>
-              {game === "bf1" || game === "bfv" ? (
-                <>
-                  <Row>
-                    <Title>{t("stats.infantryKillDeath")}</Title>
-                    <Description>{stats.infantryKillDeath}</Description>
-                  </Row>
-                  <Row>
-                    <Title>{t("stats.infantryKillsPerMinute")}</Title>
-                    <Description>{stats.infantryKillsPerMinute}</Description>
-                  </Row>
-                </>
-              ) : (
-                <>
-                  <Row>
-                    <Title>{t("stats.repairs")}</Title>
-                    <Description>{stats.repairs}</Description>
-                  </Row>
-                  <Row>
-                    <Title>{t("stats.resupplies")}</Title>
-                    <Description>{stats.resupplies}</Description>
-                  </Row>
-                </>
-              )}
-              <Row>
-                <Title>{t("stats.timePlayed")}</Title>
-                <Description>{stats.timePlayed}</Description>
-              </Row>
-            </Column>
           ) : (
-            // bfh
-            <Column>
-              <Row>
-                <Title>{t("stats.killsPerMinute")}</Title>
-                <Description>{stats.killsPerMinute}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.killsPerMinute")}</Title>
-                <Description>{stats.scorePerMinute}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.winPercent")}</Title>
-                <Description>{stats.winPercent}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.killDeath")}</Title>
-                <Description>{stats.killDeath}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.accuracy")}</Title>
-                <Description>{stats.accuracy}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.enforcer")}</Title>
-                <Description>{stats.enforcer}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.mechanic")}</Title>
-                <Description>{stats.mechanic}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.operator")}</Title>
-                <Description>{stats.operator}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.professional")}</Title>
-                <Description>{stats.professional}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.hacker")}</Title>
-                <Description>{stats.hacker}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.bestClass")}</Title>
-                <Description>{stats.bestClass}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.cashPerMinute")}</Title>
-                <Description>{stats.cashPerMinute}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.killAssists")}</Title>
-                <Description>{stats.killAssists}</Description>
-              </Row>
-              <Row>
-                <Title>{t("stats.timePlayed")}</Title>
-                <Description>{stats.timePlayed}</Description>
-              </Row>
-            </Column>
+            <></>
           )}
+          <Column>
+            {gameStats?.[game] !== undefined ? (
+              <>
+                {Object.entries(gameStats?.[game]).map(
+                  ([key, value], index) => {
+                    return (
+                      <Row key={index}>
+                        <Title>{t(`stats.${key}`)}</Title>
+                        <Description>
+                          {value
+                            .split(".")
+                            .reduce(
+                              (
+                                o: { [x: string]: number },
+                                i: string | number,
+                              ) => o[i],
+                              stats,
+                            )}
+                        </Description>
+                      </Row>
+                    );
+                  },
+                )}
+              </>
+            ) : (
+              <></>
+            )}
+          </Column>
         </Body>
       </Main>
     );
