@@ -218,23 +218,23 @@ export default function Stats(): React.ReactElement {
                 }
               />
               <Rank>Rank {stats.rank}</Rank>
-              {width <= 700 && match.params.zoom === "100" ? (
-                <></>
-              ) : (
-                <>
-                  <GameImg
-                    src={`https://cdn.gametools.network/games/${game}.png`}
-                  />
-                  <Platform
-                    src={`https://cdn.gametools.network/platforms/${
-                      platformImage[match.params.plat]
-                    }.png`}
-                  />
-                </>
-              )}
             </>
           ) : (
             <></>
+          )}
+          {width <= 700 && match.params.zoom === "100" ? (
+            <></>
+          ) : (
+            <>
+              <GameImg
+                src={`https://cdn.gametools.network/games/${game}.png`}
+              />
+              <Platform
+                src={`https://cdn.gametools.network/platforms/${
+                  platformImage[match.params.plat]
+                }.png`}
+              />
+            </>
           )}
           <Column>
             {gameStats?.[game] !== undefined ? (
