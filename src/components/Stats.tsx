@@ -6,7 +6,12 @@ import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
 import { useWindowWidth } from "@react-hook/window-size";
-import { differentWidth, gameStats, platformImage, shortName } from "../api/static";
+import {
+  differentWidth,
+  gameStats,
+  platformImage,
+  shortName,
+} from "../api/static";
 import { Description, Main, Row, Title } from "./Materials";
 import { useMatch } from "react-router";
 
