@@ -1,6 +1,7 @@
 {
     "loading": "Laden...",
     "stats": {
+        "main": "Stats",
         "killsPerMinute": "KPM",
         "scorePerMinute": "SPM",
         "saviorKills": "Saviour kills",
@@ -36,7 +37,8 @@
         "matchesPlayed": "Matches gespeeld",
         "objectiveTime": "Objective tijd",
         "meleeKills": "Melee kills",
-        "vehicleKills": "Vehicle kills"
+        "vehicleKills": "Vehicle kills",
+        "humanPrecentage": "Human kills"
     },
     "streamer": {
         "noserver": "Is niet in een server",
