@@ -1,6 +1,7 @@
 {
     "loading": "Yükleniyor...",
     "stats": {
+        "main": "Stats",
         "killsPerMinute": "KPM",
         "scorePerMinute": "SPM",
         "saviorKills": "Saviour kills",
@@ -25,11 +26,19 @@
         "hacker": "hileci",
         "cashPerMinute": "Cash per min",
         "killAssists": "Öldürme yardımı",
-        "score": "Skor",
         "kills": "Öldürme",
         "deaths": "Ölüm",
+        "score": "Skor",
         "vehicles": "Araç",
-        "alive": "Canlı"
+        "alive": "Canlı",
+        "killsPerMatch": "Kills/match",
+        "damagePerMinute": "DPM",
+        "damagePerMatch": "Dmg/match",
+        "matchesPlayed": "Matches played",
+        "objectiveTime": "Objective time",
+        "meleeKills": "Melee kills",
+        "vehicleKills": "Vehicle kills",
+        "humanPrecentage": "Human kills"
     },
     "streamer": {
         "noserver": "bir sunucuda değil",
