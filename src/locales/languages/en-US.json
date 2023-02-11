@@ -37,7 +37,8 @@
         "matchesPlayed": "Matches played",
         "objectiveTime": "Objective time",
         "meleeKills": "Melee kills",
-        "vehicleKills": "Vehicle kills"
+        "vehicleKills": "Vehicle kills",
+        "humanPrecentage": "Human kills"
     },
     "streamer": {
         "noserver": "Not in a server",
