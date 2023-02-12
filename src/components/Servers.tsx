@@ -178,7 +178,7 @@ export function BlackServerBox(): React.ReactElement {
   if (!loading && !error) {
     if ("errors" in stats) {
       return (
-        <Server>
+        <Server style={{ background: "#141d26", borderColor: "#141d26" }}>
           <Circle />
           <ServerBody style={{ color: "white" }}>
             <b>{t("server.notFound")}</b>
@@ -225,7 +225,7 @@ export function BlackServerBox(): React.ReactElement {
     );
   } else {
     return (
-      <Server>
+      <Server style={{ background: "#141d26", borderColor: "#141d26" }}>
         <Circle />
         <b style={{ color: "white" }}>{t("loading")}</b>
         <ServerPlayers style={{ color: "white" }}>0/0</ServerPlayers>
