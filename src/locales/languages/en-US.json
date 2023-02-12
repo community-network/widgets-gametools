@@ -1,5 +1,14 @@
 {
     "loading": "Loading...",
+    "notApplicable": "N/A",
+    "server": {
+        "map": "Map",
+        "players": "Players",
+        "queue": "Queue",
+        "favorites": "Favorites",
+        "mode": "Mode",
+        "notFound": "¯\\_(ツ)_/¯ server not found"
+    },
     "stats": {
         "main": "Stats",
         "killsPerMinute": "KPM",

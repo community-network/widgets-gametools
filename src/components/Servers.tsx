@@ -5,6 +5,7 @@ import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
 import { Route, Routes, useMatch } from "react-router";
+import { useTranslation } from "react-i18next";
 
 interface IServerImage {
   background: string;
@@ -79,6 +80,7 @@ const ServerPlayers = styled.b`
 }
 
 export function WhiteServerBox(): React.ReactElement {
+  const { t } = useTranslation();
   const match = useMatch("/servers/white/:gameid/:type/:sname/:platform");
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
@@ -98,8 +100,16 @@ export function WhiteServerBox(): React.ReactElement {
     }),
   );
   if (!loading && !error) {
-    if (stats == undefined) {
-      return <div>resultNotFound</div>;
+    if ("errors" in stats) {
+      return (
+        <Server>
+          <Circle />
+          <ServerBody>
+            <b>{t("server.notFound")}</b>
+          </ServerBody>
+          <ServerPlayers>{t("notApplicable")}</ServerPlayers>
+        </Server>
+      );
     }
     let queue: number = undefined;
     queue = stats.inQueue;
@@ -138,7 +148,7 @@ export function WhiteServerBox(): React.ReactElement {
     return (
       <Server>
         <Circle />
-        <b>Loading...</b>
+        <b>{t("loading")}</b>
         <ServerPlayers>0/0</ServerPlayers>
       </Server>
     );
@@ -146,6 +156,7 @@ export function WhiteServerBox(): React.ReactElement {
 }
 
 export function BlackServerBox(): React.ReactElement {
+  const { t } = useTranslation();
   const match = useMatch("/servers/black/:gameid/:type/:sname/:platform");
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
@@ -165,8 +176,18 @@ export function BlackServerBox(): React.ReactElement {
     }),
   );
   if (!loading && !error) {
-    if (stats == undefined) {
-      return <div>resultNotFound</div>;
+    if ("errors" in stats) {
+      return (
+        <Server>
+          <Circle />
+          <ServerBody style={{ color: "white" }}>
+            <b>{t("server.notFound")}</b>
+          </ServerBody>
+          <ServerPlayers style={{ color: "white" }}>
+            {t("notApplicable")}
+          </ServerPlayers>
+        </Server>
+      );
     }
     let queue: number = undefined;
     queue = stats.inQueue;
@@ -206,7 +227,7 @@ export function BlackServerBox(): React.ReactElement {
     return (
       <Server>
         <Circle />
-        <b style={{ color: "white" }}>Loading...</b>
+        <b style={{ color: "white" }}>{t("loading")}</b>
         <ServerPlayers style={{ color: "white" }}>0/0</ServerPlayers>
       </Server>
     );
@@ -264,6 +285,7 @@ const Description = styled.p`
 `;
 
 export function DetailedServerBox(): React.ReactElement {
+  const { t } = useTranslation();
   const match = useMatch("/servers/detailed/:gameid/:type/:sname/:platform");
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
@@ -283,8 +305,8 @@ export function DetailedServerBox(): React.ReactElement {
     }),
   );
   if (!loading && !error) {
-    if (stats == undefined) {
-      return <div>resultNotFound</div>;
+    if ("errors" in stats) {
+      return <DetailedDefaults gameId={gameId} text={t("server.notFound")} />;
     }
     return (
       <BigServer
@@ -298,7 +320,7 @@ export function DetailedServerBox(): React.ReactElement {
           <BigServerBody>{stats.prefix}</BigServerBody>
           <Column>
             <Row>
-              <Title>Players</Title>
+              <Title>{t("server.players")}</Title>
               <Description>
                 {stats.playerAmount}/{stats.maxPlayerAmount}
                 {stats.maxPlayers}
@@ -307,11 +329,11 @@ export function DetailedServerBox(): React.ReactElement {
             {gameId !== "bf2042" ? (
               <>
                 <Row>
-                  <Title>Queue</Title>
+                  <Title>{t("server.queue")}</Title>
                   <Description>{stats.inQueue}/10</Description>
                 </Row>
                 <Row>
-                  <Title>Favorites</Title>
+                  <Title>{t("server.favorites")}</Title>
                   <Description>{stats.favorites}</Description>
                 </Row>
               </>
@@ -319,12 +341,12 @@ export function DetailedServerBox(): React.ReactElement {
               <></>
             )}
             <Row>
-              <Title>Map</Title>
+              <Title>{t("server.map")}</Title>
               <Description>{stats.currentMap}</Description>
             </Row>
             {gameId == "bf1" ? (
               <Row>
-                <Title>Mode</Title>
+                <Title>{t("server.mode")}</Title>
                 <Description>{stats.mode}</Description>
               </Row>
             ) : (
@@ -335,14 +357,58 @@ export function DetailedServerBox(): React.ReactElement {
       </BigServer>
     );
   } else {
-    return (
-      <BigServer>
-        <Circle />
-        <b>Loading...</b>
-        <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>0/0</b>
-      </BigServer>
-    );
+    return <DetailedDefaults gameId={gameId} text={t("loading")} />;
   }
+}
+
+function DetailedDefaults({
+  gameId,
+  text,
+}: {
+  gameId: string;
+  text: string;
+}): React.ReactElement {
+  const { t } = useTranslation();
+  return (
+    <BigServer>
+      <BigServerImage background="" />
+      <div>
+        <BigServerBody>{text}</BigServerBody>
+        <Column>
+          <Row>
+            <Title>{t("server.players")}</Title>
+            <Description>0/0</Description>
+          </Row>
+          {gameId !== "bf2042" ? (
+            <>
+              <Row>
+                <Title>{t("server.queue")}</Title>
+                <Description>0/10</Description>
+              </Row>
+              <Row>
+                <Title>{t("server.favorites")}</Title>
+                <Description>0</Description>
+              </Row>
+            </>
+          ) : (
+            <></>
+          )}
+          <Row>
+            <Title>{t("server.map")}</Title>
+            <Description>{t("notApplicable")}</Description>
+          </Row>
+          {gameId == "bf1" ? (
+            <Row>
+              <Title>{t("server.mode")}</Title>
+              <Description>{t("notApplicable")}</Description>
+            </Row>
+          ) : (
+            <></>
+          )}
+        </Column>
+      </div>
+    </BigServer>
+  );
 }
 
 export default function Routing(): React.ReactElement {
