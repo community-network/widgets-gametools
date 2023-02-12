@@ -14,6 +14,7 @@ import {
 } from "../api/static";
 import { Description, Main, Row, Title } from "./Materials";
 import { useMatch } from "react-router";
+import { PathMatch } from "react-router-dom";
 
 interface IGameImage {
   background: string;
@@ -170,8 +171,16 @@ export default function Stats(): React.ReactElement {
     }),
   );
   if (!loading && !error) {
-    if (stats == undefined) {
-      return <div>resultNotFound</div>;
+    if ("errors" in stats) {
+      return (
+        <DefaultStats
+          width={width}
+          match={match}
+          gameid={gameid}
+          game={game}
+          text={t("stats.notFound")}
+        />
+      );
     }
     return (
       <Main
@@ -222,7 +231,9 @@ export default function Stats(): React.ReactElement {
                     : `https://cdn.gametools.network/${game}/${stats.rank}.png`
                 }
               />
-              <Rank>Rank {stats.rank}</Rank>
+              <Rank>
+                {t("stats.rank")} {stats.rank}
+              </Rank>
             </>
           ) : (
             <></>
@@ -273,6 +284,104 @@ export default function Stats(): React.ReactElement {
       </Main>
     );
   } else {
-    return <div></div>;
+    return (
+      <DefaultStats
+        width={width}
+        match={match}
+        gameid={gameid}
+        game={game}
+        text={t("loading")}
+      />
+    );
   }
+}
+
+function DefaultStats({
+  width,
+  match,
+  gameid,
+  game,
+  text,
+}: {
+  width: number;
+  match: PathMatch<"type" | "lang" | "plat" | "eaid" | "gameid" | "zoom">;
+  gameid: string;
+  game: string;
+  text: string;
+}) {
+  const { t, i18n } = useTranslation();
+
+  React.useState(() => {
+    i18n.changeLanguage(match.params.lang);
+  });
+  return (
+    <Main
+      zoom={match.params.zoom}
+      href={`https://gametools.network/stats/${match.params.plat}/${
+        match.params.type
+      }/${encodeURIComponent(match.params.eaid)}`}
+      target="_blank"
+    >
+      <Background
+        background={`https://cdn.gametools.network/backgrounds/${game}/1.jpg`}
+      >
+        <Blur>
+          <BarText style={{ left: "30px" }}>BATTLEFIELD {gameid} STATS</BarText>
+          {width <= 700 && match.params.zoom === "100" ? (
+            <></>
+          ) : (
+            <>
+              {["bfh", "bf2042"].includes(game) ? (
+                <Bar style={{ left: differentWidth?.[game] }} />
+              ) : (
+                <Bar />
+              )}
+              <BarText
+                style={{
+                  right: "30px",
+                  color: "rgba(255, 255, 255, 0.81)",
+                  textAlign: "right",
+                }}
+              >
+                GAMETOOLS.NETWORK
+              </BarText>
+            </>
+          )}
+        </Blur>
+      </Background>
+      <Body>
+        <Img src="https://eaassets-a.akamaihd.net/battlelog/defaultavatars/default-avatar-36.png" />
+        <PlayerName>{text}</PlayerName>
+        {game !== "bf2042" ? <Rank>{t("stats.rank")} 0</Rank> : <></>}
+        {width <= 700 && match.params.zoom === "100" ? (
+          <></>
+        ) : (
+          <>
+            <GameImg src={`https://cdn.gametools.network/games/${game}.png`} />
+            <Platform
+              src={`https://cdn.gametools.network/platforms/${
+                platformImage[match.params.plat]
+              }.png`}
+            />
+          </>
+        )}
+        <Column>
+          {gameStats?.[game] !== undefined ? (
+            <>
+              {Object.entries(gameStats?.[game]).map(([key, value], index) => {
+                return (
+                  <Row key={index}>
+                    <Title>{t(`stats.${key}`)}</Title>
+                    <Description>0</Description>
+                  </Row>
+                );
+              })}
+            </>
+          ) : (
+            <></>
+          )}
+        </Column>
+      </Body>
+    </Main>
+  );
 }

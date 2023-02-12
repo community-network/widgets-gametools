@@ -11,6 +11,7 @@
     },
     "stats": {
         "main": "Stats",
+        "rank": "Rank",
         "killsPerMinute": "KPM",
         "scorePerMinute": "SPM",
         "saviorKills": "Saviour kills",
@@ -47,7 +48,8 @@
         "objectiveTime": "Objective time",
         "meleeKills": "Melee kills",
         "vehicleKills": "Vehicle kills",
-        "humanPrecentage": "Human kills"
+        "humanPrecentage": "Human kills",
+        "notFound": "Player not found"
     },
     "streamer": {
         "noserver": "Not in a server",
