@@ -1,7 +1,17 @@
 {
     "loading": "Laden...",
+    "notApplicable": "N/A",
+    "server": {
+        "map": "Map",
+        "players": "Spelers",
+        "queue": "Queue",
+        "favorites": "Favorieten",
+        "mode": "Mode",
+        "notFound": "Server niet gevonden"
+    },
     "stats": {
         "main": "Stats",
+        "rank": "Rank",
         "killsPerMinute": "KPM",
         "scorePerMinute": "SPM",
         "saviorKills": "Saviour kills",
@@ -38,7 +48,8 @@
         "objectiveTime": "Objective tijd",
         "meleeKills": "Melee kills",
         "vehicleKills": "Vehicle kills",
-        "humanPrecentage": "Human kills"
+        "humanPrecentage": "Human kills",
+        "notFound": "Speler niet gevonden"
     },
     "streamer": {
         "noserver": "Is niet in een server",
