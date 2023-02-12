@@ -7,7 +7,7 @@
         "queue": "Queue",
         "favorites": "Favorites",
         "mode": "Mode",
-        "notFound": "¯\\_(ツ)_/¯ server not found"
+        "notFound": "Server not found"
     },
     "stats": {
         "main": "Stats",
