@@ -1,6 +1,17 @@
 {
     "loading": "Yükleniyor...",
+    "notApplicable": "Uygulanamaz",
+    "server": {
+        "map": "Harita",
+        "players": "Oyuncular",
+        "queue": "Kuyruk",
+        "favorites": "Favoriler",
+        "mode": "Mod",
+        "notFound": "Sunucu bulunamadı"
+    },
     "stats": {
+        "main": "İstatistikler",
+        "rank": "Rütbe",
         "killsPerMinute": "KPM",
         "scorePerMinute": "SPM",
         "saviorKills": "Saviour kills",
@@ -25,11 +36,20 @@
         "hacker": "hileci",
         "cashPerMinute": "Cash per min",
         "killAssists": "Öldürme yardımı",
-        "score": "Skor",
         "kills": "Öldürme",
         "deaths": "Ölüm",
+        "score": "Skor",
         "vehicles": "Araç",
-        "alive": "Canlı"
+        "alive": "Canlı",
+        "killsPerMatch": "Öldürme/maç",
+        "damagePerMinute": "DBH",
+        "damagePerMatch": "Hasar/maç",
+        "matchesPlayed": "Oynanan maçlar",
+        "objectiveTime": "Objektif zamanı",
+        "meleeKills": "Yakın dövüş öldürmeleri",
+        "vehicleKills": "Araç öldürmeleri",
+        "humanPrecentage": "Insan öldürmeleri",
+        "notFound": "Oyuncu bulunamadı"
     },
     "streamer": {
         "noserver": "bir sunucuda değil",
