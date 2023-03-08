@@ -1,6 +1,7 @@
 {
     "loading": "读取中",
     "stats": {
+        "main": "Stats",
         "killsPerMinute": "KPM",
         "scorePerMinute": "得分/分钟",
         "saviorKills": "掩护击杀",
@@ -25,9 +26,22 @@
         "hacker": "骇客",
         "cashPerMinute": "每分钟现金",
         "killAssists": "协助击杀",
-        "score": "分数",
         "kills": "击杀",
         "deaths": "死亡",
-        "vehicles": "载具"
+        "score": "分数",
+        "vehicles": "载具",
+        "alive": "Alive",
+        "killsPerMatch": "Kills/match",
+        "damagePerMinute": "DPM",
+        "damagePerMatch": "Dmg/match",
+        "matchesPlayed": "Matches played",
+        "objectiveTime": "Objective time",
+        "meleeKills": "Melee kills",
+        "vehicleKills": "Vehicle kills",
+        "humanPrecentage": "Human kills"
+    },
+    "streamer": {
+        "noserver": "Not in a server",
+        "noplayer": "Player not found in the server"
     }
 }
