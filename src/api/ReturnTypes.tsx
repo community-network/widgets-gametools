@@ -26,6 +26,13 @@ export type DetailedServerInfo = {
 
   inQue?: number;
   maxPlayers?: number;
+  noBotsPlayerAmount?: number;
+
+  // older games
+  mapImage?: string;
+  map?: string;
+  ip?: string;
+  port?: number;
 };
 
 export type ServerOwnerResult = {

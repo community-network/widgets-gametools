@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
 import { Route, Routes, useMatch } from "react-router";
 import { useTranslation } from "react-i18next";
+import { dice } from "../api/static";
 
 interface IServerImage {
   background: string;
@@ -128,7 +129,7 @@ export function WhiteServerBox(): React.ReactElement {
         )}/${match.params.platform}`}
         target="_blank"
       >
-        <ServerImage background={stats.currentMapImage}>
+        <ServerImage background={stats.currentMapImage || stats.mapImage}>
           <Blur>
             <ServerText>{stats.smallmode}</ServerText>
           </Blur>
@@ -136,7 +137,7 @@ export function WhiteServerBox(): React.ReactElement {
         <ServerBody>
           <b>{stats.prefix}</b>
           {mode}
-          {stats.currentMap}
+          {stats.currentMap || stats.map}
         </ServerBody>
         <ServerPlayers>
           {stats.playerAmount}/{stats.maxPlayerAmount}
@@ -207,7 +208,7 @@ export function BlackServerBox(): React.ReactElement {
         target="_blank"
         style={{ background: "#141d26", borderColor: "#141d26" }}
       >
-        <ServerImage background={stats.currentMapImage}>
+        <ServerImage background={stats.currentMapImage || stats.mapImage}>
           <Blur>
             <ServerText>{stats.smallmode}</ServerText>
           </Blur>
@@ -215,7 +216,7 @@ export function BlackServerBox(): React.ReactElement {
         <ServerBody style={{ color: "white" }}>
           <b>{stats.prefix}</b>
           {mode}
-          {stats.currentMap}
+          {stats.currentMap || stats.map}
         </ServerBody>
         <ServerPlayers style={{ color: "white" }}>
           {stats.playerAmount}/{stats.maxPlayerAmount}
@@ -315,7 +316,7 @@ export function DetailedServerBox(): React.ReactElement {
         )}/${match.params.platform}`}
         target="_blank"
       >
-        <BigServerImage background={stats.currentMapImage} />
+        <BigServerImage background={stats.currentMapImage || stats.mapImage} />
         <div>
           <BigServerBody>{stats.prefix}</BigServerBody>
           <Column>
@@ -326,7 +327,7 @@ export function DetailedServerBox(): React.ReactElement {
                 {stats.maxPlayers}
               </Description>
             </Row>
-            {gameId !== "bf2042" ? (
+            {gameId !== "bf2042" && dice.includes(gameId) ? (
               <>
                 <Row>
                   <Title>{t("server.queue")}</Title>
@@ -342,7 +343,7 @@ export function DetailedServerBox(): React.ReactElement {
             )}
             <Row>
               <Title>{t("server.map")}</Title>
-              <Description>{stats.currentMap}</Description>
+              <Description>{stats.currentMap || stats.map}</Description>
             </Row>
             {gameId == "bf1" ? (
               <Row>
@@ -379,7 +380,7 @@ function DetailedDefaults({
             <Title>{t("server.players")}</Title>
             <Description>0/0</Description>
           </Row>
-          {gameId !== "bf2042" ? (
+          {gameId !== "bf2042" && dice.includes(gameId) ? (
             <>
               <Row>
                 <Title>{t("server.queue")}</Title>

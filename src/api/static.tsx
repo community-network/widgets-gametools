@@ -40,6 +40,7 @@ export const shortName = {
   bfv: "5",
   bf2042: "2042",
 };
+export const dice = ["bf3", "bf4", "bfh", "bf1", "bfv", "bf2042"];
 
 export const gameStats = {
   bf3: {
