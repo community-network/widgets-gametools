@@ -1,20 +1,20 @@
 export type DetailedServerInfo = {
-  cache: boolean;
-  country: string;
+  cache?: boolean;
+  country?: string;
   currentMap: string;
   currentMapImage: string;
-  description: string;
-  favorites: string;
+  description?: string;
+  favorites?: string;
   mode: string;
   official: boolean;
   platform: string;
   playerAmount: number;
   prefix: string;
   region: string;
-  rotation: ServerRotation[];
-  settings: ServerSettings[];
+  rotation?: ServerRotation[];
+  settings?: ServerSettings[];
   smallmode: string;
-  gameId: string;
+  gameId?: string;
 
   blazeGameId?: number;
   teams?: TeamList;

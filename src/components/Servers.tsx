@@ -345,7 +345,7 @@ export function DetailedServerBox(): React.ReactElement {
               <Title>{t("server.map")}</Title>
               <Description>{stats.currentMap || stats.map}</Description>
             </Row>
-            {gameId == "bf1" ? (
+            {["bf1", "battlebit"].includes(gameId) ? (
               <Row>
                 <Title>{t("server.mode")}</Title>
                 <Description>{stats.mode}</Description>

@@ -4,6 +4,7 @@ import {
   MainStats,
   seederPlayersReturn,
 } from "./ReturnTypes";
+import { battlebitApi } from "./battlebitApi";
 
 interface seederPlayerlist {
   game: string;
@@ -95,23 +96,28 @@ export class ApiProvider extends JsonClient {
     if (platform == "all") {
       platform = "pc";
     }
+    const defaultParams = {
+      lang: lang,
+      region: region,
+      platform: platform,
+      service: gameStuff[1],
+      return_ownername: with_ownername.toString(),
+    };
+    if (game == "battlebit") {
+      return await battlebitApi.serverList({
+        searchTerm: serverName,
+        region,
+      });
+    }
     if ((getter == "gameid" || getter == "serverid") && game == "bf2042") {
       return await this.getJsonMethod(`/${gameStuff[0]}/detailedserver/`, {
         serverid: serverName,
-        lang: lang,
-        region: region,
-        platform: platform,
-        service: gameStuff[1],
-        return_ownername: with_ownername.toString(),
+        ...defaultParams,
       });
     } else if (getter == "gameid") {
       return await this.getJsonMethod(`/${gameStuff[0]}/detailedserver/`, {
         gameid: serverName,
-        lang: lang,
-        region: region,
-        platform: platform,
-        service: gameStuff[1],
-        return_ownername: with_ownername.toString(),
+        ...defaultParams,
       });
     } else if (getter == "serverip") {
       const result = await this.getJsonMethod(`/${gameStuff[0]}/servers`, {
@@ -124,11 +130,7 @@ export class ApiProvider extends JsonClient {
     }
     return await this.getJsonMethod(`/${gameStuff[0]}/detailedserver/`, {
       name: encodeURIComponent(serverName),
-      lang: lang,
-      region: region,
-      platform: platform,
-      service: gameStuff[1],
-      return_ownername: with_ownername.toString(),
+      ...defaultParams,
     });
   }
 }
