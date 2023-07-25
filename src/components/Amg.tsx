@@ -5,7 +5,7 @@ import { GetStatsOldGames } from "../api/GetStatsOldGames";
 import { useQuery } from "react-query";
 import forest from "../assets/img/forest.jpg";
 import rust from "../assets/img/rust.jpg";
-import { Routes, Route } from "react-router";
+import { Routes, Route } from "react-router-dom";
 
 interface IServerImage {
   background: string;

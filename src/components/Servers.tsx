@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
-import { Route, Routes, useMatch } from "react-router";
+import { Route, Routes, useMatch } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { dice } from "../api/static";
 

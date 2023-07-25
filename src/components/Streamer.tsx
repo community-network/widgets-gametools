@@ -13,7 +13,7 @@ import {
   seederPlayer,
   seederPlayersReturn,
 } from "../api/ReturnTypes";
-import { Routes, useMatch, Route } from "react-router";
+import { Routes, useMatch, Route } from "react-router-dom";
 
 export const Row = styled.div`
   display: flex;

@@ -13,8 +13,7 @@ import {
   shortName,
 } from "../api/static";
 import { Description, Main, Row, Title } from "./Materials";
-import { useMatch } from "react-router";
-import { PathMatch } from "react-router-dom";
+import { PathMatch, useMatch } from "react-router-dom";
 
 interface IGameImage {
   background: string;
