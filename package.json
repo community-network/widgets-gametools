@@ -23,12 +23,12 @@
   "homepage": "https://github.com/vikpe/react-webpack-typescript-starter",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "build": "yarn run clean-dist && webpack --config=configs/webpack/prod.js",
+    "build": "pnpm clean-dist && webpack --config=configs/webpack/prod.js",
     "clean-dist": "rimraf dist/*",
     "lint": "eslint './src/**/*.{js,ts,tsx}' --quiet",
-    "start": "yarn run start-dev",
+    "start": "pnpm start-dev",
     "start-dev": "webpack serve --config=configs/webpack/dev.js --port 3001",
-    "start-prod": "yarn run build && node express.js",
+    "start-prod": "pnpm build && node express.js",
     "test": "jest --coverage --watchAll --config=configs/jest.json"
   },
   "devDependencies": {
@@ -62,8 +62,7 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
-    "webpack-merge": "^5.9.0",
-    "yarn": "^1.22.19"
+    "webpack-merge": "^5.9.0"
   },
   "dependencies": {
     "@react-hook/window-size": "^3.1.1",
