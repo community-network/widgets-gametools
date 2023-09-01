@@ -1,5 +1,5 @@
 import JsonClient from "./Json";
-import { DetailedServerInfo } from "./ReturnTypes";
+import { DetailedServerInfo, ErrorReturn } from "./ReturnTypes";
 
 export interface ServerInfoReturn {
   Name: string;
@@ -98,7 +98,7 @@ export class ApiProvider extends JsonClient {
           (server.region === region || region === "all")
         );
       });
-    return servers.length > 0 ? servers[0] : null;
+    return servers.length > 0 ? servers[0] : { errors: ["server not found"] };
   }
 }
 
