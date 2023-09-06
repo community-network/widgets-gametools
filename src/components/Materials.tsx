@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-interface IZoom {
+export interface IZoom {
   zoom: string;
 }
 
