@@ -239,9 +239,8 @@ export function BlackServerBox(): React.ReactElement {
 const BigServer = styled.a<IZoom>`
   color: white;
   text-decoration: none;
-  display: flex;
-  align-items: flex-start;
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: 161.2px auto;
 
   width: ${(props) => (100 / Number(props.zoom)) * 100}%;
   height: ${(props) => (100 / Number(props.zoom)) * 100}%;
@@ -270,6 +269,7 @@ const BigServerBody = styled.h4`
   color: white;
   white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Column = styled.div`
@@ -337,7 +337,7 @@ export function DetailedServerBox(): React.ReactElement {
         zoom={zoomQuery !== null ? zoomQuery : 100}
       >
         <BigServerImage background={stats.currentMapImage || stats.mapImage} />
-        <div>
+        <div style={{ display: "grid" }}>
           <BigServerBody>{stats.prefix}</BigServerBody>
           <Column>
             <Row>
@@ -401,7 +401,7 @@ function DetailedDefaults({
   return (
     <BigServer zoom={zoom}>
       <BigServerImage background="" />
-      <div>
+      <div style={{ display: "grid" }}>
         <BigServerBody>{text}</BigServerBody>
         <Column>
           <Row>
