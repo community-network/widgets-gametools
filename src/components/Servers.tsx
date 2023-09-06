@@ -56,9 +56,6 @@ const Server = styled.a<IZoom>`
   display: flex;
   align-items: center;
 
-  width: ${(props) => (100 / Number(props.zoom)) * 100}%;
-  height: ${(props) => (100 / Number(props.zoom)) * 100}%;
-
   transform: scale(
     ${(props) => Number(props.zoom) / 100},
     ${(props) => Number(props.zoom) / 100}
