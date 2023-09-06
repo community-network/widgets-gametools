@@ -55,12 +55,6 @@ const Server = styled.a<IZoom>`
   padding: 0.1rem 1.2rem 0.1rem 0;
   display: flex;
   align-items: center;
-
-  transform: scale(
-    ${(props) => Number(props.zoom) / 100},
-    ${(props) => Number(props.zoom) / 100}
-  );
-  transform-origin: 0 0;
 `;
 
 const ServerText = styled.h1`
@@ -92,8 +86,6 @@ export function WhiteServerBox(): React.ReactElement {
   const match = useMatch("/servers/white/:gameid/:type/:sname/:platform");
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
-  const query = new URLSearchParams(useLocation().search);
-  const zoomQuery = query.get("zoom");
 
   const {
     isLoading: loading,
@@ -112,7 +104,7 @@ export function WhiteServerBox(): React.ReactElement {
   if (!loading && !error) {
     if ("errors" in stats) {
       return (
-        <Server zoom={zoomQuery !== null ? zoomQuery : 100}>
+        <Server>
           <Circle />
           <ServerBody>
             <b>{t("server.notFound")}</b>
@@ -137,7 +129,6 @@ export function WhiteServerBox(): React.ReactElement {
           match.params.sname,
         )}/${match.params.platform}`}
         target="_blank"
-        zoom={zoomQuery !== null ? zoomQuery : 100}
       >
         <ServerImage background={stats.currentMapImage || stats.mapImage}>
           <Blur>
@@ -157,7 +148,7 @@ export function WhiteServerBox(): React.ReactElement {
     );
   } else {
     return (
-      <Server zoom={zoomQuery !== null ? zoomQuery : 100}>
+      <Server>
         <Circle />
         <b>{t("loading")}</b>
         <ServerPlayers>0/0</ServerPlayers>
@@ -171,8 +162,6 @@ export function BlackServerBox(): React.ReactElement {
   const match = useMatch("/servers/black/:gameid/:type/:sname/:platform");
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
-  const query = new URLSearchParams(useLocation().search);
-  const zoomQuery = query.get("zoom");
 
   const {
     isLoading: loading,
@@ -191,10 +180,7 @@ export function BlackServerBox(): React.ReactElement {
   if (!loading && !error) {
     if ("errors" in stats) {
       return (
-        <Server
-          style={{ background: "#141d26", borderColor: "#141d26" }}
-          zoom={zoomQuery !== null ? zoomQuery : 100}
-        >
+        <Server style={{ background: "#141d26", borderColor: "#141d26" }}>
           <Circle />
           <ServerBody style={{ color: "white" }}>
             <b>{t("server.notFound")}</b>
@@ -222,7 +208,6 @@ export function BlackServerBox(): React.ReactElement {
         )}/${match.params.platform}`}
         target="_blank"
         style={{ background: "#141d26", borderColor: "#141d26" }}
-        zoom={zoomQuery !== null ? zoomQuery : 100}
       >
         <ServerImage background={stats.currentMapImage || stats.mapImage}>
           <Blur>
@@ -242,10 +227,7 @@ export function BlackServerBox(): React.ReactElement {
     );
   } else {
     return (
-      <Server
-        style={{ background: "#141d26", borderColor: "#141d26" }}
-        zoom={zoomQuery !== null ? zoomQuery : 100}
-      >
+      <Server style={{ background: "#141d26", borderColor: "#141d26" }}>
         <Circle />
         <b style={{ color: "white" }}>{t("loading")}</b>
         <ServerPlayers style={{ color: "white" }}>0/0</ServerPlayers>
