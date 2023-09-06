@@ -1,5 +1,5 @@
 import JsonClient from "./Json";
-import { DetailedServerInfo, ErrorReturn } from "./ReturnTypes";
+import { DetailedServerInfo } from "./ReturnTypes";
 
 export interface ServerInfoReturn {
   Name: string;

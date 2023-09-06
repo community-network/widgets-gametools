@@ -367,7 +367,7 @@ function DefaultStats({
         <Column>
           {gameStats?.[game] !== undefined ? (
             <>
-              {Object.entries(gameStats?.[game]).map(([key, value], index) => {
+              {Object.entries(gameStats?.[game]).map(([key], index) => {
                 return (
                   <Row key={index}>
                     <Title>{t(`stats.${key}`)}</Title>

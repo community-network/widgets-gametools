@@ -2,7 +2,7 @@ import * as React from "react";
 import "../locales/config";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { GetBfListStats } from "../api/BfList";
+import { GetBfListStats, PlayerInfoReturn } from "../api/BfList";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
@@ -33,7 +33,9 @@ export const Title = styled.h4`
   align-items: center;
 
   color: #ababab;
-  text-shadow: 6px 6px 6px #000000, 6px 6px 6px #000000;
+  text-shadow:
+    6px 6px 6px #000000,
+    6px 6px 6px #000000;
 `;
 
 export const Description = styled.p`
@@ -48,7 +50,9 @@ export const Description = styled.p`
   align-items: center;
 
   color: #ebebeb;
-  text-shadow: 6px 6px 6px #000000, 6px 6px 6px #000000;
+  text-shadow:
+    6px 6px 6px #000000,
+    6px 6px 6px #000000;
 `;
 
 const StreamColumn = styled.div`
@@ -60,7 +64,10 @@ const StreamColumn = styled.div`
   margin-top: 1rem;
 `;
 
-function statsSelector(guid: string, username: string): Promise<any> {
+function statsSelector(
+  guid: string,
+  username: string,
+): Promise<PlayerInfoReturn | seederPlayersReturn> {
   if (bflistGames.includes(guid)) {
     return GetBfListStats.stats({
       game: guid,
@@ -89,7 +96,12 @@ export function GameStreamStat(): React.ReactElement {
     isLoading: loading,
     isError: error,
     data: stats,
-  } = useQuery<seederPlayersReturn, unknown, seederPlayersReturn, string>(
+  } = useQuery<
+    seederPlayersReturn | PlayerInfoReturn,
+    unknown,
+    seederPlayersReturn | PlayerInfoReturn,
+    string
+  >(
     "seederPlayerList" + guid + match.params.player,
     () => statsSelector(guid, match.params.player),
     {
