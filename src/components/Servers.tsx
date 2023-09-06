@@ -265,7 +265,7 @@ const BigServerImage = styled.div<IServerImage>`
 
 const BigServerBody = styled.h4`
   margin: 0;
-  margin-top: 0.6rem;
+  margin-top: 0.45rem;
   color: white;
   white-space: nowrap;
   overflow: hidden;
@@ -339,7 +339,7 @@ export function DetailedServerBox(): React.ReactElement {
         <BigServerImage background={stats.currentMapImage || stats.mapImage} />
         <div style={{ display: "grid" }}>
           <BigServerBody>{stats.prefix}</BigServerBody>
-          <Column>
+          <Column style={{ marginTop: "0.7rem" }}>
             <Row>
               <Title>{t("server.players")}</Title>
               <Description>
@@ -403,7 +403,7 @@ function DetailedDefaults({
       <BigServerImage background="" />
       <div style={{ display: "grid" }}>
         <BigServerBody>{text}</BigServerBody>
-        <Column>
+        <Column style={{ marginTop: "0.7rem" }}>
           <Row>
             <Title>{t("server.players")}</Title>
             <Description>0/0</Description>
