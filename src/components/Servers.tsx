@@ -240,6 +240,7 @@ const BigServer = styled.a`
   text-decoration: none;
   display: flex;
   align-items: flex-start;
+  overflow: hidden;
 `;
 
 const BigServerImage = styled.div<IServerImage>`
