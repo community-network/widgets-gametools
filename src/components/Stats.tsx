@@ -221,7 +221,7 @@ export default function Stats(): React.ReactElement {
         <Body>
           <Img src={stats.avatar} />
           <PlayerName>{stats.userName}</PlayerName>
-          {game !== "bf2042" ? (
+          {game !== "bf2042" && (
             <>
               <RankImg
                 src={
@@ -234,8 +234,6 @@ export default function Stats(): React.ReactElement {
                 {t("stats.rank")} {stats.rank}
               </Rank>
             </>
-          ) : (
-            <></>
           )}
           {width <= 700 && match.params.zoom === "100" ? (
             <></>
@@ -252,32 +250,23 @@ export default function Stats(): React.ReactElement {
             </>
           )}
           <Column>
-            {gameStats?.[game] !== undefined ? (
-              <>
-                {Object.entries(gameStats?.[game]).map(
-                  ([key, value], index) => {
-                    return (
-                      <Row key={index}>
-                        <Title>{t(`stats.${key}`)}</Title>
-                        <Description>
-                          {value
-                            .split(".")
-                            .reduce(
-                              (
-                                o: { [x: string]: number },
-                                i: string | number,
-                              ) => o[i],
-                              stats,
-                            )}
-                        </Description>
-                      </Row>
-                    );
-                  },
-                )}
-              </>
-            ) : (
-              <></>
-            )}
+            {gameStats?.[game] !== undefined &&
+              Object.entries(gameStats?.[game]).map(([key, value], index) => {
+                return (
+                  <Row key={index}>
+                    <Title>{t(`stats.${key}`)}</Title>
+                    <Description>
+                      {value
+                        .split(".")
+                        .reduce(
+                          (o: { [x: string]: number }, i: string | number) =>
+                            o[i],
+                          stats,
+                        )}
+                    </Description>
+                  </Row>
+                );
+              })}
           </Column>
         </Body>
       </Main>
@@ -365,7 +354,7 @@ function DefaultStats({
           </>
         )}
         <Column>
-          {gameStats?.[game] !== undefined ? (
+          {gameStats?.[game] !== undefined && (
             <>
               {Object.entries(gameStats?.[game]).map(([key], index) => {
                 return (
@@ -376,8 +365,6 @@ function DefaultStats({
                 );
               })}
             </>
-          ) : (
-            <></>
           )}
         </Column>
       </Body>

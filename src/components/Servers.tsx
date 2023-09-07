@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
 import { Route, Routes, useLocation, useMatch } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { dice } from "../api/static";
+import { dice, frostbite3 } from "../api/static";
 import { IZoom } from "./Materials";
 
 interface IServerImage {
@@ -347,31 +347,27 @@ export function DetailedServerBox(): React.ReactElement {
                 {stats.maxPlayers}
               </Description>
             </Row>
-            {gameId !== "bf2042" && dice.includes(gameId) ? (
-              <>
-                <Row>
-                  <Title>{t("server.queue")}</Title>
-                  <Description>{stats.inQueue}/10</Description>
-                </Row>
-                <Row>
-                  <Title>{t("server.favorites")}</Title>
-                  <Description>{stats.favorites}</Description>
-                </Row>
-              </>
-            ) : (
-              <></>
+            {gameId !== "bf2042" && dice.includes(gameId) && (
+              <Row>
+                <Title>{t("server.queue")}</Title>
+                <Description>{stats.inQueue}/10</Description>
+              </Row>
+            )}
+            {frostbite3.includes(gameId) && (
+              <Row>
+                <Title>{t("server.favorites")}</Title>
+                <Description>{stats.favorites}</Description>
+              </Row>
             )}
             <Row>
               <Title>{t("server.map")}</Title>
               <Description>{stats.currentMap || stats.map}</Description>
             </Row>
-            {["bf1", "battlebit"].includes(gameId) ? (
+            {["bf1", "battlebit"].includes(gameId) && (
               <Row>
                 <Title>{t("server.mode")}</Title>
                 <Description>{stats.mode}</Description>
               </Row>
-            ) : (
-              <></>
             )}
           </Column>
         </div>
@@ -408,31 +404,27 @@ function DetailedDefaults({
             <Title>{t("server.players")}</Title>
             <Description>0/0</Description>
           </Row>
-          {gameId !== "bf2042" && dice.includes(gameId) ? (
-            <>
-              <Row>
-                <Title>{t("server.queue")}</Title>
-                <Description>0/10</Description>
-              </Row>
-              <Row>
-                <Title>{t("server.favorites")}</Title>
-                <Description>0</Description>
-              </Row>
-            </>
-          ) : (
-            <></>
+          {gameId !== "bf2042" && dice.includes(gameId) && (
+            <Row>
+              <Title>{t("server.queue")}</Title>
+              <Description>0/10</Description>
+            </Row>
+          )}
+          {frostbite3.includes(gameId) && (
+            <Row>
+              <Title>{t("server.favorites")}</Title>
+              <Description>0</Description>
+            </Row>
           )}
           <Row>
             <Title>{t("server.map")}</Title>
             <Description>{t("notApplicable")}</Description>
           </Row>
-          {gameId == "bf1" ? (
+          {gameId == "bf1" && (
             <Row>
               <Title>{t("server.mode")}</Title>
               <Description>{t("notApplicable")}</Description>
             </Row>
-          ) : (
-            <></>
           )}
         </Column>
       </div>
