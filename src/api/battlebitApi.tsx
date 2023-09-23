@@ -73,13 +73,14 @@ export class ApiProvider extends JsonClient {
     const result: ServerInfoReturn[] = await r.json();
     const servers = result
       .map((server) => {
+        const serverImageName = server.Map.replace("Old_", "");
         return {
           prefix: `${server.IsOfficial ? "[Official]" : "[Community]"} - ${
             server.Name
           }`,
           currentMap: server.Map,
-          currentMapImage: `https://cdn.gametools.network/maps/battlebit/${server.Map}.jpg`,
-          url: `https://cdn.gametools.network/maps/battlebit/${server.Map}.jpg`,
+          currentMapImage: `https://cdn.gametools.network/maps/battlebit/${serverImageName}.jpg`,
+          url: `https://cdn.gametools.network/maps/battlebit/${serverImageName}.jpg`,
           inQue: server.QueuePlayers,
           mode:
             modes[server.Gamemode] !== ""
