@@ -5,6 +5,7 @@ import {
   seederPlayersReturn,
 } from "./ReturnTypes";
 import { battlebitApi } from "./battlebitApi";
+import { bf1MarneApi } from "./marneApi";
 
 interface seederPlayerlist {
   game: string;
@@ -107,6 +108,12 @@ export class ApiProvider extends JsonClient {
       return await battlebitApi.serverList({
         searchTerm: serverName,
         region,
+      });
+    }
+    if (game == "bf1marne") {
+      return await bf1MarneApi.serverList({
+        searchTerm: serverName,
+        regions: [region],
       });
     }
     if ((getter == "gameid" || getter == "serverid") && game == "bf2042") {
