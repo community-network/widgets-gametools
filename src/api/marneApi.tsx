@@ -1,5 +1,5 @@
 import JsonClient from "./Json";
-import { ServerSearch } from "./ReturnTypes";
+import { DetailedServerInfo } from "./ReturnTypes";
 
 export interface PlayerReturn {
   name: string;
@@ -55,9 +55,8 @@ export class ApiProvider extends JsonClient {
    */
   async serverList({
     searchTerm,
-    limit,
     regions,
-  }: ServerSearchInfo): Promise<ServerSearch> {
+  }: ServerSearchInfo): Promise<DetailedServerInfo> {
     const modes = {
       Conquest0: "Conquest",
       Rush0: "Rush",
@@ -208,8 +207,9 @@ export class ApiProvider extends JsonClient {
           platform: "pc",
           playerAmount: server.currentPlayers,
           maxPlayerAmount: server.maxPlayers,
-          serverInfo: "",
+          serverInfo: null,
           smallMode: smallmodes[server.gameMode],
+          smallmode: smallmodes[server.gameMode],
         };
       })
       .filter((server) => {
