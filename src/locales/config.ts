@@ -4,13 +4,16 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import resourcesToBackend from "i18next-resources-to-backend";
 
 i18n
-.use(
-  resourcesToBackend((language: string) => 
-    import(`./languages/${language}.json`)
-  ),
-).use(initReactI18next).use(LanguageDetector).init({
-  fallbackLng: "en-US",
-});
+  .use(
+    resourcesToBackend(
+      (language: string) => import(`./languages/${language}.json`),
+    ),
+  )
+  .use(initReactI18next)
+  .use(LanguageDetector)
+  .init({
+    fallbackLng: "en-US",
+  });
 
 export const apiLanguage = {
   "zh-cn": "zh-tw",
