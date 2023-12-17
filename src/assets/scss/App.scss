@@ -1,14 +1,10 @@
-@font-face {font-family: "FuturaBookC";
-  src: url("../fonts/FuturaBookC Regular.otf") format("opentype");
-}
-
-@import url('https://fonts.cdnfonts.com/css/futura-pt');
+@import "./fonts.scss";
 
 body {
   margin: 0;
   padding: 0;
   background-color: transparent;
-  
+
   h1 {
     font-family: FuturaBookC;
     font-style: normal;
@@ -39,7 +35,8 @@ body {
     font-family: FuturaBookC;
   }
 
-  p, a {
+  p,
+  a {
     font-family: FuturaBookC;
     font-style: normal;
     font-weight: normal;
@@ -52,9 +49,8 @@ body {
     font-style: normal;
     font-weight: bold;
     line-height: 115%;
-      
+
     display: flex;
     align-items: center;
   }
-
 }
