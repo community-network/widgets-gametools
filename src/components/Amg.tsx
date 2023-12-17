@@ -81,7 +81,7 @@ export function OldGameOne(): React.ReactElement {
     }
     return (
       <BigServer href={"https://www.gs4u.net/en/s/201410.html"} target="_blank">
-        <BigServerImage background={forest} />
+        <BigServerImage background={forest.src} />
         <div>
           <h4 style={{ margin: 0, marginTop: "0.6rem", color: "white" }}>
             {stats.name}
@@ -136,7 +136,7 @@ export function OldGameTwo(): React.ReactElement {
         href={"https://www.gametracker.com/server_info/51.77.77.129:27030/"}
         target="_blank"
       >
-        <BigServerImage background={rust} />
+        <BigServerImage background={rust.src} />
         <div>
           <h4 style={{ margin: 0, marginTop: "0.6rem", color: "white" }}>
             {stats.name}
