@@ -25,15 +25,18 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: "asset/resource",
-      },
-      {
-        test: /\.(png|jpe?g|svg)$/,
+        test: /\.(svg)$/,
         loader: "file-loader",
         options: {
           name: "assets/[name].[ext]",
         },
+      },
+      {
+        test: /\.(jpe?g|png|webp)$/i,
+        use: {
+          loader: "responsive-loader",
+        },
+        type: "javascript/auto",
       },
     ],
   },

@@ -3,8 +3,8 @@ import "../locales/config";
 import styled from "styled-components";
 import { GetStatsOldGames } from "../api/GetStatsOldGames";
 import { useQuery } from "react-query";
-import forest from "../assets/img/forest.jpg";
-import rust from "../assets/img/rust.jpg";
+import forest from "../assets/img/forest.jpg?sizes[]=150&format=webp&useResponsiveLoader=true";
+import rust from "../assets/img/rust.jpg?sizes[]=150&format=webp&useResponsiveLoader=true";
 import { Routes, Route } from "react-router-dom";
 
 interface IServerImage {

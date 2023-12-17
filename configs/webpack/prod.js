@@ -28,13 +28,13 @@ module.exports = merge(commonConfig, {
     "react-dom": "ReactDOM",
   },
   plugins: [
+    // new BundleAnalyzerPlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
-    // new BundleAnalyzerPlugin(),
     new GenerateSW({
       runtimeCaching: [
         {
