@@ -221,13 +221,12 @@ export default function Stats(): React.ReactElement {
         <Body>
           <Img src={stats.avatar} />
           <PlayerName>{stats.userName}</PlayerName>
-          {game !== "bf2042" && (
+          {stats.rank && (
             <>
               <RankImg
                 src={
-                  stats.rankImg !== undefined
-                    ? stats.rankImg
-                    : `https://cdn.gametools.network/${game}/${stats.rank}.png`
+                  stats.rankImg ??
+                  `https://cdn.gametools.network/${game}/${stats.rank}.png`
                 }
               />
               <Rank>
@@ -239,14 +238,23 @@ export default function Stats(): React.ReactElement {
             <></>
           ) : (
             <>
-              <GameImg
-                src={`https://cdn.gametools.network/games/${game}.png`}
-              />
-              <Platform
-                src={`https://cdn.gametools.network/platforms/${
-                  platformImage[match.params.plat]
-                }.png`}
-              />
+              {game === "bf1marne" ? (
+                <GameImg
+                  style={{ width: "55px" }}
+                  src={`https://marne.io/images/marne_logo.png`}
+                />
+              ) : (
+                <>
+                  <GameImg
+                    src={`https://cdn.gametools.network/games/${game}.png`}
+                  />
+                  <Platform
+                    src={`https://cdn.gametools.network/platforms/${
+                      platformImage[match.params.plat]
+                    }.png`}
+                  />
+                </>
+              )}
             </>
           )}
           <Column>

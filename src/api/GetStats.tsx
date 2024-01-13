@@ -3,6 +3,7 @@ import {
   DetailedServerInfo,
   MainStats,
   seederPlayersReturn,
+  Bf1PlayerReturn,
 } from "./ReturnTypes";
 import { battlebitApi } from "./battlebitApi";
 import { bf1MarneApi } from "./marneApi";
@@ -33,11 +34,14 @@ interface ServerInfo {
   with_ownername?: boolean;
 }
 
-export class ApiProvider extends JsonClient {
-  constructor() {
-    super();
-  }
+export interface Bf1PlayerReturn {
+  userId: number;
+  avatar: string;
+  userName: string;
+  id: number;
+}
 
+export class ApiProvider extends JsonClient {
   async stats({
     game,
     type,
@@ -46,6 +50,26 @@ export class ApiProvider extends JsonClient {
     lang,
     platform = "pc",
   }: PlayerInfo): Promise<MainStats> {
+    if (game == "bf1marne") {
+      let playerId, playerInfo;
+      if (getter !== "playerid") {
+        const result = await this.bf1PlayerSearch({
+          name: encodeURIComponent(userName),
+        });
+        playerInfo = result;
+        playerId = result.id;
+      } else {
+        const result = await this.bf1PlayerSearch({
+          playerId: userName,
+        });
+        playerInfo = result;
+        playerId = userName;
+      }
+      return await bf1MarneApi.stats({
+        playerId: playerId,
+        playerInfo: playerInfo,
+      });
+    }
     if (getter == "playerid") {
       return await this.getJsonMethod(`/${game}/${type}/`, {
         playerid: userName,
@@ -138,6 +162,23 @@ export class ApiProvider extends JsonClient {
     return await this.getJsonMethod(`/${gameStuff[0]}/detailedserver/`, {
       name: encodeURIComponent(serverName),
       ...defaultParams,
+    });
+  }
+
+  async bf1PlayerSearch({
+    name,
+    playerId,
+  }: {
+    name?: string;
+    playerId?: string;
+  }): Promise<Bf1PlayerReturn> {
+    if (playerId) {
+      return await this.getJsonMethod(`/bf1/player/`, {
+        playerid: playerId,
+      });
+    }
+    return await this.getJsonMethod(`/bf1/player/`, {
+      name: name,
     });
   }
 }
