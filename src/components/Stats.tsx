@@ -319,7 +319,9 @@ function DefaultStats({
       target="_blank"
     >
       <Background
-        background={`https://cdn.gametools.network/backgrounds/${game}/1.webp`}
+        background={`https://cdn.gametools.network/backgrounds/${
+          game === "bf1marne" ? "bf1" : game
+        }/1.webp`}
       >
         <Blur>
           <BarText style={{ left: "30px" }}>BATTLEFIELD {gameid} STATS</BarText>
