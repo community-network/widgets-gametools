@@ -156,7 +156,7 @@ export function BlackServerBox(): React.ReactElement {
           }}
         >
           <div className={styles.Blur}>
-            <span className={styles.ServerText}>{stats.smallmode}</span>
+            <h1 className={styles.ServerText}>{stats.smallmode}</h1>
           </div>
         </div>
         <p className={styles.ServerBody} style={{ color: "white" }}>
