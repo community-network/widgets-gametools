@@ -1,85 +1,13 @@
 import * as React from "react";
 import "../locales/config";
-import styled from "styled-components";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
 import { Route, Routes, useLocation, useMatch } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { dice, frostbite3 } from "../api/static";
-import { IZoom } from "./Materials";
-
-interface IServerImage {
-  background: string;
-}
-
-const Circle = styled.span`
-  width: 48px;
-  height: 48px;
-  margin-right: 1rem;
-  background-color: rgba(0, 0, 0, 0.288);
-  border-radius: 38px;
-`;
-
-const ServerImage = styled.div<IServerImage>`
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-width: 48px;
-  width: 48px;
-  height: 48px;
-  background-image: url("${(props) => props.background}");
-  border-radius: 38px;
-  margin-right: 0.55rem;
-`;
-
-const Blur = styled.div`
-  height: 100%;
-  margin-top: -0.8rem;
-  border-radius: 38px;
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.288) 100%
-  );
-`;
-
-const Server = styled.a<IZoom>`
-  color: black;
-  text-decoration: none;
-  background: #f2f2f2;
-  border-radius: 28px;
-  border-width: 5px 8px;
-  border-style: solid;
-  border-color: #f2f2f2;
-  padding: 0.1rem 1.2rem 0.1rem 0;
-  display: flex;
-  align-items: center;
-`;
-
-const ServerText = styled.h1`
-  color: white;
-  font-size: 1.2rem;
-  text-align: center;
-  padding-top: 1.5rem;
-  line-height: 0;
-`;
-
-const ServerBody = styled.p`
-  margin: 0px;
-  white-space: nowrap;
-  overflow: hidden;
-`;
-
-const ServerPlayers = styled.b`
-  margin-left: auto;
-  padding-left: 1rem;
-  white-space: nowrap;
-`;
-
-{
-  /* <img align="center" src="https://widgets-gametools.pages.dev/servers/bf1/name/%5BBoB%5D%231%20EU%20Popular%20CQ%20Maps!%20join%20us%3Adiscord.gg%2FBoB/pc" alt="GatitoUwU's Github Stats" style="max-width: 100%;"></img> */
-}
+import styles from "./Servers.module.scss";
+import { calculateZoomStyle } from "./functions/calculateZoom";
 
 export function WhiteServerBox(): React.ReactElement {
   const { t } = useTranslation();
@@ -104,13 +32,13 @@ export function WhiteServerBox(): React.ReactElement {
   if (!loading && !error) {
     if ("errors" in stats) {
       return (
-        <Server>
-          <Circle />
-          <ServerBody>
+        <span className={styles.Server}>
+          <span className={styles.Circle} />
+          <p className={styles.ServerBody}>
             <b>{t("server.notFound")}</b>
-          </ServerBody>
-          <ServerPlayers>{t("notApplicable")}</ServerPlayers>
-        </Server>
+          </p>
+          <b className={styles.ServerPlayers}>{t("notApplicable")}</b>
+        </span>
       );
     }
     let queue: number = undefined;
@@ -124,35 +52,42 @@ export function WhiteServerBox(): React.ReactElement {
       mode = `${stats.mode}: `;
     }
     return (
-      <Server
+      <a
+        className={styles.Server}
         href={`https://gametools.network/servers/${gameId}/name/${encodeURI(
           match.params.sname,
         )}/${match.params.platform}`}
         target="_blank"
+        rel="noreferrer"
       >
-        <ServerImage background={stats.currentMapImage || stats.mapImage}>
-          <Blur>
-            <ServerText>{stats.smallmode}</ServerText>
-          </Blur>
-        </ServerImage>
-        <ServerBody>
+        <div
+          className={styles.ServerImage}
+          style={{
+            backgroundImage: `url("${stats.currentMapImage || stats.mapImage}")`,
+          }}
+        >
+          <div className={styles.Blur}>
+            <h1 className={styles.ServerText}>{stats.smallmode}</h1>
+          </div>
+        </div>
+        <p className={styles.ServerBody}>
           <b>{stats.prefix}</b>
           {mode}
           {stats.currentMap || stats.map}
-        </ServerBody>
-        <ServerPlayers>
+        </p>
+        <b className={styles.ServerPlayers}>
           {stats.playerAmount}/{stats.maxPlayerAmount}
           {stats.maxPlayers} {queueString}
-        </ServerPlayers>
-      </Server>
+        </b>
+      </a>
     );
   } else {
     return (
-      <Server>
-        <Circle />
+      <span className={styles.Server}>
+        <span className={styles.Circle} />
         <b>{t("loading")}</b>
-        <ServerPlayers>0/0</ServerPlayers>
-      </Server>
+        <b className={styles.ServerPlayers}>0/0</b>
+      </span>
     );
   }
 }
@@ -180,15 +115,18 @@ export function BlackServerBox(): React.ReactElement {
   if (!loading && !error) {
     if ("errors" in stats) {
       return (
-        <Server style={{ background: "#141d26", borderColor: "#141d26" }}>
-          <Circle />
-          <ServerBody style={{ color: "white" }}>
+        <span
+          className={styles.Server}
+          style={{ background: "#141d26", borderColor: "#141d26" }}
+        >
+          <span className={styles.Circle} />
+          <p className={styles.ServerBody} style={{ color: "white" }}>
             <b>{t("server.notFound")}</b>
-          </ServerBody>
-          <ServerPlayers style={{ color: "white" }}>
+          </p>
+          <b className={styles.ServerPlayers} style={{ color: "white" }}>
             {t("notApplicable")}
-          </ServerPlayers>
-        </Server>
+          </b>
+        </span>
       );
     }
     let queue: number = undefined;
@@ -202,99 +140,51 @@ export function BlackServerBox(): React.ReactElement {
       mode = `${stats.mode}: `;
     }
     return (
-      <Server
+      <a
+        className={styles.Server}
         href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
           match.params.sname,
         )}/${match.params.platform}`}
         target="_blank"
         style={{ background: "#141d26", borderColor: "#141d26" }}
+        rel="noreferrer"
       >
-        <ServerImage background={stats.currentMapImage || stats.mapImage}>
-          <Blur>
-            <ServerText>{stats.smallmode}</ServerText>
-          </Blur>
-        </ServerImage>
-        <ServerBody style={{ color: "white" }}>
+        <div
+          className={styles.ServerImage}
+          style={{
+            backgroundImage: `url("${stats.currentMapImage || stats.mapImage}")`,
+          }}
+        >
+          <div className={styles.Blur}>
+            <span className={styles.ServerText}>{stats.smallmode}</span>
+          </div>
+        </div>
+        <p className={styles.ServerBody} style={{ color: "white" }}>
           <b>{stats.prefix}</b>
           {mode}
           {stats.currentMap || stats.map}
-        </ServerBody>
-        <ServerPlayers style={{ color: "white" }}>
+        </p>
+        <b className={styles.ServerPlayers} style={{ color: "white" }}>
           {stats.playerAmount}/{stats.maxPlayerAmount}
           {stats.maxPlayers} {queueString}
-        </ServerPlayers>
-      </Server>
+        </b>
+      </a>
     );
   } else {
     return (
-      <Server style={{ background: "#141d26", borderColor: "#141d26" }}>
-        <Circle />
+      <span
+        className={styles.Server}
+        style={{ background: "#141d26", borderColor: "#141d26" }}
+      >
+        <span className={styles.Circle} />
         <b style={{ color: "white" }}>{t("loading")}</b>
-        <ServerPlayers style={{ color: "white" }}>0/0</ServerPlayers>
-      </Server>
+        <b className={styles.ServerPlayers} style={{ color: "white" }}>
+          0/0
+        </b>
+      </span>
     );
   }
 }
-
-const BigServer = styled.a<IZoom>`
-  color: white;
-  text-decoration: none;
-  display: grid;
-  grid-template-columns: 161.2px auto;
-
-  width: ${(props) => (100 / Number(props.zoom)) * 100}%;
-  height: ${(props) => (100 / Number(props.zoom)) * 100}%;
-
-  transform: scale(
-    ${(props) => Number(props.zoom) / 100},
-    ${(props) => Number(props.zoom) / 100}
-  );
-  transform-origin: 0 0;
-`;
-
-const BigServerImage = styled.div<IServerImage>`
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 150px;
-  min-width: 150px;
-  height: 90px;
-  background-image: url("${(props) => props.background}");
-  margin-right: 0.7rem;
-`;
-
-const BigServerBody = styled.h4`
-  margin: 0;
-  margin-top: 0.45rem;
-  color: white;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const Column = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 1rem;
-`;
-
-const Row = styled.div`
-  flex: 1;
-  margin-right: 0.5rem;
-`;
-
-const Title = styled.h4`
-  margin: 0;
-  color: white;
-`;
-
-const Description = styled.p`
-  margin: 0;
-  color: gray;
-  white-space: nowrap;
-`;
 
 export function DetailedServerBox(): React.ReactElement {
   const { t } = useTranslation();
@@ -322,61 +212,70 @@ export function DetailedServerBox(): React.ReactElement {
     if ("errors" in stats) {
       return (
         <DetailedDefaults
-          zoom={zoomQuery !== null ? zoomQuery : 100}
+          zoom={zoomQuery ?? 100}
           gameId={gameId}
           text={t("server.notFound")}
         />
       );
     }
     return (
-      <BigServer
+      <a
+        className={styles.BigServer}
         href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
           match.params.sname,
         )}/${match.params.platform}`}
         target="_blank"
-        zoom={zoomQuery !== null ? zoomQuery : 100}
+        style={calculateZoomStyle(zoomQuery ?? 100)}
+        rel="noreferrer"
       >
-        <BigServerImage background={stats.currentMapImage || stats.mapImage} />
+        <div
+          className={styles.BigServerImage}
+          style={{
+            backgroundImage: `url("${stats.currentMapImage || stats.mapImage}")`,
+          }}
+        />
         <div style={{ display: "grid" }}>
-          <BigServerBody>{stats.prefix}</BigServerBody>
-          <Column style={{ marginTop: "0.7rem" }}>
-            <Row>
-              <Title>{t("server.players")}</Title>
-              <Description>
+          <h4 className={styles.BigServerBody}>{stats.prefix}</h4>
+          <div className={styles.Column} style={{ marginTop: "0.7rem" }}>
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("server.players")}</h4>
+              <p className={styles.Description}>
                 {stats.playerAmount}/{stats.maxPlayerAmount}
                 {stats.maxPlayers}
-              </Description>
-            </Row>
+              </p>
+            </div>
             {gameId !== "bf2042" && dice.includes(gameId) && (
-              <Row>
-                <Title>{t("server.queue")}</Title>
-                <Description>{stats.inQueue}/10</Description>
-              </Row>
+              <div className={styles.Row}>
+                <h4 className={styles.Title}>{t("server.queue")}</h4>
+                <p className={styles.Description}>{stats.inQueue}/10</p>
+              </div>
             )}
             {frostbite3.includes(gameId) && (
-              <Row>
-                <Title>{t("server.favorites")}</Title>
-                <Description>{stats.favorites}</Description>
-              </Row>
+              <div className={styles.Row}>
+                <h4 className={styles.Title}>{t("server.favorites")}</h4>
+                <p className={styles.Description}>{stats.favorites}</p>
+              </div>
             )}
-            <Row>
-              <Title>{t("server.map")}</Title>
-              <Description>{stats.currentMap || stats.map}</Description>
-            </Row>
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("server.map")}</h4>
+              <p className={styles.Description}>
+                {stats.currentMap || stats.map}
+              </p>
+            </div>
             {["bf1", "battlebit"].includes(gameId) && (
-              <Row>
-                <Title>{t("server.mode")}</Title>
-                <Description>{stats.mode}</Description>
-              </Row>
+              <div className={styles.Row}>
+                <h4 className={styles.Title}>{t("server.mode")}</h4>
+                <p className={styles.Description}>{stats.mode}</p>
+              </div>
             )}
-          </Column>
+          </div>
         </div>
-      </BigServer>
+      </a>
     );
   } else {
     return (
       <DetailedDefaults
-        zoom={zoomQuery !== null ? zoomQuery : 100}
+        zoom={zoomQuery ?? 100}
         gameId={gameId}
         text={t("loading")}
       />
@@ -388,47 +287,47 @@ function DetailedDefaults({
   gameId,
   text,
   zoom,
-}: {
+}: Readonly<{
   zoom: number | string;
   gameId: string;
   text: string;
-}): React.ReactElement {
+}>): React.ReactElement {
   const { t } = useTranslation();
   return (
-    <BigServer zoom={zoom}>
-      <BigServerImage background="" />
+    <span className={styles.BigServer} style={calculateZoomStyle(zoom)}>
+      <div className={styles.BigServerImage} />
       <div style={{ display: "grid" }}>
-        <BigServerBody>{text}</BigServerBody>
-        <Column style={{ marginTop: "0.7rem" }}>
-          <Row>
-            <Title>{t("server.players")}</Title>
-            <Description>0/0</Description>
-          </Row>
+        <h4 className={styles.BigServerBody}>{text}</h4>
+        <div className={styles.Column} style={{ marginTop: "0.7rem" }}>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("server.players")}</h4>
+            <p className={styles.Description}>0/0</p>
+          </div>
           {gameId !== "bf2042" && dice.includes(gameId) && (
-            <Row>
-              <Title>{t("server.queue")}</Title>
-              <Description>0/10</Description>
-            </Row>
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("server.queue")}</h4>
+              <p className={styles.Description}>0/10</p>
+            </div>
           )}
           {frostbite3.includes(gameId) && (
-            <Row>
-              <Title>{t("server.favorites")}</Title>
-              <Description>0</Description>
-            </Row>
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("server.favorites")}</h4>
+              <p className={styles.Description}>0</p>
+            </div>
           )}
-          <Row>
-            <Title>{t("server.map")}</Title>
-            <Description>{t("notApplicable")}</Description>
-          </Row>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("server.map")}</h4>
+            <p className={styles.Description}>{t("notApplicable")}</p>
+          </div>
           {gameId == "bf1" && (
-            <Row>
-              <Title>{t("server.mode")}</Title>
-              <Description>{t("notApplicable")}</Description>
-            </Row>
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("server.mode")}</h4>
+              <p className={styles.Description}>{t("notApplicable")}</p>
+            </div>
           )}
-        </Column>
+        </div>
       </div>
-    </BigServer>
+    </span>
   );
 }
 

@@ -1,0 +1,156 @@
+.Background {
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  transform: translate(0, -196px);
+
+  .Blur {
+    width: 100%;
+    height: 196px;
+    transform: translate(0, 196px);
+    background: linear-gradient(180deg, rgba(21, 24, 41, 0) 0%, #151829 100%);
+  }
+}
+
+.Body {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 196px;
+
+  background: #151829;
+}
+
+.BarText {
+  position: fixed;
+  top: 38px;
+
+  color: #ffffff;
+  font-family: Futura PT;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.195em;
+}
+
+.Bar {
+  position: fixed;
+  right: 303px;
+  left: 285px;
+  top: 58px;
+
+  border: 2px solid rgba(255, 255, 255, 0.41);
+}
+
+.Img {
+  position: fixed;
+  width: 130px;
+  height: 130px;
+  left: 30px;
+  top: 152px;
+
+  border-radius: 100px;
+}
+
+.PlayerName {
+  position: fixed;
+  left: 182px;
+  top: 193px;
+
+  font-family: Futura PT;
+  font-weight: bold;
+  font-size: 38px;
+  line-height: 49px;
+
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.RankImg {
+  object-fit: cover;
+  position: fixed;
+  width: 48px;
+  height: 32px;
+  left: 182px;
+  top: 250px;
+}
+
+.Rank {
+  position: fixed;
+  left: 244px;
+  top: 250px;
+
+  font-family: Futura PT;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 36px;
+
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.GameImg {
+  position: fixed;
+  object-fit: cover;
+
+  width: 206px;
+  height: 55px;
+  right: 30px;
+  top: 209px;
+}
+
+.Platform {
+  position: fixed;
+  width: 46px;
+  height: 46px;
+  right: 257px;
+  top: 215px;
+}
+
+.Column {
+  position: fixed;
+  top: 322px;
+  left: 30px;
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
+
+.Row {
+  /* flex: 1; */
+  margin-right: 0.5rem;
+}
+
+.Title {
+  margin: 0;
+  margin-right: 5rem;
+  font-family: Futura PT;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 44px;
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.67);
+}
+
+.Description {
+  margin: 0;
+  margin-right: 5rem;
+  margin-bottom: 3rem;
+  font-family: Futura PT;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 38px;
+  line-height: 49px;
+  display: flex;
+  align-items: center;
+
+  color: rgba(255, 255, 255, 0.92);
+}

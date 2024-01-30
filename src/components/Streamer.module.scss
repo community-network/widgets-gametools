@@ -1,0 +1,48 @@
+.Row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0rem 1.5rem;
+}
+
+.Title {
+  margin: 0;
+  font-family: Futura PT;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 44px;
+  display: flex;
+  align-items: center;
+
+  color: #ababab;
+  text-shadow:
+    6px 6px 6px #000000,
+    6px 6px 6px #000000;
+}
+
+.Description {
+  margin: 0;
+  margin-bottom: 3rem;
+  font-family: Futura PT;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 38px;
+  line-height: 49px;
+  display: flex;
+  align-items: center;
+
+  color: #ebebeb;
+  text-shadow:
+    6px 6px 6px #000000,
+    6px 6px 6px #000000;
+}
+
+.StreamColumn {
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 1rem;
+}

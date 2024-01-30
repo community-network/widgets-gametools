@@ -1,0 +1,109 @@
+.Circle {
+  width: 48px;
+  height: 48px;
+  margin-right: 1rem;
+  background-color: rgba(0, 0, 0, 0.288);
+  border-radius: 38px;
+}
+
+.ServerImage {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-width: 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 38px;
+  margin-right: 0.55rem;
+
+  .Blur {
+    height: 100%;
+    margin-top: -0.8rem;
+    border-radius: 38px;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.288) 100%);
+  }
+}
+
+.Server {
+  color: black;
+  text-decoration: none;
+  background: #f2f2f2;
+  border-radius: 28px;
+  border-width: 5px 8px;
+  border-style: solid;
+  border-color: #f2f2f2;
+  padding: 0.1rem 1.2rem 0.1rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.ServerText {
+  color: white;
+  font-size: 1.2rem;
+  text-align: center;
+  padding-top: 1.5rem;
+  line-height: 0;
+}
+
+.ServerBody {
+  margin: 0px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ServerPlayers {
+  margin-left: auto;
+  padding-left: 1rem;
+  white-space: nowrap;
+}
+
+.BigServer {
+  color: white;
+  text-decoration: none;
+  display: grid;
+  grid-template-columns: 161.2px auto;
+  transform-origin: 0 0;
+}
+
+.BigServerImage {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 150px;
+  min-width: 150px;
+  height: 90px;
+  margin-right: 0.7rem;
+}
+
+.BigServerBody {
+  margin: 0;
+  margin-top: 0.45rem;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Column {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
+
+.Row {
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.Title {
+  margin: 0;
+  color: white;
+}
+
+.Description {
+  margin: 0;
+  color: gray;
+  white-space: nowrap;
+}

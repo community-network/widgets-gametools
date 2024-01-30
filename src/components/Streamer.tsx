@@ -1,12 +1,10 @@
 import * as React from "react";
 import "../locales/config";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 import { GetBfListStats, PlayerInfoReturn } from "../api/BfList";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
-import { Main } from "./Materials";
 import { bflistGames } from "../api/static";
 import {
   MainStats,
@@ -14,55 +12,8 @@ import {
   seederPlayersReturn,
 } from "../api/ReturnTypes";
 import { Routes, useMatch, Route } from "react-router-dom";
-
-export const Row = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0rem 1.5rem;
-`;
-
-export const Title = styled.h4`
-  margin: 0;
-  font-family: Futura PT;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 34px;
-  line-height: 44px;
-  display: flex;
-  align-items: center;
-
-  color: #ababab;
-  text-shadow:
-    6px 6px 6px #000000,
-    6px 6px 6px #000000;
-`;
-
-export const Description = styled.p`
-  margin: 0;
-  margin-bottom: 3rem;
-  font-family: Futura PT;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 38px;
-  line-height: 49px;
-  display: flex;
-  align-items: center;
-
-  color: #ebebeb;
-  text-shadow:
-    6px 6px 6px #000000,
-    6px 6px 6px #000000;
-`;
-
-const StreamColumn = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-flow: row wrap;
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 1rem;
-`;
+import styles from "./Streamer.module.scss";
+import { calculateZoomStyle } from "./functions/calculateZoom";
 
 function statsSelector(
   guid: string,
@@ -120,14 +71,14 @@ export function GameStreamStat(): React.ReactElement {
     // if seederid not found
     if (stats == undefined || "errors" in stats) {
       return (
-        <Main zoom={match.params.zoom}>
-          <StreamColumn>
-            <Row>
-              <Title>{t("stats.main")}</Title>
-              <Description>{t("streamer.noserver")}</Description>
-            </Row>
-          </StreamColumn>
-        </Main>
+        <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+          <div className={styles.StreamColumn}>
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("stats.main")}</h4>
+              <p className={styles.Description}>{t("streamer.noserver")}</p>
+            </div>
+          </div>
+        </span>
       );
     }
 
@@ -151,47 +102,47 @@ export function GameStreamStat(): React.ReactElement {
     }
     if (currentPlayer != undefined) {
       return (
-        <Main zoom={match.params.zoom}>
-          <StreamColumn>
-            <Row>
-              <Title>{t("stats.score")}</Title>
-              <Description>{currentPlayer.score}</Description>
-            </Row>
-            <Row>
-              <Title>{t("stats.kills")}</Title>
-              <Description>{currentPlayer.kills}</Description>
-            </Row>
-            <Row>
-              <Title>{t("stats.deaths")}</Title>
-              <Description>{currentPlayer.deaths}</Description>
-            </Row>
-          </StreamColumn>
-        </Main>
+        <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+          <div className={styles.StreamColumn}>
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("stats.score")}</h4>
+              <p className={styles.Description}>{currentPlayer.score}</p>
+            </div>
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("stats.kills")}</h4>
+              <p className={styles.Description}>{currentPlayer.kills}</p>
+            </div>
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("stats.deaths")}</h4>
+              <p className={styles.Description}>{currentPlayer.deaths}</p>
+            </div>
+          </div>
+        </span>
       );
     } else {
       // player not in server
       return (
-        <Main zoom={match.params.zoom}>
-          <StreamColumn>
-            <Row>
-              <Title>{t("stats.main")}</Title>
-              <Description>{t("streamer.noplayer")}</Description>
-            </Row>
-          </StreamColumn>
-        </Main>
+        <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+          <div className={styles.StreamColumn}>
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("stats.main")}</h4>
+              <p className={styles.Description}>{t("streamer.noplayer")}</p>
+            </div>
+          </div>
+        </span>
       );
     }
   } else {
     // loading
     return (
-      <Main zoom={match.params.zoom}>
-        <StreamColumn>
-          <Row>
-            <Title>{t("stats.main")}</Title>
-            <Description>{t("loading")}</Description>
-          </Row>
-        </StreamColumn>
-      </Main>
+      <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+        <div className={styles.StreamColumn}>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.main")}</h4>
+            <p className={styles.Description}>{t("loading")}</p>
+          </div>
+        </div>
+      </span>
     );
   }
 }
@@ -231,14 +182,14 @@ export function GameStreamScore(): React.ReactElement {
     // if seederid not found
     if (stats == undefined || "errors" in stats) {
       return (
-        <Main zoom={match.params.zoom}>
-          <StreamColumn>
-            <Row>
-              <Title>{t("stats.main")}</Title>
-              <Description>{t("streamer.noserver")}</Description>
-            </Row>
-          </StreamColumn>
-        </Main>
+        <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+          <div className={styles.StreamColumn}>
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("stats.main")}</h4>
+              <p className={styles.Description}>{t("streamer.noserver")}</p>
+            </div>
+          </div>
+        </span>
       );
     }
 
@@ -265,67 +216,67 @@ export function GameStreamScore(): React.ReactElement {
     const kdTeamTwo = teams[1].kills / teams[1].deaths || 0.0;
 
     return (
-      <Main zoom={match.params.zoom}>
-        <StreamColumn>
-          <Row>
-            <Title>{t("stats.alive")}</Title>
-            <Description>{teams[0].alive}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.vehicles")}</Title>
-            <Description>{teams[0].vehicles}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.score")}</Title>
-            <Description>{teams[0].score}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.killDeath")}</Title>
-            <Description>
+      <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+        <div className={styles.StreamColumn}>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.alive")}</h4>
+            <p className={styles.Description}>{teams[0].alive}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.vehicles")}</h4>
+            <p className={styles.Description}>{teams[0].vehicles}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.score")}</h4>
+            <p className={styles.Description}>{teams[0].score}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.killDeath")}</h4>
+            <p className={styles.Description}>
               {(kdTeamOne === Infinity ? teams[0].kills : kdTeamOne).toFixed(2)}
-            </Description>
-          </Row>
-          <Row>
-            <Title>{stats.teams[0].name}</Title>
-          </Row>
-          <Row>
-            <Description>VS</Description>
-          </Row>
-          <Row>
-            <Title>{stats.teams[1].name}</Title>
-          </Row>
-          <Row>
-            <Title>{t("stats.killDeath")}</Title>
-            <Description>
+            </p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{stats.teams[0].name}</h4>
+          </div>
+          <div className={styles.Row}>
+            <p className={styles.Description}>VS</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{stats.teams[1].name}</h4>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.killDeath")}</h4>
+            <p className={styles.Description}>
               {(kdTeamTwo === Infinity ? teams[1].kills : kdTeamTwo).toFixed(2)}
-            </Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.score")}</Title>
-            <Description>{teams[1].score}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.vehicles")}</Title>
-            <Description>{teams[1].vehicles}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.alive")}</Title>
-            <Description>{teams[1].alive}</Description>
-          </Row>
-        </StreamColumn>
-      </Main>
+            </p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.score")}</h4>
+            <p className={styles.Description}>{teams[1].score}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.vehicles")}</h4>
+            <p className={styles.Description}>{teams[1].vehicles}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.alive")}</h4>
+            <p className={styles.Description}>{teams[1].alive}</p>
+          </div>
+        </div>
+      </span>
     );
   } else {
     // loading
     return (
-      <Main zoom={match.params.zoom}>
-        <StreamColumn>
-          <Row>
-            <Title>{t("stats.main")}</Title>
-            <Description>{t("loading")}</Description>
-          </Row>
-        </StreamColumn>
-      </Main>
+      <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+        <div className={styles.StreamColumn}>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.main")}</h4>
+            <p className={styles.Description}>{t("loading")}</p>
+          </div>
+        </div>
+      </span>
     );
   }
 }
@@ -368,66 +319,68 @@ export function SteamStat(): React.ReactElement {
       return <div>resultNotFound</div>;
     }
     return (
-      <Main zoom={match.params.zoom}>
-        <StreamColumn>
-          <Row>
-            <Title>{t("stats.killsPerMinute")}</Title>
-            <Description>{stats.killsPerMinute}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.killsPerMinute")}</Title>
-            <Description>{stats.scorePerMinute}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.skill")}</Title>
-            <Description>{stats.skill}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.killDeath")}</Title>
-            <Description>{stats.killDeath}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.longestHeadShot")}</Title>
-            <Description>{stats.longestHeadShot}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.winPercent")}</Title>
-            <Description>{stats.winPercent}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.headshotPercent")}</Title>
-            <Description>{stats.headshots}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.accuracy")}</Title>
-            <Description>{stats.accuracy}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.bestClass")}</Title>
-            <Description>{stats.bestClass}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.highestKillStreak")}</Title>
-            <Description>{stats.highestKillStreak}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.revives")}</Title>
-            <Description>{stats.revives}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.infantryKillDeath")}</Title>
-            <Description>{stats.infantryKillDeath}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.infantryKillsPerMinute")}</Title>
-            <Description>{stats.infantryKillsPerMinute}</Description>
-          </Row>
-          <Row>
-            <Title>{t("stats.timePlayed")}</Title>
-            <Description>{stats.timePlayed}</Description>
-          </Row>
-        </StreamColumn>
-      </Main>
+      <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+        <div className={styles.StreamColumn}>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.killsPerMinute")}</h4>
+            <p className={styles.Description}>{stats.killsPerMinute}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.killsPerMinute")}</h4>
+            <p className={styles.Description}>{stats.scorePerMinute}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.skill")}</h4>
+            <p className={styles.Description}>{stats.skill}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.killDeath")}</h4>
+            <p className={styles.Description}>{stats.killDeath}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.longestHeadShot")}</h4>
+            <p className={styles.Description}>{stats.longestHeadShot}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.winPercent")}</h4>
+            <p className={styles.Description}>{stats.winPercent}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.headshotPercent")}</h4>
+            <p className={styles.Description}>{stats.headshots}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.accuracy")}</h4>
+            <p className={styles.Description}>{stats.accuracy}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.bestClass")}</h4>
+            <p className={styles.Description}>{stats.bestClass}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.highestKillStreak")}</h4>
+            <p className={styles.Description}>{stats.highestKillStreak}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.revives")}</h4>
+            <p className={styles.Description}>{stats.revives}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.infantryKillDeath")}</h4>
+            <p className={styles.Description}>{stats.infantryKillDeath}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>
+              {t("stats.infantryKillsPerMinute")}
+            </h4>
+            <p className={styles.Description}>{stats.infantryKillsPerMinute}</p>
+          </div>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("stats.timePlayed")}</h4>
+            <p className={styles.Description}>{stats.timePlayed}</p>
+          </div>
+        </div>
+      </span>
     );
   } else {
     return <div></div>;
