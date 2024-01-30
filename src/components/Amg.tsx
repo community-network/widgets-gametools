@@ -6,6 +6,7 @@ import forest from "../assets/img/forest.jpg?sizes[]=150&format=webp&useResponsi
 import rust from "../assets/img/rust.jpg?sizes[]=150&format=webp&useResponsiveLoader=true";
 import { Routes, Route } from "react-router-dom";
 import styles from "./Amg.module.scss";
+import serverStyles from "./Servers.module.scss";
 
 export function OldGameOne(): React.ReactElement {
   const {
@@ -37,20 +38,20 @@ export function OldGameOne(): React.ReactElement {
           <h4 style={{ margin: 0, marginTop: "0.6rem", color: "white" }}>
             {stats.name}
           </h4>
-          <div className={styles.Column}>
-            <div className={styles.Row}>
-              <h4 className={styles.Title}>Players</h4>
-              <p className={styles.Description}>
+          <div className={serverStyles.Column}>
+            <div className={serverStyles.Row}>
+              <h4 className={serverStyles.Title}>Players</h4>
+              <p className={serverStyles.Description}>
                 {stats.players.length}/{stats.maxplayers}
               </p>
             </div>
-            <div className={styles.Row}>
-              <h4 className={styles.Title}>Ping</h4>
-              <p className={styles.Description}>{stats.ping}</p>
+            <div className={serverStyles.Row}>
+              <h4 className={serverStyles.Title}>Ping</h4>
+              <p className={serverStyles.Description}>{stats.ping}</p>
             </div>
-            <div className={styles.Row}>
-              <h4 className={styles.Title}>Server IP</h4>
-              <p className={styles.Description}>{stats.connect}</p>
+            <div className={serverStyles.Row}>
+              <h4 className={serverStyles.Title}>Server IP</h4>
+              <p className={serverStyles.Description}>{stats.connect}</p>
             </div>
           </div>
         </div>
@@ -59,7 +60,7 @@ export function OldGameOne(): React.ReactElement {
   } else {
     return (
       <span className={styles.BigServer}>
-        <span className={styles.Circle} />
+        <span className={serverStyles.Circle} />
         <b>Loading...</b>
         <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>0/0</b>
       </span>
@@ -97,20 +98,20 @@ export function OldGameTwo(): React.ReactElement {
           <h4 style={{ margin: 0, marginTop: "0.6rem", color: "white" }}>
             {stats.name}
           </h4>
-          <div className={styles.Column}>
-            <div className={styles.Row}>
-              <h4 className={styles.Title}>Players</h4>
-              <p className={styles.Description}>
+          <div className={serverStyles.Column}>
+            <div className={serverStyles.Row}>
+              <h4 className={serverStyles.Title}>Players</h4>
+              <p className={serverStyles.Description}>
                 {stats.players.length}/{stats.maxplayers}
               </p>
             </div>
-            <div className={styles.Row}>
-              <h4 className={styles.Title}>Ping</h4>
-              <p className={styles.Description}>{stats.ping}</p>
+            <div className={serverStyles.Row}>
+              <h4 className={serverStyles.Title}>Ping</h4>
+              <p className={serverStyles.Description}>{stats.ping}</p>
             </div>
-            <div className={styles.Row}>
-              <h4 className={styles.Title}>Server IP</h4>
-              <p className={styles.Description}>{stats.connect}</p>
+            <div className={serverStyles.Row}>
+              <h4 className={serverStyles.Title}>Server IP</h4>
+              <p className={serverStyles.Description}>{stats.connect}</p>
             </div>
           </div>
         </div>
@@ -119,7 +120,7 @@ export function OldGameTwo(): React.ReactElement {
   } else {
     return (
       <span className={styles.BigServer}>
-        <span className={styles.Circle} />
+        <span className={serverStyles.Circle} />
         <b>Loading...</b>
         <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>0/0</b>
       </span>

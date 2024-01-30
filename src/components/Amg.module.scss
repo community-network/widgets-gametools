@@ -1,11 +1,3 @@
-.Circle {
-  width: 48px;
-  height: 48px;
-  margin-right: 1rem;
-  background-color: rgba(0, 0, 0, 0.288);
-  border-radius: 38px;
-}
-
 .BigServer {
   color: white;
   text-decoration: none;
@@ -20,28 +12,4 @@
   width: 150px;
   height: 90px;
   margin-right: 0.7rem;
-}
-
-.Column {
-  display: flex;
-  flex-flow: row wrap;
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 1rem;
-}
-
-.Row {
-  flex: 1;
-  margin-right: 0.5rem;
-}
-
-.Title {
-  margin: 0;
-  color: white;
-}
-
-.Description {
-  margin: 0;
-  color: gray;
-  white-space: nowrap;
 }
