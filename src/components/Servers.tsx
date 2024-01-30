@@ -9,11 +9,17 @@ import { dice, frostbite3 } from "../api/static";
 import styles from "./Servers.module.scss";
 import { calculateZoomStyle } from "./functions/calculateZoom";
 
-export function WhiteServerBox(): React.ReactElement {
+export function ServerBox(
+  props: Readonly<{ color: string }>,
+): React.ReactElement {
+  const { color } = props;
   const { t } = useTranslation();
-  const match = useMatch("/servers/white/:gameid/:type/:sname/:platform");
+  const match = useMatch(`/servers/${color}/:gameid/:type/:sname/:platform`);
   const gameId = match.params.gameid;
   const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
+  const backgroundStyle =
+    color === "black" ? { background: "#141d26", borderColor: "#141d26" } : {};
+  const textStyle = color == "black" ? { color: "white" } : {};
 
   const {
     isLoading: loading,
@@ -32,12 +38,14 @@ export function WhiteServerBox(): React.ReactElement {
   if (!loading && !error) {
     if ("errors" in stats) {
       return (
-        <span className={styles.Server}>
+        <span className={styles.Server} style={backgroundStyle}>
           <span className={styles.Circle} />
-          <p className={styles.ServerBody}>
+          <p className={styles.ServerBody} style={textStyle}>
             <b>{t("server.notFound")}</b>
           </p>
-          <b className={styles.ServerPlayers}>{t("notApplicable")}</b>
+          <b className={styles.ServerPlayers} style={textStyle}>
+            {t("notApplicable")}
+          </b>
         </span>
       );
     }
@@ -58,6 +66,7 @@ export function WhiteServerBox(): React.ReactElement {
           match.params.sname,
         )}/${match.params.platform}`}
         target="_blank"
+        style={backgroundStyle}
         rel="noreferrer"
       >
         <div
@@ -70,12 +79,12 @@ export function WhiteServerBox(): React.ReactElement {
             <h1 className={styles.ServerText}>{stats.smallmode}</h1>
           </div>
         </div>
-        <p className={styles.ServerBody}>
+        <p className={styles.ServerBody} style={textStyle}>
           <b>{stats.prefix}</b>
           {mode}
           {stats.currentMap || stats.map}
         </p>
-        <b className={styles.ServerPlayers}>
+        <b className={styles.ServerPlayers} style={textStyle}>
           {stats.playerAmount}/{stats.maxPlayerAmount}
           {stats.maxPlayers} {queueString}
         </b>
@@ -83,102 +92,10 @@ export function WhiteServerBox(): React.ReactElement {
     );
   } else {
     return (
-      <span className={styles.Server}>
+      <span className={styles.Server} style={backgroundStyle}>
         <span className={styles.Circle} />
-        <b>{t("loading")}</b>
-        <b className={styles.ServerPlayers}>0/0</b>
-      </span>
-    );
-  }
-}
-
-export function BlackServerBox(): React.ReactElement {
-  const { t } = useTranslation();
-  const match = useMatch("/servers/black/:gameid/:type/:sname/:platform");
-  const gameId = match.params.gameid;
-  const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
-
-  const {
-    isLoading: loading,
-    isError: error,
-    data: stats,
-  } = useQuery("servers" + gameId + serverName + match.params.platform, () =>
-    GetStats.server({
-      game: gameId,
-      getter: match.params.type,
-      serverName: serverName,
-      lang: getLanguage(),
-      platform: match.params.platform,
-      with_ownername: false,
-    }),
-  );
-  if (!loading && !error) {
-    if ("errors" in stats) {
-      return (
-        <span
-          className={styles.Server}
-          style={{ background: "#141d26", borderColor: "#141d26" }}
-        >
-          <span className={styles.Circle} />
-          <p className={styles.ServerBody} style={{ color: "white" }}>
-            <b>{t("server.notFound")}</b>
-          </p>
-          <b className={styles.ServerPlayers} style={{ color: "white" }}>
-            {t("notApplicable")}
-          </b>
-        </span>
-      );
-    }
-    let queue: number = undefined;
-    queue = stats.inQueue;
-    let queueString = "";
-    if (queue !== undefined && queue !== 0) {
-      queueString = `[${queue}]`;
-    }
-    let mode = "";
-    if (stats.mode !== undefined) {
-      mode = `${stats.mode}: `;
-    }
-    return (
-      <a
-        className={styles.Server}
-        href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
-          match.params.sname,
-        )}/${match.params.platform}`}
-        target="_blank"
-        style={{ background: "#141d26", borderColor: "#141d26" }}
-        rel="noreferrer"
-      >
-        <div
-          className={styles.ServerImage}
-          style={{
-            backgroundImage: `url("${stats.currentMapImage || stats.mapImage}")`,
-          }}
-        >
-          <div className={styles.Blur}>
-            <h1 className={styles.ServerText}>{stats.smallmode}</h1>
-          </div>
-        </div>
-        <p className={styles.ServerBody} style={{ color: "white" }}>
-          <b>{stats.prefix}</b>
-          {mode}
-          {stats.currentMap || stats.map}
-        </p>
-        <b className={styles.ServerPlayers} style={{ color: "white" }}>
-          {stats.playerAmount}/{stats.maxPlayerAmount}
-          {stats.maxPlayers} {queueString}
-        </b>
-      </a>
-    );
-  } else {
-    return (
-      <span
-        className={styles.Server}
-        style={{ background: "#141d26", borderColor: "#141d26" }}
-      >
-        <span className={styles.Circle} />
-        <b style={{ color: "white" }}>{t("loading")}</b>
-        <b className={styles.ServerPlayers} style={{ color: "white" }}>
+        <b style={textStyle}>{t("loading")}</b>
+        <b className={styles.ServerPlayers} style={textStyle}>
           0/0
         </b>
       </span>
@@ -336,11 +253,11 @@ export default function Routing(): React.ReactElement {
     <Routes>
       <Route
         path="/white/:gameid/:type/:sname/:platform"
-        element={<WhiteServerBox />}
+        element={<ServerBox color="white" />}
       />
       <Route
         path="/black/:gameid/:type/:sname/:platform"
-        element={<BlackServerBox />}
+        element={<ServerBox color="black" />}
       />
       <Route
         path="/detailed/:gameid/:type/:sname/:platform"
