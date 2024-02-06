@@ -35,6 +35,7 @@ export function ServerBox(
       with_ownername: false,
     }),
   );
+  console.log(stats);
   if (!loading && !error) {
     if ("errors" in stats) {
       return (

@@ -6,7 +6,7 @@ import {
   Bf1PlayerReturn,
 } from "./ReturnTypes";
 import { battlebitApi } from "./battlebitApi";
-import { bf1MarneApi } from "./marneApi";
+import { MarneApi } from "./marneApi";
 
 interface seederPlayerlist {
   game: string;
@@ -50,7 +50,7 @@ export class ApiProvider extends JsonClient {
     lang,
     platform = "pc",
   }: PlayerInfo): Promise<MainStats> {
-    if (game == "bf1marne") {
+    if (game.includes("marne")) {
       let playerId, playerInfo;
       if (getter !== "playerid") {
         const result = await this.bf1PlayerSearch({
@@ -65,7 +65,8 @@ export class ApiProvider extends JsonClient {
         playerInfo = result;
         playerId = userName;
       }
-      return await bf1MarneApi.stats({
+      return await MarneApi.stats({
+        game: game,
         playerId: playerId,
         playerInfo: playerInfo,
       });
@@ -134,8 +135,9 @@ export class ApiProvider extends JsonClient {
         region,
       });
     }
-    if (game == "bf1marne") {
-      return await bf1MarneApi.serverList({
+    if (game.includes("marne")) {
+      return await MarneApi.serverList({
+        game: game,
         searchTerm: serverName,
         regions: [region],
       });
