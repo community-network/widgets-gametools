@@ -12,7 +12,7 @@ import {
   shortName,
 } from "../api/static";
 import { PathMatch, useMatch } from "react-router-dom";
-import styles from "./Stats.module.scss";
+import * as styles from "./Stats.module.scss";
 import { calculateZoomStyle } from "./functions/calculateZoom";
 
 export default function Stats(): React.ReactElement {

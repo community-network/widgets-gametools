@@ -12,7 +12,7 @@ import {
   seederPlayersReturn,
 } from "../api/ReturnTypes";
 import { Routes, useMatch, Route } from "react-router-dom";
-import styles from "./Streamer.module.scss";
+import * as styles from "./Streamer.module.scss";
 import { calculateZoomStyle } from "./functions/calculateZoom";
 
 function statsSelector(

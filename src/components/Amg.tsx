@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import forest from "../assets/img/forest.jpg?sizes[]=150&format=webp&useResponsiveLoader=true";
 import rust from "../assets/img/rust.jpg?sizes[]=150&format=webp&useResponsiveLoader=true";
 import { Routes, Route } from "react-router-dom";
-import styles from "./Amg.module.scss";
+import * as styles from "./Amg.module.scss";
 import serverStyles from "./Servers.module.scss";
 
 export function OldGameOne(): React.ReactElement {

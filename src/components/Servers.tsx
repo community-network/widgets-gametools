@@ -12,7 +12,7 @@ import {
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { dice, frostbite3 } from "../api/static";
-import styles from "./Servers.module.scss";
+import * as styles from "./Servers.module.scss";
 import { calculateZoomStyle } from "./functions/calculateZoom";
 
 export function ServerBox(
