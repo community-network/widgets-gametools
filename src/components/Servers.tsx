@@ -3,7 +3,13 @@ import "../locales/config";
 import { GetStats } from "../api/GetStats";
 import { useQuery } from "react-query";
 import { getLanguage } from "../locales/config";
-import { Route, Routes, useLocation, useMatch } from "react-router-dom";
+import {
+  PathMatch,
+  Route,
+  Routes,
+  useLocation,
+  useMatch,
+} from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { dice, frostbite3 } from "../api/static";
 import styles from "./Servers.module.scss";
@@ -35,11 +41,21 @@ export function ServerBox(
       with_ownername: false,
     }),
   );
-  console.log(stats);
+  const params = GetStats.constructParamStr({
+    search: match.params.sname,
+    game: gameId,
+    platform: match.params.platform,
+  });
   if (!loading && !error) {
     if ("errors" in stats) {
       return (
-        <span className={styles.Server} style={backgroundStyle}>
+        <a
+          className={styles.Server}
+          style={backgroundStyle}
+          href={`https://gametools.network/servers${params}`}
+          target="_blank"
+          rel="noreferrer"
+        >
           <span className={styles.Circle} />
           <p className={styles.ServerBody} style={textStyle}>
             <b>{t("server.notFound")}</b>
@@ -47,7 +63,7 @@ export function ServerBox(
           <b className={styles.ServerPlayers} style={textStyle}>
             {t("notApplicable")}
           </b>
-        </span>
+        </a>
       );
     }
     let queue: number = undefined;
@@ -93,13 +109,19 @@ export function ServerBox(
     );
   } else {
     return (
-      <span className={styles.Server} style={backgroundStyle}>
+      <a
+        className={styles.Server}
+        style={backgroundStyle}
+        href={`https://gametools.network/servers${params}`}
+        target="_blank"
+        rel="noreferrer"
+      >
         <span className={styles.Circle} />
         <b style={textStyle}>{t("loading")}</b>
         <b className={styles.ServerPlayers} style={textStyle}>
           0/0
         </b>
-      </span>
+      </a>
     );
   }
 }
@@ -130,6 +152,7 @@ export function DetailedServerBox(): React.ReactElement {
     if ("errors" in stats) {
       return (
         <DetailedDefaults
+          match={match}
           zoom={zoomQuery ?? 100}
           gameId={gameId}
           text={t("server.notFound")}
@@ -193,6 +216,7 @@ export function DetailedServerBox(): React.ReactElement {
   } else {
     return (
       <DetailedDefaults
+        match={match}
         zoom={zoomQuery ?? 100}
         gameId={gameId}
         text={t("loading")}
@@ -202,17 +226,30 @@ export function DetailedServerBox(): React.ReactElement {
 }
 
 function DetailedDefaults({
+  match,
   gameId,
   text,
   zoom,
 }: Readonly<{
+  match: PathMatch<"gameid" | "type" | "sname" | "platform">;
   zoom: number | string;
   gameId: string;
   text: string;
 }>): React.ReactElement {
   const { t } = useTranslation();
+  const params = GetStats.constructParamStr({
+    search: match.params.sname,
+    game: gameId,
+    platform: match.params.platform,
+  });
   return (
-    <span className={styles.BigServer} style={calculateZoomStyle(zoom)}>
+    <a
+      className={styles.BigServer}
+      href={`https://gametools.network/servers${params}`}
+      target="_blank"
+      style={calculateZoomStyle(zoom)}
+      rel="noreferrer"
+    >
       <div className={styles.BigServerImage} />
       <div style={{ display: "grid" }}>
         <h4 className={styles.BigServerBody}>{text}</h4>
@@ -245,7 +282,7 @@ function DetailedDefaults({
           )}
         </div>
       </div>
-    </span>
+    </a>
   );
 }
 
