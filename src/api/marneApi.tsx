@@ -2,11 +2,11 @@ import { Bf1PlayerReturn } from "./GetStats";
 import JsonClient from "./Json";
 import {
   DetailedServerInfo,
-  ServerSettings,
   MainStats,
-  MainStatsWeapon,
-  MainStatsGamemode,
   MainStatsClasses,
+  MainStatsGamemode,
+  MainStatsWeapon,
+  ServerSettings,
 } from "./ReturnTypes";
 
 export interface PlayerReturn {

@@ -3,12 +3,11 @@ import {
   DetailedServerInfo,
   MainStats,
   seederPlayersReturn,
-  Bf1PlayerReturn,
 } from "./ReturnTypes";
 import { battlebitApi } from "./battlebitApi";
 import { MarneApi } from "./marneApi";
 
-interface seederPlayerlist {
+interface SeederPlayerlist {
   game: string;
   gameId?: string;
   id?: string;
@@ -90,7 +89,7 @@ export class ApiProvider extends JsonClient {
     gameId = undefined,
     id = undefined,
     name = undefined,
-  }: seederPlayerlist): Promise<seederPlayersReturn> {
+  }: SeederPlayerlist): Promise<seederPlayersReturn> {
     const gameStuff = game.split(".");
     if (id !== undefined) {
       return await this.getJsonMethod(`/${gameStuff[0]}/seederplayers/`, {
@@ -118,6 +117,9 @@ export class ApiProvider extends JsonClient {
     platform = "pc",
     with_ownername = true,
   }: ServerInfo): Promise<DetailedServerInfo> {
+    if (serverName == "undefined") {
+      return undefined;
+    }
     const gameStuff = game.split(".");
     if (platform == "all") {
       platform = "pc";

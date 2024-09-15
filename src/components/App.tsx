@@ -1,8 +1,8 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as React from "react";
+import { I18nextProvider } from "react-i18next";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "../assets/scss/App.scss";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { I18nextProvider } from "react-i18next";
 import i18n from "../locales/config";
 
 const Stats = React.lazy(() => import("./Stats"));

@@ -1,8 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
-import "../locales/config";
-import { GetStats } from "../api/GetStats";
-import { useQuery } from "react-query";
-import { getLanguage } from "../locales/config";
+import { useTranslation } from "react-i18next";
 import {
   PathMatch,
   Route,
@@ -10,8 +8,10 @@ import {
   useLocation,
   useMatch,
 } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { GetStats } from "../api/GetStats";
 import { dice, frostbite3 } from "../api/static";
+import "../locales/config";
+import { getLanguage } from "../locales/config";
 import * as styles from "./Servers.module.scss";
 import { calculateZoomStyle } from "./functions/calculateZoom";
 
@@ -31,83 +31,25 @@ export function ServerBox(
     isLoading: loading,
     isError: error,
     data: stats,
-  } = useQuery("servers" + gameId + serverName + match.params.platform, () =>
-    GetStats.server({
-      game: gameId,
-      getter: match.params.type,
-      serverName: serverName,
-      lang: getLanguage(),
-      platform: match.params.platform,
-      with_ownername: false,
-    }),
-  );
+  } = useQuery({
+    queryKey: ["servers" + gameId + serverName + match.params.platform],
+    queryFn: () =>
+      GetStats.server({
+        game: gameId,
+        getter: match.params.type,
+        serverName: serverName,
+        lang: getLanguage(),
+        platform: match.params.platform,
+        with_ownername: false,
+      }),
+    retry: 1,
+  });
   const params = GetStats.constructParamStr({
     search: match.params.sname,
     game: gameId,
     platform: match.params.platform,
   });
-  if (!loading && !error) {
-    if ("errors" in stats) {
-      return (
-        <a
-          className={styles.Server}
-          style={backgroundStyle}
-          href={`https://gametools.network/servers${params}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className={styles.Circle} />
-          <p className={styles.ServerBody} style={textStyle}>
-            <b>{t("server.notFound")}</b>
-          </p>
-          <b className={styles.ServerPlayers} style={textStyle}>
-            {t("notApplicable")}
-          </b>
-        </a>
-      );
-    }
-    let queue: number = undefined;
-    queue = stats.inQueue;
-    let queueString = "";
-    if (queue !== undefined && queue !== 0) {
-      queueString = `[${queue}]`;
-    }
-    let mode = "";
-    if (stats.mode !== undefined) {
-      mode = `${stats.mode}: `;
-    }
-    return (
-      <a
-        className={styles.Server}
-        href={`https://gametools.network/servers/${gameId}/name/${encodeURI(
-          match.params.sname,
-        )}/${match.params.platform}`}
-        target="_blank"
-        style={backgroundStyle}
-        rel="noreferrer"
-      >
-        <div
-          className={styles.ServerImage}
-          style={{
-            backgroundImage: `url("${stats.currentMapImage || stats.mapImage}")`,
-          }}
-        >
-          <div className={styles.Blur}>
-            <h1 className={styles.ServerText}>{stats.smallmode}</h1>
-          </div>
-        </div>
-        <p className={styles.ServerBody} style={textStyle}>
-          <b>{stats.prefix}</b>
-          {mode}
-          {stats.currentMap || stats.map}
-        </p>
-        <b className={styles.ServerPlayers} style={textStyle}>
-          {stats.playerAmount}/{stats.maxPlayerAmount}
-          {stats.maxPlayers} {queueString}
-        </b>
-      </a>
-    );
-  } else {
+  if (loading) {
     return (
       <a
         className={styles.Server}
@@ -124,6 +66,67 @@ export function ServerBox(
       </a>
     );
   }
+
+  if (error || stats === undefined) {
+    return (
+      <a
+        className={styles.Server}
+        style={backgroundStyle}
+        href={`https://gametools.network/servers${params}`}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <span className={styles.Circle} />
+        <p className={styles.ServerBody} style={textStyle}>
+          <b>{t("server.notFound")}</b>
+        </p>
+        <b className={styles.ServerPlayers} style={textStyle}>
+          {t("notApplicable")}
+        </b>
+      </a>
+    );
+  }
+  let queue: number = undefined;
+  queue = stats?.inQueue;
+  let queueString = "";
+  if (queue !== undefined && queue !== 0) {
+    queueString = `[${queue}]`;
+  }
+  let mode = "";
+  if (stats?.mode !== undefined) {
+    mode = `${stats?.mode}: `;
+  }
+  return (
+    <a
+      className={styles.Server}
+      href={`https://gametools.network/servers/${gameId}/name/${encodeURI(
+        match.params.sname,
+      )}/${match.params.platform}`}
+      target="_blank"
+      style={backgroundStyle}
+      rel="noreferrer"
+    >
+      <div
+        className={styles.ServerImage}
+        style={{
+          backgroundImage: `url("${stats?.currentMapImage || stats?.mapImage}")`,
+        }}
+      >
+        <div className={styles.Blur}>
+          <h1 className={styles.ServerText}>{stats?.smallmode}</h1>
+        </div>
+      </div>
+      <p className={styles.ServerBody} style={textStyle}>
+        <b>{stats?.prefix}</b>
+        {mode}
+        {stats?.currentMap || stats?.map}
+      </p>
+      <b className={styles.ServerPlayers} style={textStyle}>
+        {stats?.playerAmount}/{stats?.maxPlayerAmount}
+        {stats?.maxPlayers} {queueString}
+      </b>
+    </a>
+  );
 }
 
 export function DetailedServerBox(): React.ReactElement {
@@ -138,82 +141,20 @@ export function DetailedServerBox(): React.ReactElement {
     isLoading: loading,
     isError: error,
     data: stats,
-  } = useQuery("servers" + gameId + serverName + match.params.platform, () =>
-    GetStats.server({
-      game: gameId,
-      getter: match.params.type,
-      serverName: serverName,
-      lang: getLanguage(),
-      platform: match.params.platform,
-      with_ownername: false,
-    }),
-  );
-  if (!loading && !error) {
-    if ("errors" in stats) {
-      return (
-        <DetailedDefaults
-          match={match}
-          zoom={zoomQuery ?? 100}
-          gameId={gameId}
-          text={t("server.notFound")}
-        />
-      );
-    }
-    return (
-      <a
-        className={styles.BigServer}
-        href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
-          match.params.sname,
-        )}/${match.params.platform}`}
-        target="_blank"
-        style={calculateZoomStyle(zoomQuery ?? 100)}
-        rel="noreferrer"
-      >
-        <div
-          className={styles.BigServerImage}
-          style={{
-            backgroundImage: `url("${stats.currentMapImage || stats.mapImage}")`,
-          }}
-        />
-        <div style={{ display: "grid" }}>
-          <h4 className={styles.BigServerBody}>{stats.prefix}</h4>
-          <div className={styles.Column} style={{ marginTop: "0.7rem" }}>
-            <div className={styles.Row}>
-              <h4 className={styles.Title}>{t("server.players")}</h4>
-              <p className={styles.Description}>
-                {stats.playerAmount}/{stats.maxPlayerAmount}
-                {stats.maxPlayers}
-              </p>
-            </div>
-            {gameId !== "bf2042" && dice.includes(gameId) && (
-              <div className={styles.Row}>
-                <h4 className={styles.Title}>{t("server.queue")}</h4>
-                <p className={styles.Description}>{stats.inQueue}/10</p>
-              </div>
-            )}
-            {frostbite3.includes(gameId) && (
-              <div className={styles.Row}>
-                <h4 className={styles.Title}>{t("server.favorites")}</h4>
-                <p className={styles.Description}>{stats.favorites}</p>
-              </div>
-            )}
-            <div className={styles.Row}>
-              <h4 className={styles.Title}>{t("server.map")}</h4>
-              <p className={styles.Description}>
-                {stats.currentMap || stats.map}
-              </p>
-            </div>
-            {["bf1", "battlebit"].includes(gameId) && (
-              <div className={styles.Row}>
-                <h4 className={styles.Title}>{t("server.mode")}</h4>
-                <p className={styles.Description}>{stats.mode}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </a>
-    );
-  } else {
+  } = useQuery({
+    queryKey: ["servers" + gameId + serverName + match.params.platform],
+    queryFn: () =>
+      GetStats.server({
+        game: gameId,
+        getter: match.params.type,
+        serverName: serverName,
+        lang: getLanguage(),
+        platform: match.params.platform,
+        with_ownername: false,
+      }),
+    retry: 1,
+  });
+  if (loading) {
     return (
       <DetailedDefaults
         match={match}
@@ -223,6 +164,71 @@ export function DetailedServerBox(): React.ReactElement {
       />
     );
   }
+
+  if (error || stats === undefined) {
+    return (
+      <DetailedDefaults
+        match={match}
+        zoom={zoomQuery ?? 100}
+        gameId={gameId}
+        text={t("server.notFound")}
+      />
+    );
+  }
+  return (
+    <a
+      className={styles.BigServer}
+      href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
+        match.params.sname,
+      )}/${match.params.platform}`}
+      target="_blank"
+      style={calculateZoomStyle(zoomQuery ?? 100)}
+      rel="noreferrer"
+    >
+      <div
+        className={styles.BigServerImage}
+        style={{
+          backgroundImage: `url("${stats?.currentMapImage || stats?.mapImage}")`,
+        }}
+      />
+      <div style={{ display: "grid" }}>
+        <h4 className={styles.BigServerBody}>{stats?.prefix}</h4>
+        <div className={styles.Column} style={{ marginTop: "0.7rem" }}>
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("server.players")}</h4>
+            <p className={styles.Description}>
+              {stats?.playerAmount}/{stats?.maxPlayerAmount}
+              {stats?.maxPlayers}
+            </p>
+          </div>
+          {gameId !== "bf2042" && dice.includes(gameId) && (
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("server.queue")}</h4>
+              <p className={styles.Description}>{stats?.inQueue}/10</p>
+            </div>
+          )}
+          {frostbite3.includes(gameId) && (
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("server.favorites")}</h4>
+              <p className={styles.Description}>{stats?.favorites}</p>
+            </div>
+          )}
+          <div className={styles.Row}>
+            <h4 className={styles.Title}>{t("server.map")}</h4>
+            <p className={styles.Description}>
+              {stats?.currentMap || stats?.map}
+            </p>
+          </div>
+          {["bf1", "battlebit"].includes(gameId) && (
+            <div className={styles.Row}>
+              <h4 className={styles.Title}>{t("server.mode")}</h4>
+              <p className={styles.Description}>{stats?.mode}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </a>
+  );
 }
 
 function DetailedDefaults({

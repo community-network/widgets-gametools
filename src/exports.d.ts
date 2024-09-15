@@ -1,5 +1,6 @@
 declare module "*.jpg";
 
+declare module "*.scss";
 declare module "*useResponsiveLoader=true" {
   const value: {
     srcSet: string;
