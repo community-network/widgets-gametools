@@ -73,6 +73,23 @@
   min-width: 150px;
   height: 90px;
   margin-right: 0.7rem;
+  display: flex;
+}
+
+.blur {
+  height: 100%;
+  flex-grow: 3;
+  background: radial-gradient(100% 100% at 50% 50%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4872) 100%);
+}
+
+.serverFavorites {
+  --color-text: var(--color-alt-text);
+  text-align: center;
+  line-height: 0;
+  transform: translate(0, 50%);
+  margin: 0;
+  height: 100%;
+  font-size: 24px;
 }
 
 .BigServerBody {
