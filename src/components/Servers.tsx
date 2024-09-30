@@ -99,7 +99,7 @@ export function ServerBox(
   return (
     <a
       className={styles.Server}
-      href={`https://gametools.network/servers/${gameId}/name/${encodeURI(
+      href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
         match.params.sname,
       )}/${match.params.platform}`}
       target="_blank"
