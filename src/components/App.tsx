@@ -7,7 +7,7 @@ import i18n from "../locales/config";
 
 const Stats = React.lazy(() => import("./Stats"));
 const Servers = React.lazy(() => import("./Servers"));
-const OldGames = React.lazy(() => import("./Amg"));
+const OldGames = React.lazy(() => import("./OldGames"));
 const Streamer = React.lazy(() => import("./Streamer"));
 
 const queryClient = new QueryClient();

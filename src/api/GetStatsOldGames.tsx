@@ -7,13 +7,15 @@ export class ApiProvider extends JsonClient {
   }
 
   async server({
-    group,
-    number,
+    gamename,
+    host,
+    port
   }: {
-    group: string;
-    number: string;
+    gamename: string;
+    host: string;
+    port: string;
   }): Promise<OldGames> {
-    return await this.getJsonMethod(`/${group}/${number}/`, {});
+    return await this.getJsonMethod(`/game/${gamename}/${host}/${port}`, {});
   }
 }
 
