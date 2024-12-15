@@ -309,7 +309,7 @@ export function SteamStat(): React.ReactElement {
     return <div></div>;
   }
   if (stats == undefined) {
-    return <div>resultNotFound</div>;
+    return <div>{t("server.notFound")}</div>;
   }
   return (
     <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
