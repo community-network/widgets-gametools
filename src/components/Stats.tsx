@@ -69,9 +69,8 @@ export default function Stats(): React.ReactElement {
     <a
       className="Main"
       style={calculateZoomStyle(match.params.zoom)}
-      href={`https://gametools.network/stats/${match.params.plat}/${
-        match.params.type
-      }/${encodeURIComponent(match.params.eaid)}`}
+      href={`https://gametools.network/stats/${match.params.plat}/${match.params.type
+        }/${encodeURIComponent(match.params.eaid)}`}
       target="_blank"
       rel="noreferrer"
     >
@@ -83,7 +82,7 @@ export default function Stats(): React.ReactElement {
       >
         <div className={styles.Blur}>
           <p className={styles.BarText} style={{ left: "30px" }}>
-            BATTLEFIELD {gameid} STATS
+            {t("stats.header", { gameid: gameid })}
           </p>
           {!(width <= 700 && match.params.zoom === "100") && (
             <>
@@ -103,7 +102,7 @@ export default function Stats(): React.ReactElement {
                   textAlign: "right",
                 }}
               >
-                GAMETOOLS.NETWORK
+                {t("stats.title")}
               </p>
             </>
           )}
@@ -142,9 +141,8 @@ export default function Stats(): React.ReactElement {
                 />
                 <img
                   className={styles.Platform}
-                  src={`https://cdn.gametools.network/platforms/${
-                    platformImage[match.params.plat]
-                  }.png`}
+                  src={`https://cdn.gametools.network/platforms/${platformImage[match.params.plat]
+                    }.png`}
                 />
               </>
             )}
@@ -196,23 +194,21 @@ function DefaultStats({
     <a
       className="Main"
       style={calculateZoomStyle(match.params.zoom)}
-      href={`https://gametools.network/stats/${match.params.plat}/${
-        match.params.type
-      }/${encodeURIComponent(match.params.eaid)}`}
+      href={`https://gametools.network/stats/${match.params.plat}/${match.params.type
+        }/${encodeURIComponent(match.params.eaid)}`}
       target="_blank"
       rel="noreferrer"
     >
       <div
         className={styles.Background}
         style={{
-          backgroundImage: `url("https://cdn.gametools.network/backgrounds/${
-            game === "bf1marne" ? "bf1" : game
-          }/1.webp")`,
+          backgroundImage: `url("https://cdn.gametools.network/backgrounds/${game === "bf1marne" ? "bf1" : game
+            }/1.webp")`,
         }}
       >
         <div className={styles.Blur}>
           <p className={styles.BarText} style={{ left: "30px" }}>
-            BATTLEFIELD {gameid} STATS
+            {t("stats.header", { gameid: gameid })}
           </p>
           {width <= 700 && match.params.zoom === "100" ? (
             <></>
@@ -234,7 +230,7 @@ function DefaultStats({
                   textAlign: "right",
                 }}
               >
-                GAMETOOLS.NETWORK
+                {t("stats.title")}
               </p>
             </>
           )}
@@ -261,9 +257,8 @@ function DefaultStats({
             />
             <img
               className={styles.Platform}
-              src={`https://cdn.gametools.network/platforms/${
-                platformImage[match.params.plat]
-              }.png`}
+              src={`https://cdn.gametools.network/platforms/${platformImage[match.params.plat]
+                }.png`}
             />
           </>
         )}

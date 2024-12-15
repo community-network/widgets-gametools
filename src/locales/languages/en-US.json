@@ -13,6 +13,8 @@
   },
   "stats": {
     "main": "Stats",
+    "title": "GAMETOOLS.NETWORK",
+    "header": "BATTLEFIELD {{ gameid }} STATS",
     "rank": "Rank",
     "killsPerMinute": "KPM",
     "scorePerMinute": "SPM",
