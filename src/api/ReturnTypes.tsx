@@ -292,9 +292,14 @@ export type MainStatsWeapon = {
   weaponName: string;
 };
 
+export type OldGamePlayers = {
+  name: string;
+};
+
 export type OldGames = {
   name: string;
-  players: any[];
+  map: string;
+  players: OldGamePlayers[];
   maxplayers: number;
   ping: number;
   connect: string;

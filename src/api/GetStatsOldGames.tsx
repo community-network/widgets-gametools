@@ -9,7 +9,7 @@ export class ApiProvider extends JsonClient {
   async server({
     gamename,
     host,
-    port
+    port,
   }: {
     gamename: string;
     host: string;

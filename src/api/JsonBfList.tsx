@@ -26,6 +26,7 @@ export default class JsonClient {
   getJsonMethod(
     method: string,
     params: { [name: string]: string },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
     return this.errorHandler(this.fetchMethod(method, params));
   }

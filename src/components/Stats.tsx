@@ -2,7 +2,7 @@ import { useWindowWidth } from "@react-hook/window-size";
 import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-import { PathMatch, useMatch } from "react-router-dom";
+import { PathMatch, useMatch } from "react-router";
 import { GetStats } from "../api/GetStats";
 import {
   differentWidth,

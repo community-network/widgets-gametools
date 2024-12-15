@@ -79,13 +79,6 @@ interface ServerSearchInfo {
   regions?: string[];
 }
 
-interface DetailedSearch {
-  game: string;
-  getter: string;
-  serverName: string;
-  region: string;
-}
-
 const gamemode_stats = {
   mgc_roo_g: { gamemodeName: "Conquest" },
   mgtd_roo_g: { gamemodeName: "Team deathmatch" },
@@ -379,62 +372,6 @@ const smallmodes = {
   ZoneControl0: "RS",
 };
 
-const to_internal = {
-  "sinai desert": "MP_Desert",
-  "ballroom blitz": "MP_Chateau",
-  "empire's edge": "MP_ItalianCoast",
-  "st quentin scar": "MP_Scar",
-  "prise de tahure": "MP_Shoveltown",
-  "monte grappa": "MP_MountainFort",
-  "fao fortress": "MP_FaoFortress",
-  "giant's shadow": "MP_Giant",
-  rupture: "MP_Graveyard",
-  amiens: "MP_Amiens",
-  suez: "MP_Suez",
-  "fort de vaux": "MP_Underworld",
-  "nivelle nights": "MP_Trench",
-  soissons: "MP_Fields",
-  "verdun heights": "MP_Verdun",
-  albion: "MP_Islands",
-  tsaritsyn: "MP_Tsaritsyn",
-  "łupków pass": "MP_Ravines",
-  "achi baba": "MP_Ridge",
-  "heligoland bight": "MP_Naval",
-  caporetto: "MP_River",
-  "river somme": "MP_Offensive",
-  passchendaele: "MP_Hell",
-  galicia: "MP_Valley",
-  "volga river": "MP_Volga",
-  "brusilov keep": "MP_Bridge",
-  "cape helles": "MP_Beachhead",
-  zeebrugge: "MP_Harbor",
-  "argonne forest": "MP_Forest",
-  "razor's edge": "MP_Alps",
-  "london calling": "MP_Blitz",
-  "london calling: Scourge": "MP_London",
-  //bfv
-  "fjell 652": "MP_ArcticFjell",
-  narvik: "MP_ArcticFjord",
-  arras: "MP_Arras",
-  devastation: "MP_Devastation",
-  "twisted steel": "MP_Escaut",
-  aerodrome: "MP_Foxhunt",
-  hamada: "MP_Halfaya",
-  rotterdam: "MP_Rotterdam",
-  panzerstorm: "MP_Hannut",
-  mercury: "MP_Crete",
-  marita: "MP_Kalamas",
-  provence: "MP_Provence",
-  "al sudan": "MP_SandAndSea",
-  "operation Underground": "MP_Bunker",
-  "iwo jima": "MP_IwoJima",
-  "pacific storm": "MP_TropicIslands",
-  "wake island": "MP_WakeIsland",
-  "solomon islands": "MP_Jungle",
-  "al marj encampment": "MP_Libya",
-  "lofoten islands": "MP_Norway",
-};
-
 const maps = {
   MP_Amiens: "Amiens",
   MP_Chateau: "Ballroom Blitz",
@@ -629,13 +566,6 @@ const map_image = {
     "https://cdn.gametools.network/maps/bfv/1080p_MP_Escaut-9764d1fb.webp",
   MP_WE_Grind_Rotterdam:
     "https://cdn.gametools.network/maps/bfv/1080p_MP_Rotterdam-55632240.webp",
-};
-
-const marne_regions = {
-  AS: "Asia",
-  SA: "sam",
-  NA: "nam",
-  AF: "afr",
 };
 
 interface PlayerInfo {

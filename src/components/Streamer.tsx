@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-import { Route, Routes, useMatch } from "react-router-dom";
+import { Route, Routes, useMatch } from "react-router";
 import { GetBfListStats, PlayerInfoReturn } from "../api/BfList";
 import { GetStats } from "../api/GetStats";
 import {

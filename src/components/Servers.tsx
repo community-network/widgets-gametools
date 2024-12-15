@@ -1,13 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-import {
-  PathMatch,
-  Route,
-  Routes,
-  useLocation,
-  useMatch,
-} from "react-router-dom";
+import { PathMatch, Route, Routes, useLocation, useMatch } from "react-router";
 import { GetStats } from "../api/GetStats";
 import { dice, frostbite3 } from "../api/static";
 import "../locales/config";
@@ -292,7 +286,6 @@ function DetailedDefaults({
   );
 }
 
-
 export function SmallServerBox(): React.ReactElement {
   const { t } = useTranslation();
   const match = useMatch("/servers/small/:gameid/:type/:sname/:platform");
@@ -320,21 +313,13 @@ export function SmallServerBox(): React.ReactElement {
   });
   if (loading) {
     return (
-      <SmallDefaults
-        match={match}
-        zoom={zoomQuery ?? 100}
-        gameId={gameId}
-      />
+      <SmallDefaults match={match} zoom={zoomQuery ?? 100} gameId={gameId} />
     );
   }
 
   if (error || stats === undefined) {
     return (
-      <SmallDefaults
-        match={match}
-        zoom={zoomQuery ?? 100}
-        gameId={gameId}
-      />
+      <SmallDefaults match={match} zoom={zoomQuery ?? 100} gameId={gameId} />
     );
   }
   return (
@@ -355,9 +340,7 @@ export function SmallServerBox(): React.ReactElement {
       >
         <div className={styles.blur}>
           {stats?.favorites && (
-            <p className={styles.serverFavorites}>
-              &#9733; {stats?.favorites}
-            </p>
+            <p className={styles.serverFavorites}>&#9733; {stats?.favorites}</p>
           )}
         </div>
       </div>

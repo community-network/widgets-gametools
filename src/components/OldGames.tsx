@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
-import { Route, Routes, useMatch } from "react-router-dom";
+import { Route, Routes, useMatch } from "react-router";
 import { GetStatsOldGames } from "../api/GetStatsOldGames";
 import "../locales/config";
 import * as styles from "./OldGames.module.scss";
 import * as serverStyles from "./Servers.module.scss";
+import { maps as hll_maps } from "../api/oldGameMaps/hll";
 
 export function OldGame(): React.ReactElement {
   const match = useMatch("/oldgames/detailed/:gamename/:host/:port");
@@ -20,7 +21,7 @@ export function OldGame(): React.ReactElement {
       GetStatsOldGames.server({
         gamename: gamename,
         host: host,
-        port: port
+        port: port,
       }),
     retry: 1,
   });
@@ -37,13 +38,21 @@ export function OldGame(): React.ReactElement {
   if (stats == undefined) {
     return <div>resultNotFound</div>;
   }
+
+  let backgroundImage = `url(/${gamename}.jpg)`;
+
+  if (gamename === "hll") {
+    const image_name = hll_maps.find(
+      (item) => item.queryName == stats.map,
+    ).image;
+    if (image_name !== undefined) {
+      backgroundImage = `url(https://cdn.gametools.network/maps/hll/${image_name}.webp)`;
+    }
+  }
+
   return (
-    <div
-      className={styles.BigServer}>
-      <div
-        className={styles.BigServerImage}
-        style={{ backgroundImage: `url(/${gamename}.jpg)` }}
-      />
+    <div className={styles.BigServer}>
+      <div className={styles.BigServerImage} style={{ backgroundImage }} />
       <div>
         <h4 style={{ margin: 0, marginTop: "0.6rem", color: "white" }}>
           {stats.name}
