@@ -6,10 +6,12 @@ import "../locales/config";
 import * as styles from "./OldGames.module.scss";
 import * as serverStyles from "./Servers.module.scss";
 import { maps as hll_maps } from "../api/oldGameMaps/hll";
+import { useTranslation } from "react-i18next";
 
 export function OldGame(): React.ReactElement {
   const match = useMatch("/oldgames/detailed/:gamename/:host/:port");
   const { gamename, host, port } = match.params;
+  const { t } = useTranslation();
 
   const {
     isLoading: loading,
@@ -30,23 +32,23 @@ export function OldGame(): React.ReactElement {
     return (
       <span className={styles.BigServer}>
         <span className={serverStyles.Circle} />
-        <b>Loading...</b>
+        <b>{t("loading")}</b>
         <b style={{ marginLeft: "auto", paddingLeft: "1rem" }}>0/0</b>
       </span>
     );
   }
   if (stats == undefined) {
-    return <div>resultNotFound</div>;
+    return <div>{t("server.notFound")}</div>;
   }
 
   let backgroundImage = `url(/${gamename}.jpg)`;
+  let mapName: string | undefined = undefined;
 
   if (gamename === "hll") {
-    const image_name = hll_maps.find(
-      (item) => item.queryName == stats.map,
-    ).image;
-    if (image_name !== undefined) {
-      backgroundImage = `url(https://cdn.gametools.network/maps/hll/${image_name}.webp)`;
+    const mapInfo = hll_maps.find((item) => item.queryName == stats.map);
+    if (mapInfo !== undefined) {
+      backgroundImage = `url(https://cdn.gametools.network/maps/hll/${mapInfo.image}.webp)`;
+      mapName = mapInfo.base;
     }
   }
 
@@ -59,19 +61,25 @@ export function OldGame(): React.ReactElement {
         </h4>
         <div className={serverStyles.Column}>
           <div className={serverStyles.Row}>
-            <h4 className={serverStyles.Title}>Players</h4>
+            <h4 className={serverStyles.Title}>{t("server.players")}</h4>
             <p className={serverStyles.Description}>
               {stats.players.length}/{stats.maxplayers}
             </p>
           </div>
           <div className={serverStyles.Row}>
-            <h4 className={serverStyles.Title}>Ping</h4>
+            <h4 className={serverStyles.Title}>{t("server.ping")}</h4>
             <p className={serverStyles.Description}>{stats.ping}</p>
           </div>
           <div className={serverStyles.Row}>
-            <h4 className={serverStyles.Title}>Server IP</h4>
+            <h4 className={serverStyles.Title}>{t("server.serverIp")}</h4>
             <p className={serverStyles.Description}>{stats.connect}</p>
           </div>
+          {mapName !== undefined && (
+            <div className={serverStyles.Row}>
+              <h4 className={serverStyles.Title}>{t("server.map")}</h4>
+              <p className={serverStyles.Description}>{mapName}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

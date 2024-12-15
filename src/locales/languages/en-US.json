@@ -7,6 +7,8 @@
     "queue": "Queue",
     "favorites": "Favorites",
     "mode": "Mode",
+    "ping": "Ping",
+    "serverIp": "Server IP",
     "notFound": "Server not found"
   },
   "stats": {
