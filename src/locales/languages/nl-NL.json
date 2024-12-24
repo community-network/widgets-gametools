@@ -7,10 +7,14 @@
     "queue": "Queue",
     "favorites": "Favorieten",
     "mode": "Mode",
+    "ping": "Ping",
+    "serverIp": "Server IP",
     "notFound": "Server niet gevonden"
   },
   "stats": {
     "main": "Stats",
+    "title": "GAMETOOLS.NETWORK",
+    "header": "BATTLEFIELD {{ gameid }} STATS",
     "rank": "Rank",
     "killsPerMinute": "KPM",
     "scorePerMinute": "SPM",
