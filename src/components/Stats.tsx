@@ -69,8 +69,9 @@ export default function Stats(): React.ReactElement {
     <a
       className="Main"
       style={calculateZoomStyle(match.params.zoom)}
-      href={`https://gametools.network/stats/${match.params.plat}/${match.params.type
-        }/${encodeURIComponent(match.params.eaid)}`}
+      href={`https://gametools.network/stats/${match.params.plat}/${
+        match.params.type
+      }/${encodeURIComponent(match.params.eaid)}`}
       target="_blank"
       rel="noreferrer"
     >
@@ -141,8 +142,9 @@ export default function Stats(): React.ReactElement {
                 />
                 <img
                   className={styles.Platform}
-                  src={`https://cdn.gametools.network/platforms/${platformImage[match.params.plat]
-                    }.png`}
+                  src={`https://cdn.gametools.network/platforms/${
+                    platformImage[match.params.plat]
+                  }.png`}
                 />
               </>
             )}
@@ -194,16 +196,18 @@ function DefaultStats({
     <a
       className="Main"
       style={calculateZoomStyle(match.params.zoom)}
-      href={`https://gametools.network/stats/${match.params.plat}/${match.params.type
-        }/${encodeURIComponent(match.params.eaid)}`}
+      href={`https://gametools.network/stats/${match.params.plat}/${
+        match.params.type
+      }/${encodeURIComponent(match.params.eaid)}`}
       target="_blank"
       rel="noreferrer"
     >
       <div
         className={styles.Background}
         style={{
-          backgroundImage: `url("https://cdn.gametools.network/backgrounds/${game === "bf1marne" ? "bf1" : game
-            }/1.webp")`,
+          backgroundImage: `url("https://cdn.gametools.network/backgrounds/${
+            game === "bf1marne" ? "bf1" : game
+          }/1.webp")`,
         }}
       >
         <div className={styles.Blur}>
@@ -257,8 +261,9 @@ function DefaultStats({
             />
             <img
               className={styles.Platform}
-              src={`https://cdn.gametools.network/platforms/${platformImage[match.params.plat]
-                }.png`}
+              src={`https://cdn.gametools.network/platforms/${
+                platformImage[match.params.plat]
+              }.png`}
             />
           </>
         )}

@@ -2,45 +2,52 @@ import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
+import pluginJs from "@eslint/js";
 import { FlatCompat } from "@eslint/eslintrc";
+import reactCompiler from "eslint-plugin-react-compiler";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
+  baseDirectory: __dirname,
+  recommendedConfig: pluginJs.configs.recommended,
+  allConfig: pluginJs.configs.all,
 });
 
-export default [...compat.extends(
+/** @type {import('eslint').Linter.Config[]} */
+export default [
+  ...compat.extends(
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-), {
+  ),
+  {
     plugins: {
-        "@typescript-eslint": typescriptEslint,
+      "@typescript-eslint": typescriptEslint,
+      "react-compiler": reactCompiler,
     },
 
     languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 2021,
-        sourceType: "module",
+      parser: tsParser,
+      ecmaVersion: 2021,
+      sourceType: "module",
 
-        parserOptions: {
-            ecmaFeatures: {
-                jsx: true,
-            },
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
         },
+      },
     },
 
     settings: {
-        react: {
-            version: "detect",
-        },
+      react: {
+        version: "detect",
+      },
     },
 
     rules: {
-        "@typescript-eslint/no-var-requires": 0,
+      "@typescript-eslint/no-var-requires": 0,
+      "react-compiler/react-compiler": "error",
     },
-}];
+  },
+];
