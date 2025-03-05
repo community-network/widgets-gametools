@@ -16,7 +16,7 @@ export function ServerBox(
   const { t } = useTranslation();
   const match = useMatch(`/servers/${color}/:gameid/:type/:sname/:platform`);
   const gameId = match.params.gameid;
-  const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
+  const serverName = match.params.sname;
   const backgroundStyle =
     color === "black" ? { background: "#141d26", borderColor: "#141d26" } : {};
   const textStyle = color == "black" ? { color: "white" } : {};
@@ -127,7 +127,7 @@ export function DetailedServerBox(): React.ReactElement {
   const { t } = useTranslation();
   const match = useMatch("/servers/detailed/:gameid/:type/:sname/:platform");
   const gameId = match.params.gameid;
-  const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
+  const serverName = match.params.sname
   const query = new URLSearchParams(useLocation().search);
   const zoomQuery = query.get("zoom");
 
@@ -290,7 +290,7 @@ export function SmallServerBox(): React.ReactElement {
   const { t } = useTranslation();
   const match = useMatch("/servers/small/:gameid/:type/:sname/:platform");
   const gameId = match.params.gameid;
-  const serverName = unescape(match.params.sname).replaceAll('"', '\\"');
+  const serverName = match.params.sname;
   const query = new URLSearchParams(useLocation().search);
   const zoomQuery = query.get("zoom");
 
