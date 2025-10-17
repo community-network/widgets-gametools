@@ -1,11 +1,11 @@
 export const platformGames = {
-  pc: ["bf3", "bf4", "bfh", "bf1", "bfv", "bf2042"],
+  pc: ["bf3", "bf4", "bfh", "bf1", "bfv", "bf2042", "bf6"],
   xboxone: ["bf4", "bfh", "bf1", "bfv", "bf2042"],
   xbox360: ["bf3", "bf4", "bfh"],
   ps4: ["bf4", "bfh", "bf1", "bfv", "bf2042"],
   ps3: ["bf3", "bf4", "bfh"],
-  ps5: ["bf2042"],
-  xboxseries: ["bf2042"],
+  ps5: ["bf2042", "bf6"],
+  xboxseries: ["bf2042", "bf6"],
 };
 
 export const differentWidth = {
@@ -40,7 +40,7 @@ export const shortName = {
   bfv: "5",
   bf2042: "2042",
 };
-export const dice = ["bf3", "bf4", "bfh", "bf1", "bfv", "bf2042"];
+export const dice = ["bf3", "bf4", "bfh", "bf1", "bfv", "bf2042", "bf6"];
 
 export const gameStats = {
   bf3: {

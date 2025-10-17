@@ -130,6 +130,7 @@ export function DetailedServerBox(): React.ReactElement {
   const serverName = match.params.sname
   const query = new URLSearchParams(useLocation().search);
   const zoomQuery = query.get("zoom");
+  const nameQuery = query.get("name");
 
   const {
     isLoading: loading,
@@ -148,6 +149,11 @@ export function DetailedServerBox(): React.ReactElement {
       }),
     retry: 1,
   });
+
+  if (query.has("name") && stats !== undefined) {
+    stats.prefix = nameQuery;
+  }
+
   if (loading) {
     return (
       <DetailedDefaults
@@ -195,7 +201,7 @@ export function DetailedServerBox(): React.ReactElement {
               {stats?.maxPlayers}
             </p>
           </div>
-          {gameId !== "bf2042" && dice.includes(gameId) && (
+          {!["bf2042", "bf6"].includes(gameId) && dice.includes(gameId) && (
             <div className={styles.Row}>
               <h4 className={styles.Title}>{t("server.queue")}</h4>
               <p className={styles.Description}>{stats?.inQueue}/10</p>
@@ -258,7 +264,7 @@ function DetailedDefaults({
             <h4 className={styles.Title}>{t("server.players")}</h4>
             <p className={styles.Description}>0/0</p>
           </div>
-          {gameId !== "bf2042" && dice.includes(gameId) && (
+          {!["bf2042", "bf6"].includes(gameId) && dice.includes(gameId) && (
             <div className={styles.Row}>
               <h4 className={styles.Title}>{t("server.queue")}</h4>
               <p className={styles.Description}>0/10</p>
@@ -293,6 +299,7 @@ export function SmallServerBox(): React.ReactElement {
   const serverName = match.params.sname;
   const query = new URLSearchParams(useLocation().search);
   const zoomQuery = query.get("zoom");
+  const nameQuery = query.get("name");
 
   const {
     isLoading: loading,
@@ -311,6 +318,9 @@ export function SmallServerBox(): React.ReactElement {
       }),
     retry: 1,
   });
+  if (query.has("name") && stats !== undefined) {
+    stats.prefix = nameQuery;
+  }
   if (loading) {
     return (
       <SmallDefaults match={match} zoom={zoomQuery ?? 100} gameId={gameId} />
@@ -352,7 +362,7 @@ export function SmallServerBox(): React.ReactElement {
             {stats?.maxPlayers}
           </p>
         </div>
-        {gameId !== "bf2042" && dice.includes(gameId) && (
+        {!["bf2042", "bf6"].includes(gameId) && dice.includes(gameId) && (
           <div className={styles.Row}>
             <h4 className={styles.Title}>{t("server.queue")}</h4>
             <p className={styles.Description}>{stats?.inQueue}/10</p>
@@ -392,7 +402,7 @@ function SmallDefaults({
           <h4 className={styles.Title}>{t("server.players")}</h4>
           <p className={styles.Description}>0/0</p>
         </div>
-        {gameId !== "bf2042" && dice.includes(gameId) && (
+        {!["bf2042", "bf6"].includes(gameId) && dice.includes(gameId) && (
           <div className={styles.Row}>
             <h4 className={styles.Title}>{t("server.queue")}</h4>
             <p className={styles.Description}>0/10</p>
