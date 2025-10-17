@@ -13,6 +13,7 @@ export function ServerBox(
   props: Readonly<{ color: string }>,
 ): React.ReactElement {
   const { color } = props;
+  const query = new URLSearchParams(useLocation().search);
   const { t } = useTranslation();
   const match = useMatch(`/servers/${color}/:gameid/:type/:sname/:platform`);
   const gameId = match.params.gameid;
@@ -38,6 +39,11 @@ export function ServerBox(
       }),
     retry: 1,
   });
+
+  if (query.has("name") && stats !== undefined) {
+    stats.prefix = query.get("name");
+  }
+
   const params = GetStats.constructParamStr({
     search: match.params.sname,
     game: gameId,
@@ -130,7 +136,6 @@ export function DetailedServerBox(): React.ReactElement {
   const serverName = match.params.sname
   const query = new URLSearchParams(useLocation().search);
   const zoomQuery = query.get("zoom");
-  const nameQuery = query.get("name");
 
   const {
     isLoading: loading,
@@ -151,7 +156,7 @@ export function DetailedServerBox(): React.ReactElement {
   });
 
   if (query.has("name") && stats !== undefined) {
-    stats.prefix = nameQuery;
+    stats.prefix = query.get("name");
   }
 
   if (loading) {
@@ -219,7 +224,7 @@ export function DetailedServerBox(): React.ReactElement {
               {stats?.currentMap || stats?.map}
             </p>
           </div>
-          {["bf1", "battlebit"].includes(gameId) && (
+          {["bf1", "battlebit", "bf6"].includes(gameId) && (
             <div className={styles.Row}>
               <h4 className={styles.Title}>{t("server.mode")}</h4>
               <p className={styles.Description}>{stats?.mode}</p>
@@ -280,7 +285,7 @@ function DetailedDefaults({
             <h4 className={styles.Title}>{t("server.map")}</h4>
             <p className={styles.Description}>{t("notApplicable")}</p>
           </div>
-          {gameId == "bf1" && (
+          {["bf1", "battlebit", "bf6", "bf2042"].includes(gameId) && (
             <div className={styles.Row}>
               <h4 className={styles.Title}>{t("server.mode")}</h4>
               <p className={styles.Description}>{t("notApplicable")}</p>
@@ -299,7 +304,6 @@ export function SmallServerBox(): React.ReactElement {
   const serverName = match.params.sname;
   const query = new URLSearchParams(useLocation().search);
   const zoomQuery = query.get("zoom");
-  const nameQuery = query.get("name");
 
   const {
     isLoading: loading,
@@ -319,7 +323,7 @@ export function SmallServerBox(): React.ReactElement {
     retry: 1,
   });
   if (query.has("name") && stats !== undefined) {
-    stats.prefix = nameQuery;
+    stats.prefix = query.get("name");
   }
   if (loading) {
     return (
