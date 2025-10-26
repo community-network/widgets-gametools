@@ -69,9 +69,8 @@ export default function Stats(): React.ReactElement {
     <a
       className="Main"
       style={calculateZoomStyle(match.params.zoom)}
-      href={`https://gametools.network/stats/${match.params.plat}/${
-        match.params.type
-      }/${encodeURIComponent(match.params.eaid)}`}
+      href={`https://gametools.network/stats/${match.params.plat}/${match.params.type
+        }/${encodeURIComponent(match.params.eaid)}`}
       target="_blank"
       rel="noreferrer"
     >
@@ -87,7 +86,7 @@ export default function Stats(): React.ReactElement {
           </p>
           {!(width <= 700 && match.params.zoom === "100") && (
             <>
-              {["bfh", "bf2042"].includes(game) ? (
+              {["bfh", "bf2042", "bf6"].includes(game) ? (
                 <hr
                   className={styles.Bar}
                   style={{ left: differentWidth?.[game] }}
@@ -142,9 +141,8 @@ export default function Stats(): React.ReactElement {
                 />
                 <img
                   className={styles.Platform}
-                  src={`https://cdn.gametools.network/platforms/${
-                    platformImage[match.params.plat]
-                  }.png`}
+                  src={`https://cdn.gametools.network/platforms/${platformImage[match.params.plat]
+                    }.png`}
                 />
               </>
             )}
@@ -196,18 +194,16 @@ function DefaultStats({
     <a
       className="Main"
       style={calculateZoomStyle(match.params.zoom)}
-      href={`https://gametools.network/stats/${match.params.plat}/${
-        match.params.type
-      }/${encodeURIComponent(match.params.eaid)}`}
+      href={`https://gametools.network/stats/${match.params.plat}/${match.params.type
+        }/${encodeURIComponent(match.params.eaid)}`}
       target="_blank"
       rel="noreferrer"
     >
       <div
         className={styles.Background}
         style={{
-          backgroundImage: `url("https://cdn.gametools.network/backgrounds/${
-            game === "bf1marne" ? "bf1" : game
-          }/1.webp")`,
+          backgroundImage: `url("https://cdn.gametools.network/backgrounds/${game === "bf1marne" ? "bf1" : game
+            }/1.webp")`,
         }}
       >
         <div className={styles.Blur}>
@@ -218,7 +214,7 @@ function DefaultStats({
             <></>
           ) : (
             <>
-              {["bfh", "bf2042"].includes(game) ? (
+              {["bfh", "bf2042", "bf6"].includes(game) ? (
                 <hr
                   className={styles.Bar}
                   style={{ left: differentWidth?.[game] }}
@@ -246,7 +242,7 @@ function DefaultStats({
           src="https://eaassets-a.akamaihd.net/battlelog/defaultavatars/default-avatar-36.png"
         />
         <div className={styles.PlayerName}>{text}</div>
-        {game !== "bf2042" ? (
+        {!["bf2042", "bf6"].includes(game) ? (
           <div className={styles.Rank}>{t("stats.rank")} 0</div>
         ) : (
           <></>
@@ -261,9 +257,8 @@ function DefaultStats({
             />
             <img
               className={styles.Platform}
-              src={`https://cdn.gametools.network/platforms/${
-                platformImage[match.params.plat]
-              }.png`}
+              src={`https://cdn.gametools.network/platforms/${platformImage[match.params.plat]
+                }.png`}
             />
           </>
         )}

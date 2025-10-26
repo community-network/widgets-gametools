@@ -155,4 +155,20 @@ export const gameStats = {
     resupplies: "resupplies",
     timePlayed: "timePlayed",
   },
+  "bf6": {
+    killsPerMinute: "killsPerMinute",
+    damagePerMinute: "damagePerMinute",
+    headshotPercent: "headshots",
+    killDeath: "killDeath",
+    infantryKillDeath: "infantryKillDeath",
+    winPercent: "winPercent",
+    killsPerMatch: "killsPerMatch",
+    accuracy: "accuracy",
+    bestClass: "bestClass",
+    humanPrecentage: "humanPrecentage",
+    repairs: "repairs",
+    revives: "revives",
+    resupplies: "resupplies",
+    timePlayed: "timePlayed",
+  }
 };
