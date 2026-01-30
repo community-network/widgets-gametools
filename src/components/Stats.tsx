@@ -137,6 +137,7 @@ export default function Stats(): React.ReactElement {
               <>
                 <img
                   className={styles.GameImg}
+                  style={game === "bf6" ? { height: "30px", top: "224px" } : {}}
                   src={`https://cdn.gametools.network/games/${game}.png`}
                 />
                 <img
