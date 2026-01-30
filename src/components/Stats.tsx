@@ -109,7 +109,7 @@ export default function Stats(): React.ReactElement {
         </div>
       </div>
       <div className={styles.Body}>
-        <img className={styles.Img} src={stats?.avatar} />
+        <img className={styles.Img} src={stats?.avatar || "https://eaassets-a.akamaihd.net/battlelog/defaultavatars/default-avatar-36.png"} />
         <div className={styles.PlayerName}>{stats?.userName}</div>
         {stats?.rank !== undefined && (
           <>
