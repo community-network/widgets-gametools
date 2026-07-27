@@ -11,9 +11,9 @@ export class ApiProvider extends JsonClient {
     host,
     port,
   }: {
-    gamename: string;
-    host: string;
-    port: string;
+    gamename: string | undefined;
+    host: string | undefined;
+    port: string | undefined;
   }): Promise<OldGames> {
     return await this.getJsonMethod(`/game/${gamename}/${host}/${port}`, {});
   }

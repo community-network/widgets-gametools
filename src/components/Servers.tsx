@@ -16,8 +16,8 @@ export function ServerBox(
   const query = new URLSearchParams(useLocation().search);
   const { t } = useTranslation();
   const match = useMatch(`/servers/${color}/:gameid/:type/:sname/:platform`);
-  const gameId = match.params.gameid;
-  const serverName = match.params.sname;
+  const gameId = match?.params.gameid;
+  const serverName = match?.params.sname;
   const backgroundStyle =
     color === "black" ? { background: "#141d26", borderColor: "#141d26" } : {};
   const textStyle = color == "black" ? { color: "white" } : {};
@@ -27,14 +27,14 @@ export function ServerBox(
     isError: error,
     data: stats,
   } = useQuery({
-    queryKey: ["servers" + gameId + serverName + match.params.platform],
+    queryKey: ["servers" + gameId + serverName + match?.params.platform],
     queryFn: () =>
       GetStats.server({
         game: gameId,
-        getter: match.params.type,
+        getter: match?.params.type,
         serverName: serverName,
         lang: getLanguage(),
-        platform: match.params.platform,
+        platform: match?.params.platform,
         with_ownername: false,
       }),
     retry: 1,
@@ -45,9 +45,9 @@ export function ServerBox(
   }
 
   const params = GetStats.constructParamStr({
-    search: match.params.sname,
+    search: match?.params.sname,
     game: gameId,
-    platform: match.params.platform,
+    platform: match?.params.platform,
   });
   if (loading) {
     return (
@@ -86,7 +86,7 @@ export function ServerBox(
       </a>
     );
   }
-  let queue: number = undefined;
+  let queue: number | undefined = undefined;
   queue = stats?.inQueue;
   let queueString = "";
   if (queue !== undefined && queue !== 0) {
@@ -100,8 +100,8 @@ export function ServerBox(
     <a
       className={styles.Server}
       href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
-        match.params.sname,
-      )}/${match.params.platform}`}
+        match?.params.sname,
+      )}/${match?.params.platform}`}
       target="_blank"
       style={backgroundStyle}
       rel="noreferrer"
@@ -132,8 +132,8 @@ export function ServerBox(
 export function DetailedServerBox(): React.ReactElement {
   const { t } = useTranslation();
   const match = useMatch("/servers/detailed/:gameid/:type/:sname/:platform");
-  const gameId = match.params.gameid;
-  const serverName = match.params.sname
+  const gameId = match?.params.gameid || "";
+  const serverName = match?.params.sname
   const query = new URLSearchParams(useLocation().search);
   const zoomQuery = query.get("zoom");
 
@@ -142,14 +142,14 @@ export function DetailedServerBox(): React.ReactElement {
     isError: error,
     data: stats,
   } = useQuery({
-    queryKey: ["servers" + gameId + serverName + match.params.platform],
+    queryKey: ["servers" + gameId + serverName + match?.params.platform],
     queryFn: () =>
       GetStats.server({
         game: gameId,
-        getter: match.params.type,
+        getter: match?.params.type,
         serverName: serverName,
         lang: getLanguage(),
-        platform: match.params.platform,
+        platform: match?.params.platform,
         with_ownername: false,
       }),
     retry: 1,
@@ -184,8 +184,8 @@ export function DetailedServerBox(): React.ReactElement {
     <a
       className={styles.BigServer}
       href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
-        match.params.sname,
-      )}/${match.params.platform}`}
+        match?.params.sname,
+      )}/${match?.params.platform}`}
       target="_blank"
       style={calculateZoomStyle(zoomQuery ?? 100)}
       rel="noreferrer"
@@ -249,9 +249,9 @@ function DetailedDefaults({
 }>): React.ReactElement {
   const { t } = useTranslation();
   const params = GetStats.constructParamStr({
-    search: match.params.sname,
+    search: match?.params.sname || "",
     game: gameId,
-    platform: match.params.platform,
+    platform: match?.params.platform || "pc",
   });
   return (
     <a
@@ -300,8 +300,8 @@ function DetailedDefaults({
 export function SmallServerBox(): React.ReactElement {
   const { t } = useTranslation();
   const match = useMatch("/servers/small/:gameid/:type/:sname/:platform");
-  const gameId = match.params.gameid;
-  const serverName = match.params.sname;
+  const gameId = match?.params.gameid;
+  const serverName = match?.params.sname;
   const query = new URLSearchParams(useLocation().search);
   const zoomQuery = query.get("zoom");
 
@@ -310,14 +310,14 @@ export function SmallServerBox(): React.ReactElement {
     isError: error,
     data: stats,
   } = useQuery({
-    queryKey: ["servers" + gameId + serverName + match.params.platform],
+    queryKey: ["servers" + gameId + serverName + match?.params.platform],
     queryFn: () =>
       GetStats.server({
         game: gameId,
-        getter: match.params.type,
+        getter: match?.params.type,
         serverName: serverName,
         lang: getLanguage(),
-        platform: match.params.platform,
+        platform: match?.params.platform,
         with_ownername: false,
       }),
     retry: 1,
@@ -340,8 +340,8 @@ export function SmallServerBox(): React.ReactElement {
     <a
       className={styles.BigServer}
       href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
-        match.params.sname,
-      )}/${match.params.platform}`}
+        match?.params.sname,
+      )}/${match?.params.platform}`}
       target="_blank"
       style={calculateZoomStyle(zoomQuery ?? 100)}
       rel="noreferrer"
@@ -388,9 +388,9 @@ function SmallDefaults({
 }>): React.ReactElement {
   const { t } = useTranslation();
   const params = GetStats.constructParamStr({
-    search: match.params.sname,
+    search: match?.params.sname,
     game: gameId,
-    platform: match.params.platform,
+    platform: match?.params.platform,
   });
   return (
     <a

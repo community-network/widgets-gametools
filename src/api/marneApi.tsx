@@ -751,37 +751,37 @@ export class ApiProvider extends JsonClient {
       this.serverCache.servers == undefined
         ? []
         : this.serverCache.servers
-            .map((server) => {
-              const internalMapName: string = server?.mapName
-                ?.split("/")
-                .slice(-1)[0];
-              return {
-                prefix: server.name,
-                currentMap: maps[internalMapName],
-                currentMapImage: map_image[internalMapName],
-                url: map_image[internalMapName],
-                inQue: 0,
-                mode: modes[server.gameMode],
-                official: false,
-                ownerId: 0,
-                region: server.region,
-                platform: "pc",
-                playerAmount: server.currentPlayers,
-                maxPlayerAmount: server.maxPlayers,
-                serverInfo: null,
-                smallMode: smallmodes[server.gameMode],
-                smallmode: smallmodes[server.gameMode],
-              };
-            })
-            .filter((server) => {
-              return (
-                server.prefix
-                  .toLowerCase()
-                  .includes(searchTerm.toLowerCase()) &&
-                (regions.includes(server.region.toLowerCase()) ||
-                  regions.includes("all"))
-              );
-            });
+          .map((server) => {
+            const internalMapName: string = server?.mapName
+              ?.split("/")
+              .slice(-1)[0];
+            return {
+              prefix: server.name,
+              currentMap: maps[internalMapName],
+              currentMapImage: map_image[internalMapName],
+              url: map_image[internalMapName],
+              inQue: 0,
+              mode: modes[server.gameMode],
+              official: false,
+              ownerId: 0,
+              region: server.region,
+              platform: "pc",
+              playerAmount: server.currentPlayers,
+              maxPlayerAmount: server.maxPlayers,
+              serverInfo: null,
+              smallMode: smallmodes[server.gameMode],
+              smallmode: smallmodes[server.gameMode],
+            };
+          })
+          .filter((server) => {
+            return (
+              server.prefix
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) &&
+              (regions.includes(server.region.toLowerCase()) ||
+                regions.includes("all"))
+            );
+          });
     return servers.length > 0 ? servers[0] : { errors: ["server not found"] };
   }
 }

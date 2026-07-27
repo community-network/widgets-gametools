@@ -18,7 +18,7 @@ import { calculateZoomStyle } from "./functions/calculateZoom";
 function statsSelector(
   guid: string,
   username: string,
-): Promise<PlayerInfoReturn | seederPlayersReturn> {
+): Promise<PlayerInfoReturn | seederPlayersReturn | undefined> {
   if (bflistGames.includes(guid)) {
     return GetBfListStats.stats({
       game: guid,
@@ -37,10 +37,10 @@ export function GameStreamStat(): React.ReactElement {
   const { t, i18n } = useTranslation();
 
   React.useState(() => {
-    i18n.changeLanguage(match.params.lang);
+    i18n.changeLanguage(match?.params.lang);
   });
 
-  const guid = match.params.id;
+  const guid = match?.params.id;
 
   // Promise<PlayerInfoReturn> | Promise<seederPlayersReturn>
   const {
@@ -52,8 +52,8 @@ export function GameStreamStat(): React.ReactElement {
     unknown,
     seederPlayersReturn | PlayerInfoReturn
   >({
-    queryKey: ["seederPlayerList" + guid + match.params.player],
-    queryFn: () => statsSelector(guid, match.params.player),
+    queryKey: ["seederPlayerList" + guid + match?.params.player],
+    queryFn: () => statsSelector(guid, match?.params.player),
     retry: 2,
     staleTime: 1000 * 3, // seconds
     refetchOnMount: "always",
@@ -66,7 +66,7 @@ export function GameStreamStat(): React.ReactElement {
   if (loading) {
     // loading
     return (
-      <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+      <span className="Main" style={calculateZoomStyle(match?.params.zoom)}>
         <div className={styles.StreamColumn}>
           <div className={styles.Row}>
             <h4 className={styles.Title}>{t("stats.main")}</h4>
@@ -80,7 +80,7 @@ export function GameStreamStat(): React.ReactElement {
   // if seederid not found
   if (error || stats === undefined) {
     return (
-      <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+      <span className="Main" style={calculateZoomStyle(match?.params.zoom)}>
         <div className={styles.StreamColumn}>
           <div className={styles.Row}>
             <h4 className={styles.Title}>{t("stats.main")}</h4>
@@ -98,9 +98,9 @@ export function GameStreamStat(): React.ReactElement {
     players.forEach((player: seederPlayer) => {
       const playerName = player.name.replace(/(?=\[)(.*?)(?<=\])/gm, "");
       if (
-        player.player_id.toString() == match.params.player ||
-        player.name == match.params.player ||
-        playerName == match.params.player
+        player.player_id.toString() == match?.params.player ||
+        player.name == match?.params.player ||
+        playerName == match?.params.player
       ) {
         currentPlayer = player;
       }
@@ -111,7 +111,7 @@ export function GameStreamStat(): React.ReactElement {
   }
   if (currentPlayer != undefined) {
     return (
-      <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+      <span className="Main" style={calculateZoomStyle(match?.params.zoom)}>
         <div className={styles.StreamColumn}>
           <div className={styles.Row}>
             <h4 className={styles.Title}>{t("stats.score")}</h4>
@@ -131,7 +131,7 @@ export function GameStreamStat(): React.ReactElement {
   } else {
     // player not in server
     return (
-      <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+      <span className="Main" style={calculateZoomStyle(match?.params.zoom)}>
         <div className={styles.StreamColumn}>
           <div className={styles.Row}>
             <h4 className={styles.Title}>{t("stats.main")}</h4>
@@ -148,10 +148,10 @@ export function GameStreamScore(): React.ReactElement {
   const { t, i18n } = useTranslation();
 
   React.useState(() => {
-    i18n.changeLanguage(match.params.lang);
+    i18n.changeLanguage(match?.params.lang);
   });
 
-  const guid = match.params.id;
+  const guid = match?.params.id;
   const {
     isLoading: loading,
     isError: error,
@@ -174,7 +174,7 @@ export function GameStreamScore(): React.ReactElement {
   if (loading) {
     // loading
     return (
-      <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+      <span className="Main" style={calculateZoomStyle(match?.params.zoom)}>
         <div className={styles.StreamColumn}>
           <div className={styles.Row}>
             <h4 className={styles.Title}>{t("stats.main")}</h4>
@@ -188,7 +188,7 @@ export function GameStreamScore(): React.ReactElement {
   // if seederid not found
   if (error || stats === undefined) {
     return (
-      <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+      <span className="Main" style={calculateZoomStyle(match?.params.zoom)}>
         <div className={styles.StreamColumn}>
           <div className={styles.Row}>
             <h4 className={styles.Title}>{t("stats.main")}</h4>
@@ -222,7 +222,7 @@ export function GameStreamScore(): React.ReactElement {
   const kdTeamTwo = teams[1].kills / teams[1].deaths || 0.0;
 
   return (
-    <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+    <span className="Main" style={calculateZoomStyle(match?.params.zoom)}>
       <div className={styles.StreamColumn}>
         <div className={styles.Row}>
           <h4 className={styles.Title}>{t("stats.alive")}</h4>
@@ -279,7 +279,7 @@ export function SteamStat(): React.ReactElement {
   const { t, i18n } = useTranslation();
 
   React.useState(() => {
-    i18n.changeLanguage(match.params.lang);
+    i18n.changeLanguage(match?.params.lang);
   });
 
   const {
@@ -287,13 +287,13 @@ export function SteamStat(): React.ReactElement {
     isError: error,
     data: stats,
   } = useQuery<MainStats, unknown, MainStats>({
-    queryKey: ["stats" + match.params.gameid + match.params.eaid],
+    queryKey: ["stats" + match?.params.gameid + match?.params.eaid],
     queryFn: () =>
       GetStats.stats({
-        game: match.params.gameid,
+        game: match?.params.gameid,
         type: "stats",
-        getter: match.params.type,
-        userName: match.params.eaid,
+        getter: match?.params.type,
+        userName: match?.params.eaid,
         lang: getLanguage(),
       }),
 
@@ -312,7 +312,7 @@ export function SteamStat(): React.ReactElement {
     return <div>{t("server.notFound")}</div>;
   }
   return (
-    <span className="Main" style={calculateZoomStyle(match.params.zoom)}>
+    <span className="Main" style={calculateZoomStyle(match?.params.zoom)}>
       <div className={styles.StreamColumn}>
         <div className={styles.Row}>
           <h4 className={styles.Title}>{t("stats.killsPerMinute")}</h4>

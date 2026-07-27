@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 
 export function OldGame(): React.ReactElement {
   const match = useMatch("/oldgames/detailed/:gamename/:host/:port");
-  const { gamename, host, port } = match.params;
+  const { gamename, host, port } = match?.params || {};
   const { t } = useTranslation();
 
   const {

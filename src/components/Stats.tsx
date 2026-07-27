@@ -20,10 +20,10 @@ export default function Stats(): React.ReactElement {
   const { t, i18n } = useTranslation();
 
   React.useState(() => {
-    i18n.changeLanguage(match.params.lang);
+    i18n.changeLanguage(match?.params.lang);
   });
 
-  const game = match.params.gameid;
+  const game = match?.params.gameid;
   const gameid = shortName[game];
   const width = useWindowWidth();
   const {
@@ -31,15 +31,15 @@ export default function Stats(): React.ReactElement {
     isError: error,
     data: stats,
   } = useQuery({
-    queryKey: ["stats" + game + match.params.eaid],
+    queryKey: ["stats" + game + match?.params.eaid],
     queryFn: () =>
       GetStats.stats({
         game: game,
         type: "stats",
-        getter: match.params.type,
-        userName: match.params.eaid,
+        getter: match?.params.type,
+        userName: match?.params.eaid,
         lang: getLanguage(),
-        platform: match.params.plat,
+        platform: match?.params.plat,
       }),
     retry: 1,
   });
@@ -68,9 +68,9 @@ export default function Stats(): React.ReactElement {
   return (
     <a
       className="Main"
-      style={calculateZoomStyle(match.params.zoom)}
-      href={`https://gametools.network/stats/${match.params.plat}/${match.params.type
-        }/${encodeURIComponent(match.params.eaid)}`}
+      style={calculateZoomStyle(match?.params.zoom)}
+      href={`https://gametools.network/stats/${match?.params.plat}/${match?.params.type
+        }/${encodeURIComponent(match?.params.eaid || "")}`}
       target="_blank"
       rel="noreferrer"
     >
@@ -84,7 +84,7 @@ export default function Stats(): React.ReactElement {
           <p className={styles.BarText} style={{ left: "30px" }}>
             {t("stats.header", { gameid: gameid })}
           </p>
-          {!(width <= 700 && match.params.zoom === "100") && (
+          {!(width <= 700 && match?.params.zoom === "100") && (
             <>
               {["bfh", "bf2042", "bf6"].includes(game) ? (
                 <hr
@@ -125,7 +125,7 @@ export default function Stats(): React.ReactElement {
             </div>
           </>
         )}
-        {!(width <= 700 && match.params.zoom === "100") && (
+        {!(width <= 700 && match?.params.zoom === "100") && (
           <>
             {game === "bf1marne" ? (
               <img
@@ -142,7 +142,7 @@ export default function Stats(): React.ReactElement {
                 />
                 <img
                   className={styles.Platform}
-                  src={`https://cdn.gametools.network/platforms/${platformImage[match.params.plat]
+                  src={`https://cdn.gametools.network/platforms/${platformImage[match?.params.plat]
                     }.png`}
                 />
               </>
@@ -189,14 +189,14 @@ function DefaultStats({
   const { t, i18n } = useTranslation();
 
   React.useState(() => {
-    i18n.changeLanguage(match.params.lang);
+    i18n.changeLanguage(match?.params.lang);
   });
   return (
     <a
       className="Main"
-      style={calculateZoomStyle(match.params.zoom)}
-      href={`https://gametools.network/stats/${match.params.plat}/${match.params.type
-        }/${encodeURIComponent(match.params.eaid)}`}
+      style={calculateZoomStyle(match?.params.zoom)}
+      href={`https://gametools.network/stats/${match?.params.plat}/${match?.params.type
+        }/${encodeURIComponent(match?.params.eaid)}`}
       target="_blank"
       rel="noreferrer"
     >
@@ -211,7 +211,7 @@ function DefaultStats({
           <p className={styles.BarText} style={{ left: "30px" }}>
             {t("stats.header", { gameid: gameid })}
           </p>
-          {width <= 700 && match.params.zoom === "100" ? (
+          {width <= 700 && match?.params.zoom === "100" ? (
             <></>
           ) : (
             <>
@@ -248,7 +248,7 @@ function DefaultStats({
         ) : (
           <></>
         )}
-        {width <= 700 && match.params.zoom === "100" ? (
+        {width <= 700 && match?.params.zoom === "100" ? (
           <></>
         ) : (
           <>
@@ -258,7 +258,7 @@ function DefaultStats({
             />
             <img
               className={styles.Platform}
-              src={`https://cdn.gametools.network/platforms/${platformImage[match.params.plat]
+              src={`https://cdn.gametools.network/platforms/${platformImage[match?.params.plat]
                 }.png`}
             />
           </>

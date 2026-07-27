@@ -48,7 +48,7 @@ export class ApiProvider extends JsonClient {
     userName,
     lang,
     platform = "pc",
-  }: PlayerInfo): Promise<MainStats> {
+  }: PlayerInfo): Promise<MainStats | undefined> {
     if (game.includes("marne")) {
       let playerId, playerInfo;
       if (getter !== "playerid") {
@@ -56,7 +56,7 @@ export class ApiProvider extends JsonClient {
           name: encodeURIComponent(userName),
         });
         playerInfo = result;
-        playerId = result.id;
+        playerId = result?.id;
       } else {
         const result = await this.bf1PlayerSearch({
           playerId: userName,
@@ -89,7 +89,7 @@ export class ApiProvider extends JsonClient {
     gameId = undefined,
     id = undefined,
     name = undefined,
-  }: SeederPlayerlist): Promise<seederPlayersReturn> {
+  }: SeederPlayerlist): Promise<seederPlayersReturn | undefined> {
     const gameStuff = game.split(".");
     if (id !== undefined) {
       return await this.getJsonMethod(`/${gameStuff[0]}/seederplayers/`, {
@@ -116,7 +116,7 @@ export class ApiProvider extends JsonClient {
     region = "all",
     platform = "pc",
     with_ownername = true,
-  }: ServerInfo): Promise<DetailedServerInfo> {
+  }: ServerInfo): Promise<DetailedServerInfo | undefined> {
     if (serverName == "undefined") {
       return undefined;
     }
@@ -175,15 +175,17 @@ export class ApiProvider extends JsonClient {
   }: {
     name?: string;
     playerId?: string;
-  }): Promise<Bf1PlayerReturn> {
+  }): Promise<Bf1PlayerReturn | undefined> {
     if (playerId) {
       return await this.getJsonMethod(`/bf1/player/`, {
         playerid: playerId,
       });
     }
-    return await this.getJsonMethod(`/bf1/player/`, {
-      name: name,
-    });
+    if (name) {
+      return await this.getJsonMethod(`/bf1/player/`, {
+        name: name,
+      });
+    }
   }
 }
 
