@@ -42,7 +42,7 @@ function Default(): React.ReactElement {
   console.log(profileError)
   return (
     <div className={styles.content}>
-      <div className={styles.block}>
+      <div className={styles.block} style={{ paddingRight: profileError ? "1rem" : "0.25rem" }}>
         {profileError ? (
           <>
             <div className={styles.name}>
