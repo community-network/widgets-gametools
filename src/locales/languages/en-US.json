@@ -1,5 +1,6 @@
 {
   "loading": "Loading...",
+  "error": "Error",
   "notApplicable": "N/A",
   "server": {
     "map": "Map",
@@ -70,7 +71,11 @@
       "deaths": "Deaths",
       "placement": "Placement",
       "prevRound": "Previous round",
-      "bfRotalSquad": "Battle Royale Squads Ranked"
+      "bfRotalSquad": "Battle Royale Squads Ranked",
+      "error": {
+        "lastSessionLoad": "Failed to load last session data",
+        "profileLoad": "Failed to load profile data"
+      }
     }
   }
 }

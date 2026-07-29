@@ -39,21 +39,32 @@ function Default(): React.ReactElement {
   });
 
   const rank = profile?.competitiveRanks?.find((d: { mode: string; }) => d.mode === "GraniteSquad0");
-
+  console.log(profileError)
   return (
     <div className={styles.content}>
       <div className={styles.block}>
-        <div className={styles.inner}>
-          <div>
+        {profileError ? (
+          <>
             <div className={styles.name}>
-              {t("bf-ranked.default.rank")}
+              {t("error")}
             </div>
-            <div className={styles.message}>
-              {profileLoading ? t("loading") : rank?.name}
+            <div className={styles.errorMessage}>
+              {t("bf-ranked.default.error.profileLoad")}
             </div>
+          </>
+        ) : (
+          <div className={styles.inner}>
+            <div>
+              <div className={styles.name}>
+                {t("bf-ranked.default.rank")}
+              </div>
+              <div className={styles.message}>
+                {profileLoading ? t("loading") : rank?.name}
+              </div>
+            </div>
+            <img className={styles.rankIcon} src={bf6.ranked_br_images_s4[rank?.rank] || undefined} />
           </div>
-          <img className={styles.rankIcon} src={bf6.ranked_br_images_s4[rank?.rank] || undefined} />
-        </div>
+        )}
       </div>
       <div>
         <div>
@@ -64,32 +75,44 @@ function Default(): React.ReactElement {
             {t("bf-ranked.default.prevRound")}
           </div>
         </div>
-        <div className={styles.content}>
+        {lastSessionError ? (
           <div className={styles.block}>
             <div className={styles.name}>
-              {t("bf-ranked.default.kills")}
+              {t("error")}
             </div>
-            <div className={styles.message}>
-              {lastSessionLoading ? t("loading") : lastSession?.stats?.killsRealPlayers}
-            </div>
-          </div>
-          <div className={styles.block}>
-            <div className={styles.name}>
-              {t("bf-ranked.default.deaths")}
-            </div>
-            <div className={styles.message}>
-              {lastSessionLoading ? t("loading") : lastSession?.stats?.deathsFinished}
+            <div className={styles.errorMessage}>
+              {t("bf-ranked.default.error.lastSessionLoad")}
             </div>
           </div>
-          <div className={styles.block}>
-            <div className={styles.name}>
-              {t("bf-ranked.default.placement")}
+        ) : (
+          <div className={styles.content}>
+            <div className={styles.block}>
+              <div className={styles.name}>
+                {t("bf-ranked.default.kills")}
+              </div>
+              <div className={styles.message}>
+                {lastSessionLoading ? t("loading") : lastSession?.stats?.killsRealPlayers}
+              </div>
             </div>
-            <div className={styles.message}>
-              {lastSessionLoading ? t("loading") : lastSession?.stats?.placementLastPlayedGame}
+            <div className={styles.block}>
+              <div className={styles.name}>
+                {t("bf-ranked.default.deaths")}
+              </div>
+              <div className={styles.message}>
+                {lastSessionLoading ? t("loading") : lastSession?.stats?.deathsFinished}
+              </div>
+            </div>
+            <div className={styles.block}>
+              <div className={styles.name}>
+                {t("bf-ranked.default.placement")}
+              </div>
+              <div className={styles.message}>
+                {lastSessionLoading ? t("loading") : lastSession?.stats?.placementLastPlayedGame}
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
       </div>
     </div>
   )
