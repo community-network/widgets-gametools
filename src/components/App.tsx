@@ -9,6 +9,7 @@ const Stats = React.lazy(() => import("./Stats"));
 const Servers = React.lazy(() => import("./Servers"));
 const OldGames = React.lazy(() => import("./OldGames"));
 const Streamer = React.lazy(() => import("./Streamer"));
+const BfRanked = React.lazy(() => import("./BfRanked"));
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ export default function App(): React.ReactElement {
           <Routes>
             <Route path="/servers/*" element={<Servers />} />
             <Route path="/oldgames/*" element={<OldGames />} />
+            <Route path="/bf-ranked/*" element={<BfRanked />} />
             <Route
               path="/stats/:plat/:type/:eaid/:gameid/:lang/:zoom"
               element={<Stats />}

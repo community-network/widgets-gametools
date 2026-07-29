@@ -52,6 +52,7 @@
     "eslint-plugin-react-compiler": "19.1.0-rc.2",
     "express": "^5.1.0",
     "file-loader": "^6.2.0",
+    "gametools-global-mapping": "^1.0.9",
     "html-webpack-plugin": "^5.6.4",
     "jest": "^30.2.0",
     "lightningcss": "^1.30.2",

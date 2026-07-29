@@ -16,7 +16,7 @@ importers:
         version: 5.90.5(react@19.2.0)
       copy-webpack-plugin:
         specifier: ^13.0.1
-        version: 13.0.1(webpack@5.102.1)
+        version: 13.0.1(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       i18next:
         specifier: ^25.6.0
         version: 25.6.0(typescript@5.9.3)
@@ -28,7 +28,7 @@ importers:
         version: 1.2.1
       mini-css-extract-plugin:
         specifier: ^2.9.4
-        version: 2.9.4(webpack@5.102.1)
+        version: 2.9.4(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       react:
         specifier: ^19.2.0
         version: 19.2.0
@@ -46,7 +46,7 @@ importers:
         version: 0.14.1
       workbox-webpack-plugin:
         specifier: ^7.3.0
-        version: 7.3.0(@types/babel__core@7.20.5)(webpack@5.102.1)
+        version: 7.3.0(@types/babel__core@7.20.5)(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
     devDependencies:
       '@swc/core':
         specifier: ^1.13.5
@@ -77,13 +77,13 @@ importers:
         version: 4.26.3
       css-loader:
         specifier: ^7.1.2
-        version: 7.1.2(webpack@5.102.1)
+        version: 7.1.2(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       css-minimizer-webpack-plugin:
         specifier: ^7.0.2
-        version: 7.0.2(lightningcss@1.30.2)(webpack@5.102.1)
+        version: 7.0.2(lightningcss@1.30.2)(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       dotenv-webpack:
         specifier: ^8.1.1
-        version: 8.1.1(webpack@5.102.1)
+        version: 8.1.1(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       eslint:
         specifier: ^9.37.0
         version: 9.37.0
@@ -104,10 +104,13 @@ importers:
         version: 5.1.0
       file-loader:
         specifier: ^6.2.0
-        version: 6.2.0(webpack@5.102.1)
+        version: 6.2.0(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
+      gametools-global-mapping:
+        specifier: ^1.0.9
+        version: 1.0.9
       html-webpack-plugin:
         specifier: ^5.6.4
-        version: 5.6.4(webpack@5.102.1)
+        version: 5.6.4(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       jest:
         specifier: ^30.2.0
         version: 30.2.0(@types/node@24.8.0)
@@ -128,16 +131,16 @@ importers:
         version: 1.93.2
       sass-loader:
         specifier: ^16.0.5
-        version: 16.0.5(sass@1.93.2)(webpack@5.102.1)
+        version: 16.0.5(sass@1.93.2)(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       sharp:
         specifier: ^0.34.4
         version: 0.34.4
       style-loader:
         specifier: ^4.0.0
-        version: 4.0.0(webpack@5.102.1)
+        version: 4.0.0(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       swc-loader:
         specifier: ^0.2.6
-        version: 0.2.6(@swc/core@1.13.5)(webpack@5.102.1)
+        version: 0.2.6(@swc/core@1.13.5)(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -2820,6 +2823,9 @@ packages:
 
   functions-have-names@1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
+
+  gametools-global-mapping@1.0.9:
+    resolution: {integrity: sha512-WDhQJXHUXsvP8/wNVgS0imGRFQO+681OLmlBH40PIb51UEImOTya1f2ECRU4Mw8jej+LCK0hODhr0mQYAhb8Zw==}
 
   generator-function@2.0.1:
     resolution: {integrity: sha512-SFdFmIJi+ybC0vjlHN0ZGVGHc3lgE0DxPAT0djjVg+kjOnSqclqmj0KQ7ykTOLP6YxoqOvuAODGdcHJn+43q3g==}
@@ -7112,17 +7118,17 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@3.0.1(webpack-cli@6.0.1)(webpack@5.102.1)':
+  '@webpack-cli/configtest@3.0.1(webpack-cli@6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))':
     dependencies:
       webpack: 5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.102.1)
 
-  '@webpack-cli/info@3.0.1(webpack-cli@6.0.1)(webpack@5.102.1)':
+  '@webpack-cli/info@3.0.1(webpack-cli@6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))':
     dependencies:
       webpack: 5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.102.1)
 
-  '@webpack-cli/serve@3.0.1(webpack-cli@6.0.1)(webpack-dev-server@5.2.2)(webpack@5.102.1)':
+  '@webpack-cli/serve@3.0.1(webpack-cli@6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack-dev-server@5.2.2(webpack-cli@6.0.1)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))':
     dependencies:
       webpack: 5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.102.1)
@@ -7599,7 +7605,7 @@ snapshots:
     dependencies:
       is-what: 3.14.1
 
-  copy-webpack-plugin@13.0.1(webpack@5.102.1):
+  copy-webpack-plugin@13.0.1(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       glob-parent: 6.0.2
       normalize-path: 3.0.0
@@ -7626,7 +7632,7 @@ snapshots:
     dependencies:
       postcss: 8.5.6
 
-  css-loader@7.1.2(webpack@5.102.1):
+  css-loader@7.1.2(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.6)
       postcss: 8.5.6
@@ -7639,7 +7645,7 @@ snapshots:
     optionalDependencies:
       webpack: 5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)
 
-  css-minimizer-webpack-plugin@7.0.2(lightningcss@1.30.2)(webpack@5.102.1):
+  css-minimizer-webpack-plugin@7.0.2(lightningcss@1.30.2)(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       cssnano: 7.1.1(postcss@8.5.6)
@@ -7856,7 +7862,7 @@ snapshots:
     dependencies:
       dotenv: 8.6.0
 
-  dotenv-webpack@8.1.1(webpack@5.102.1):
+  dotenv-webpack@8.1.1(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       dotenv-defaults: 2.0.2
       webpack: 5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)
@@ -8291,7 +8297,7 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
-  file-loader@6.2.0(webpack@5.102.1):
+  file-loader@6.2.0(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
@@ -8388,6 +8394,8 @@ snapshots:
       is-callable: 1.2.7
 
   functions-have-names@1.2.3: {}
+
+  gametools-global-mapping@1.0.9: {}
 
   generator-function@2.0.1: {}
 
@@ -8538,7 +8546,7 @@ snapshots:
     dependencies:
       void-elements: 3.1.0
 
-  html-webpack-plugin@5.6.4(webpack@5.102.1):
+  html-webpack-plugin@5.6.4(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
@@ -9460,7 +9468,7 @@ snapshots:
 
   mimic-fn@2.1.0: {}
 
-  mini-css-extract-plugin@2.9.4(webpack@5.102.1):
+  mini-css-extract-plugin@2.9.4(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       schema-utils: 4.3.3
       tapable: 2.3.0
@@ -10169,7 +10177,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass-loader@16.0.5(sass@1.93.2)(webpack@5.102.1):
+  sass-loader@16.0.5(sass@1.93.2)(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
@@ -10559,7 +10567,7 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  style-loader@4.0.0(webpack@5.102.1):
+  style-loader@4.0.0(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       webpack: 5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)
 
@@ -10600,7 +10608,7 @@ snapshots:
       picocolors: 1.1.1
       sax: 1.4.1
 
-  swc-loader@0.2.6(@swc/core@1.13.5)(webpack@5.102.1):
+  swc-loader@0.2.6(@swc/core@1.13.5)(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       '@swc/core': 1.13.5
       '@swc/counter': 0.1.3
@@ -10621,7 +10629,7 @@ snapshots:
       type-fest: 0.16.0
       unique-string: 2.0.0
 
-  terser-webpack-plugin@5.3.14(@swc/core@1.13.5)(webpack@5.102.1):
+  terser-webpack-plugin@5.3.14(@swc/core@1.13.5)(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
@@ -10884,9 +10892,9 @@ snapshots:
   webpack-cli@6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.102.1):
     dependencies:
       '@discoveryjs/json-ext': 0.6.3
-      '@webpack-cli/configtest': 3.0.1(webpack-cli@6.0.1)(webpack@5.102.1)
-      '@webpack-cli/info': 3.0.1(webpack-cli@6.0.1)(webpack@5.102.1)
-      '@webpack-cli/serve': 3.0.1(webpack-cli@6.0.1)(webpack-dev-server@5.2.2)(webpack@5.102.1)
+      '@webpack-cli/configtest': 3.0.1(webpack-cli@6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
+      '@webpack-cli/info': 3.0.1(webpack-cli@6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
+      '@webpack-cli/serve': 3.0.1(webpack-cli@6.0.1(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@5.2.2)(webpack@5.102.1))(webpack-dev-server@5.2.2(webpack-cli@6.0.1)(webpack@5.102.1))(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       colorette: 2.0.20
       commander: 12.1.0
       cross-spawn: 7.0.6
@@ -10901,7 +10909,7 @@ snapshots:
       webpack-bundle-analyzer: 4.10.2
       webpack-dev-server: 5.2.2(webpack-cli@6.0.1)(webpack@5.102.1)
 
-  webpack-dev-middleware@7.4.5(webpack@5.102.1):
+  webpack-dev-middleware@7.4.5(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       colorette: 2.0.20
       memfs: 4.49.0
@@ -10940,7 +10948,7 @@ snapshots:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack-dev-middleware: 7.4.5(webpack@5.102.1)
+      webpack-dev-middleware: 7.4.5(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       ws: 8.18.3
     optionalDependencies:
       webpack: 5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)
@@ -10988,7 +10996,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.0
-      terser-webpack-plugin: 5.3.14(@swc/core@1.13.5)(webpack@5.102.1)
+      terser-webpack-plugin: 5.3.14(@swc/core@1.13.5)(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1))
       watchpack: 2.4.4
       webpack-sources: 3.3.3
     optionalDependencies:
@@ -11169,7 +11177,7 @@ snapshots:
 
   workbox-sw@7.3.0: {}
 
-  workbox-webpack-plugin@7.3.0(@types/babel__core@7.20.5)(webpack@5.102.1):
+  workbox-webpack-plugin@7.3.0(@types/babel__core@7.20.5)(webpack@5.102.1(@swc/core@1.13.5)(webpack-cli@6.0.1)):
     dependencies:
       fast-json-stable-stringify: 2.1.0
       pretty-bytes: 5.6.0
