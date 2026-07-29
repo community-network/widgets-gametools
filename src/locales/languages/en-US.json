@@ -62,5 +62,15 @@
   "streamer": {
     "noserver": "Not in a server",
     "noplayer": "Player not found in the server"
+  },
+  "bf-ranked": {
+    "default": {
+      "rank": "Rank",
+      "kills": "Kills",
+      "deaths": "Deaths",
+      "placement": "Placement",
+      "prevRound": "Previous round",
+      "bfRotalSquad": "Battle Royale Squads Ranked"
+    }
   }
 }

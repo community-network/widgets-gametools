@@ -4,10 +4,11 @@ import { GetBfRanked } from "../api/BfRanked";
 import { useQuery } from "@tanstack/react-query";
 import { bf6 } from "gametools-global-mapping"
 import * as styles from "./BfRanked.module.scss";
+import { useTranslation } from "react-i18next";
 
 function Default(): React.ReactElement {
   const match = useMatch(`/bf-ranked/default/:id`);
-
+  const { t } = useTranslation();
 
   const {
     isLoading: profileLoading,
@@ -45,7 +46,7 @@ function Default(): React.ReactElement {
         <div className={styles.inner}>
           <div>
             <div className={styles.name}>
-              Rank
+              {t("bf-ranked.default.rank")}
             </div>
             <div className={styles.message}>
               {rank?.name}
@@ -57,16 +58,16 @@ function Default(): React.ReactElement {
       <div>
         <div>
           <div className={styles.description}>
-            Battle Royale Squads Ranked
+            {t("bf-ranked.default.bfRotalSquad")}
           </div>
           <div className={styles.title}>
-            Previous round
+            {t("bf-ranked.default.prevRound")}
           </div>
         </div>
         <div className={styles.content}>
           <div className={styles.block}>
             <div className={styles.name}>
-              Kills
+              {t("bf-ranked.default.kills")}
             </div>
             <div className={styles.message}>
               {lastSession?.stats?.killsRealPlayers}
@@ -74,7 +75,7 @@ function Default(): React.ReactElement {
           </div>
           <div className={styles.block}>
             <div className={styles.name}>
-              Deaths
+              {t("bf-ranked.default.deaths")}
             </div>
             <div className={styles.message}>
               {lastSession?.stats?.deathsFinished}
@@ -82,7 +83,7 @@ function Default(): React.ReactElement {
           </div>
           <div className={styles.block}>
             <div className={styles.name}>
-              Placement
+              {t("bf-ranked.default.placement")}
             </div>
             <div className={styles.message}>
               {lastSession?.stats?.placementLastPlayedGame}
