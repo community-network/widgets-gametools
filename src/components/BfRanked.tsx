@@ -49,7 +49,7 @@ function Default(): React.ReactElement {
               {t("bf-ranked.default.rank")}
             </div>
             <div className={styles.message}>
-              {rank?.name}
+              {profileLoading ? t("loading") : rank?.name}
             </div>
           </div>
           <img className={styles.rankIcon} src={bf6.ranked_br_images_s4[rank?.rank] || undefined} />
@@ -70,7 +70,7 @@ function Default(): React.ReactElement {
               {t("bf-ranked.default.kills")}
             </div>
             <div className={styles.message}>
-              {lastSession?.stats?.killsRealPlayers}
+              {lastSessionLoading ? t("loading") : lastSession?.stats?.killsRealPlayers}
             </div>
           </div>
           <div className={styles.block}>
@@ -78,7 +78,7 @@ function Default(): React.ReactElement {
               {t("bf-ranked.default.deaths")}
             </div>
             <div className={styles.message}>
-              {lastSession?.stats?.deathsFinished}
+              {lastSessionLoading ? t("loading") : lastSession?.stats?.deathsFinished}
             </div>
           </div>
           <div className={styles.block}>
@@ -86,7 +86,7 @@ function Default(): React.ReactElement {
               {t("bf-ranked.default.placement")}
             </div>
             <div className={styles.message}>
-              {lastSession?.stats?.placementLastPlayedGame}
+              {lastSessionLoading ? t("loading") : lastSession?.stats?.placementLastPlayedGame}
             </div>
           </div>
         </div>
