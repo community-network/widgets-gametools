@@ -22,6 +22,12 @@ body {
     gap: 0.75rem;
     position: relative;
     align-items: end;
+
+    .content {
+        .block {
+            width: 8rem;
+        }
+    }
 }
 
 .title {
