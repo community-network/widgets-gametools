@@ -4,9 +4,9 @@ const { resolve } = require("path");
 const { GenerateSW } = require("workbox-webpack-plugin");
 // const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const lightningcss = require('lightningcss');
-const browserslist = require('browserslist');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const lightningcss = require("lightningcss");
+const browserslist = require("browserslist");
 
 const commonConfig = require("./common");
 
@@ -28,11 +28,11 @@ module.exports = merge(commonConfig, {
   devtool: "source-map",
   optimization: {
     minimizer: [
-      '...',
+      "...",
       new CssMinimizerPlugin({
         minify: CssMinimizerPlugin.lightningCssMinify,
         minimizerOptions: {
-          targets: lightningcss.browserslistToTargets(browserslist('defaults'))
+          targets: lightningcss.browserslistToTargets(browserslist("defaults")),
         },
       }),
     ],
@@ -48,8 +48,14 @@ module.exports = merge(commonConfig, {
     new GenerateSW({
       runtimeCaching: [
         {
-          urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
-          handler: "CacheFirst",
+          urlPattern: ({ request }) => request.destination === "image",
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "images-cache",
+            expiration: {
+              maxEntries: 10,
+            },
+          },
         },
       ],
     }),
