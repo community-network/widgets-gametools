@@ -58,6 +58,8 @@ module.exports = merge(commonConfig, {
           },
         },
       ],
+      skipWaiting: true,
+      clientsClaim: true,
     }),
   ],
 });
