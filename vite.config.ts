@@ -10,9 +10,9 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     VitePWA({
       registerType: 'autoUpdate',
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
-      }
+      // workbox: {
+      //   globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+      // }
     })
   ]
 })
