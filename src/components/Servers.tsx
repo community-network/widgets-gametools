@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-import { PathMatch, Route, Routes, useLocation, useMatch } from "react-router";
+import { type PathMatch, Route, Routes, useLocation, useMatch } from "react-router";
 import { GetStats } from "../api/GetStats";
 import { dice, frostbite3 } from "../api/static";
 import "../locales/config";
 import { getLanguage } from "../locales/config";
-import * as styles from "./Servers.module.scss";
+import styles from "./Servers.module.scss";
 import { calculateZoomStyle } from "./functions/calculateZoom";
 
 export function ServerBox(
@@ -40,9 +40,6 @@ export function ServerBox(
     retry: 1,
   });
 
-  if (query.has("name") && stats !== undefined) {
-    stats.prefix = query.get("name");
-  }
 
   const params = GetStats.constructParamStr({
     search: match?.params.sname,
@@ -67,7 +64,7 @@ export function ServerBox(
     );
   }
 
-  if (error || stats === undefined) {
+  if (error || stats === undefined || "errors" in stats) {
     return (
       <a
         className={styles.Server}
@@ -86,6 +83,11 @@ export function ServerBox(
       </a>
     );
   }
+
+  if (query.has("name") && stats !== undefined) {
+    stats.prefix = query.get("name") || "";
+  }
+
   let queue: number | undefined = undefined;
   queue = stats?.inQueue;
   let queueString = "";
@@ -100,7 +102,7 @@ export function ServerBox(
     <a
       className={styles.Server}
       href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
-        match?.params.sname,
+        match?.params.sname || "",
       )}/${match?.params.platform}`}
       target="_blank"
       style={backgroundStyle}
@@ -131,7 +133,7 @@ export function ServerBox(
 
 export function DetailedServerBox(): React.ReactElement {
   const { t } = useTranslation();
-  const match = useMatch("/servers/detailed/:gameid/:type/:sname/:platform");
+  const match = useMatch("/servers/detailed/:gameid/:type/:sname/:platform") || undefined;
   const gameId = match?.params.gameid || "";
   const serverName = match?.params.sname
   const query = new URLSearchParams(useLocation().search);
@@ -155,10 +157,6 @@ export function DetailedServerBox(): React.ReactElement {
     retry: 1,
   });
 
-  if (query.has("name") && stats !== undefined) {
-    stats.prefix = query.get("name");
-  }
-
   if (loading) {
     return (
       <DetailedDefaults
@@ -170,7 +168,7 @@ export function DetailedServerBox(): React.ReactElement {
     );
   }
 
-  if (error || stats === undefined) {
+  if (error || stats === undefined || "errors" in stats) {
     return (
       <DetailedDefaults
         match={match}
@@ -180,11 +178,16 @@ export function DetailedServerBox(): React.ReactElement {
       />
     );
   }
+
+  if (query.has("name") && stats !== undefined) {
+    stats.prefix = query.get("name") || "";
+  }
+
   return (
     <a
       className={styles.BigServer}
       href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
-        match?.params.sname,
+        match?.params.sname || "",
       )}/${match?.params.platform}`}
       target="_blank"
       style={calculateZoomStyle(zoomQuery ?? 100)}
@@ -242,7 +245,7 @@ function DetailedDefaults({
   text,
   zoom,
 }: Readonly<{
-  match: PathMatch<"gameid" | "type" | "sname" | "platform">;
+  match: PathMatch<"gameid" | "type" | "sname" | "platform"> | undefined;
   zoom: number | string;
   gameId: string;
   text: string;
@@ -299,7 +302,7 @@ function DetailedDefaults({
 
 export function SmallServerBox(): React.ReactElement {
   const { t } = useTranslation();
-  const match = useMatch("/servers/small/:gameid/:type/:sname/:platform");
+  const match = useMatch("/servers/small/:gameid/:type/:sname/:platform") || undefined;
   const gameId = match?.params.gameid;
   const serverName = match?.params.sname;
   const query = new URLSearchParams(useLocation().search);
@@ -322,25 +325,25 @@ export function SmallServerBox(): React.ReactElement {
       }),
     retry: 1,
   });
-  if (query.has("name") && stats !== undefined) {
-    stats.prefix = query.get("name");
-  }
   if (loading) {
     return (
       <SmallDefaults match={match} zoom={zoomQuery ?? 100} gameId={gameId} />
     );
   }
 
-  if (error || stats === undefined) {
+  if (error || stats === undefined || "errors" in stats) {
     return (
       <SmallDefaults match={match} zoom={zoomQuery ?? 100} gameId={gameId} />
     );
+  }
+  if (query.has("name") && stats !== undefined) {
+    stats.prefix = query.get("name") || "";
   }
   return (
     <a
       className={styles.BigServer}
       href={`https://gametools.network/servers/${gameId}/name/${encodeURIComponent(
-        match?.params.sname,
+        match?.params.sname || "",
       )}/${match?.params.platform}`}
       target="_blank"
       style={calculateZoomStyle(zoomQuery ?? 100)}
@@ -366,7 +369,7 @@ export function SmallServerBox(): React.ReactElement {
             {stats?.maxPlayers}
           </p>
         </div>
-        {!["bf2042", "bf6"].includes(gameId) && dice.includes(gameId) && (
+        {!["bf2042", "bf6"].includes(gameId || "") && dice.includes(gameId || "") && (
           <div className={styles.Row}>
             <h4 className={styles.Title}>{t("server.queue")}</h4>
             <p className={styles.Description}>{stats?.inQueue}/10</p>
@@ -382,9 +385,9 @@ function SmallDefaults({
   gameId,
   zoom,
 }: Readonly<{
-  match: PathMatch<"gameid" | "type" | "sname" | "platform">;
+  match: PathMatch<"gameid" | "type" | "sname" | "platform"> | undefined;
   zoom: number | string;
-  gameId: string;
+  gameId: string | undefined;
 }>): React.ReactElement {
   const { t } = useTranslation();
   const params = GetStats.constructParamStr({
@@ -406,7 +409,7 @@ function SmallDefaults({
           <h4 className={styles.Title}>{t("server.players")}</h4>
           <p className={styles.Description}>0/0</p>
         </div>
-        {!["bf2042", "bf6"].includes(gameId) && dice.includes(gameId) && (
+        {!["bf2042", "bf6"].includes(gameId || "") && dice.includes(gameId || "") && (
           <div className={styles.Row}>
             <h4 className={styles.Title}>{t("server.queue")}</h4>
             <p className={styles.Description}>0/10</p>

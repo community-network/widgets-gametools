@@ -2,7 +2,7 @@ import { useWindowWidth } from "@react-hook/window-size";
 import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-import { PathMatch, useMatch } from "react-router";
+import { type PathMatch, useMatch } from "react-router";
 import { GetStats } from "../api/GetStats";
 import {
   differentWidth,
@@ -12,11 +12,11 @@ import {
 } from "../api/static";
 import "../locales/config";
 import { getLanguage } from "../locales/config";
-import * as styles from "./Stats.module.scss";
+import styles from "./Stats.module.scss";
 import { calculateZoomStyle } from "./functions/calculateZoom";
 
 export default function Stats(): React.ReactElement {
-  const match = useMatch("/stats/:plat/:type/:eaid/:gameid/:lang/:zoom");
+  const match = useMatch("/stats/:plat/:type/:eaid/:gameid/:lang/:zoom") || undefined;
   const { t, i18n } = useTranslation();
 
   React.useState(() => {
@@ -24,7 +24,7 @@ export default function Stats(): React.ReactElement {
   });
 
   const game = match?.params.gameid;
-  const gameid = shortName[game];
+  const gameid = shortName[game || ""];
   const width = useWindowWidth();
   const {
     isLoading: loading,
@@ -86,10 +86,10 @@ export default function Stats(): React.ReactElement {
           </p>
           {!(width <= 700 && match?.params.zoom === "100") && (
             <>
-              {["bfh", "bf2042", "bf6"].includes(game) ? (
+              {["bfh", "bf2042", "bf6"].includes(game || "") ? (
                 <hr
                   className={styles.Bar}
-                  style={{ left: differentWidth?.[game] }}
+                  style={{ left: differentWidth?.[game || ""] }}
                 />
               ) : (
                 <hr className={styles.Bar} />
@@ -142,7 +142,7 @@ export default function Stats(): React.ReactElement {
                 />
                 <img
                   className={styles.Platform}
-                  src={`https://cdn.gametools.network/platforms/${platformImage[match?.params.plat]
+                  src={`https://cdn.gametools.network/platforms/${platformImage[match?.params.plat || ""]
                     }.png`}
                 />
               </>
@@ -150,19 +150,13 @@ export default function Stats(): React.ReactElement {
           </>
         )}
         <div className={styles.Column}>
-          {gameStats?.[game] !== undefined &&
+          {game !== undefined && game in gameStats &&
             Object.entries(gameStats?.[game]).map(([key, value], index) => {
               return (
                 <div className={styles.Row} key={index}>
                   <h4 className={styles.Title}>{t(`stats.${key}`)}</h4>
                   <p className={styles.Description}>
-                    {value
-                      .split(".")
-                      .reduce(
-                        (o: { [x: string]: number }, i: string | number) =>
-                          o[i],
-                        stats,
-                      )}
+                    {value?.split(".").reduce((o: any, i: any) => o[i], stats)}
                   </p>
                 </div>
               );
@@ -181,9 +175,9 @@ function DefaultStats({
   text,
 }: Readonly<{
   width: number;
-  match: PathMatch<"type" | "lang" | "plat" | "eaid" | "gameid" | "zoom">;
+  match: PathMatch<"type" | "lang" | "plat" | "eaid" | "gameid" | "zoom"> | undefined;
   gameid: string;
-  game: string;
+  game?: string;
   text: string;
 }>) {
   const { t, i18n } = useTranslation();
@@ -196,7 +190,7 @@ function DefaultStats({
       className="Main"
       style={calculateZoomStyle(match?.params.zoom)}
       href={`https://gametools.network/stats/${match?.params.plat}/${match?.params.type
-        }/${encodeURIComponent(match?.params.eaid)}`}
+        }/${encodeURIComponent(match?.params.eaid || "")}`}
       target="_blank"
       rel="noreferrer"
     >
@@ -215,10 +209,10 @@ function DefaultStats({
             <></>
           ) : (
             <>
-              {["bfh", "bf2042", "bf6"].includes(game) ? (
+              {["bfh", "bf2042", "bf6"].includes(game || "") ? (
                 <hr
                   className={styles.Bar}
-                  style={{ left: differentWidth?.[game] }}
+                  style={{ left: differentWidth?.[game || ""] }}
                 />
               ) : (
                 <hr className={styles.Bar} />
@@ -243,7 +237,7 @@ function DefaultStats({
           src="https://eaassets-a.akamaihd.net/battlelog/defaultavatars/default-avatar-36.png"
         />
         <div className={styles.PlayerName}>{text}</div>
-        {!["bf2042", "bf6"].includes(game) ? (
+        {!["bf2042", "bf6"].includes(game || "") ? (
           <div className={styles.Rank}>{t("stats.rank")} 0</div>
         ) : (
           <></>
@@ -258,15 +252,15 @@ function DefaultStats({
             />
             <img
               className={styles.Platform}
-              src={`https://cdn.gametools.network/platforms/${platformImage[match?.params.plat]
+              src={`https://cdn.gametools.network/platforms/${platformImage[match?.params.plat || ""]
                 }.png`}
             />
           </>
         )}
         <div className={styles.Column}>
-          {gameStats?.[game] !== undefined && (
+          {gameStats?.[game || ""] !== undefined && (
             <>
-              {Object.entries(gameStats?.[game]).map(([key], index) => {
+              {Object.entries(gameStats?.[game || ""]).map(([key], index) => {
                 return (
                   <div className={styles.Row} key={index}>
                     <h4 className={styles.Title}>{t(`stats.${key}`)}</h4>

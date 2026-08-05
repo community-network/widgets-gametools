@@ -2,24 +2,23 @@ import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import { Route, Routes, useMatch } from "react-router";
-import { GetBfListStats, PlayerInfoReturn } from "../api/BfList";
+import { GetBfListStats, type PlayerInfoReturn } from "../api/BfList";
 import { GetStats } from "../api/GetStats";
 import {
-  MainStats,
-  seederPlayer,
-  seederPlayersReturn,
+  type seederPlayer,
+  type seederPlayersReturn,
 } from "../api/ReturnTypes";
 import { bflistGames } from "../api/static";
 import "../locales/config";
 import { getLanguage } from "../locales/config";
-import * as styles from "./Streamer.module.scss";
+import styles from "./Streamer.module.scss";
 import { calculateZoomStyle } from "./functions/calculateZoom";
 
 function statsSelector(
-  guid: string,
-  username: string,
+  guid: string | undefined,
+  username: string | undefined,
 ): Promise<PlayerInfoReturn | seederPlayersReturn | undefined> {
-  if (bflistGames.includes(guid)) {
+  if (bflistGames.includes(guid || "")) {
     return GetBfListStats.stats({
       game: guid,
       userName: username,
@@ -47,11 +46,7 @@ export function GameStreamStat(): React.ReactElement {
     isLoading: loading,
     isError: error,
     data: stats,
-  } = useQuery<
-    seederPlayersReturn | PlayerInfoReturn,
-    unknown,
-    seederPlayersReturn | PlayerInfoReturn
-  >({
+  } = useQuery({
     queryKey: ["seederPlayerList" + guid + match?.params.player],
     queryFn: () => statsSelector(guid, match?.params.player),
     retry: 2,
@@ -92,7 +87,7 @@ export function GameStreamStat(): React.ReactElement {
   }
 
   let currentPlayer = undefined;
-  if (!bflistGames.includes(guid)) {
+  if (!bflistGames.includes(guid || "") && "teams" in stats) {
     // bf1
     const players = stats?.teams[0]?.players.concat(stats?.teams[1]?.players);
     players.forEach((player: seederPlayer) => {
@@ -109,7 +104,7 @@ export function GameStreamStat(): React.ReactElement {
     // older
     currentPlayer = stats;
   }
-  if (currentPlayer != undefined) {
+  if (currentPlayer != undefined && !("serverinfo" in currentPlayer)) {
     return (
       <span className="Main" style={calculateZoomStyle(match?.params.zoom)}>
         <div className={styles.StreamColumn}>
@@ -156,7 +151,7 @@ export function GameStreamScore(): React.ReactElement {
     isLoading: loading,
     isError: error,
     data: stats,
-  } = useQuery<seederPlayersReturn, unknown, seederPlayersReturn>({
+  } = useQuery({
     queryKey: ["seederPlayerList" + guid],
     queryFn: () =>
       GetStats.seederPlayerList({
@@ -286,7 +281,7 @@ export function SteamStat(): React.ReactElement {
     isLoading: loading,
     isError: error,
     data: stats,
-  } = useQuery<MainStats, unknown, MainStats>({
+  } = useQuery({
     queryKey: ["stats" + match?.params.gameid + match?.params.eaid],
     queryFn: () =>
       GetStats.stats({

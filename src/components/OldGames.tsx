@@ -3,8 +3,8 @@ import * as React from "react";
 import { Route, Routes, useMatch } from "react-router";
 import { GetStatsOldGames } from "../api/GetStatsOldGames";
 import "../locales/config";
-import * as styles from "./OldGames.module.scss";
-import * as serverStyles from "./Servers.module.scss";
+import styles from "./OldGames.module.scss";
+import serverStyles from "./Servers.module.scss";
 import { maps as hll_maps } from "../api/oldGameMaps/hll";
 import { useTranslation } from "react-i18next";
 

@@ -1,12 +1,13 @@
-import { Bf1PlayerReturn } from "./GetStats";
+import { type Bf1PlayerReturn } from "./GetStats";
 import JsonClient from "./Json";
 import {
-  DetailedServerInfo,
-  MainStats,
-  MainStatsClasses,
-  MainStatsGamemode,
-  MainStatsWeapon,
-  ServerSettings,
+  type DetailedServerInfo,
+  type ErrorResult,
+  type MainStats,
+  type MainStatsClasses,
+  type MainStatsGamemode,
+  type MainStatsWeapon,
+  type ServerSettings,
 } from "./ReturnTypes";
 
 export interface PlayerReturn {
@@ -73,8 +74,8 @@ export interface DetailedServerReturn {
 }
 
 interface ServerSearchInfo {
-  game: string;
-  searchTerm: string;
+  game?: string;
+  searchTerm?: string;
   limit?: string;
   regions?: string[];
 }
@@ -328,7 +329,7 @@ const weapon_stats = {
   c_wRSinWinT: { weaponName: "Russian 1895 Trench" },
   c_wMWelsh: { weaponName: "Welsh Blade" },
 };
-const gamemode_score = {
+const gamemode_score: { [key: string]: string } = {
   mgc_roo_g: "sc_conquest",
   mgtd_roo_g: "sc_deathmatch",
   mgb_roo_g: "sc_operations",
@@ -337,7 +338,7 @@ const gamemode_score = {
   mgdo_roo_g: "sc_domination",
   _roo_g: "sc_general",
 };
-const classes_score = {
+const classes_score: { [key: string]: string } = {
   c_md_: "sc_medic",
   c_sp_: "sc_support",
   c_as_: "sc_assault",
@@ -346,7 +347,7 @@ const classes_score = {
   c_tk_: "sc_tanker",
   c_cv_: "sc_cavalry",
 };
-const modes = {
+const modes: { [key: string]: string } = {
   Conquest0: "Conquest",
   Rush0: "Rush",
   BreakThrough0: "Shock Operations",
@@ -359,7 +360,7 @@ const modes = {
   ZoneControl0: "Rush",
 };
 
-const smallmodes = {
+const smallmodes: { [key: string]: string } = {
   Conquest0: "CQ",
   Rush0: "RS",
   BreakThrough0: "SO",
@@ -372,7 +373,7 @@ const smallmodes = {
   ZoneControl0: "RS",
 };
 
-const maps = {
+const maps: { [key: string]: string } = {
   MP_Amiens: "Amiens",
   MP_Chateau: "Ballroom Blitz",
   MP_Desert: "Sinai Desert",
@@ -439,7 +440,7 @@ const maps = {
   MP_WE_Grind_Rotterdam: "Rotterdam (Grind)",
 };
 
-const map_image = {
+const map_image: { [key: string]: string } = {
   MP_Amiens:
     "https://cdn.gametools.network/maps/bf1/MP_Amiens_LandscapeLarge-e195589d.webp",
   MP_Chateau:
@@ -569,9 +570,9 @@ const map_image = {
 };
 
 interface PlayerInfo {
-  game: string;
-  playerId: string;
-  playerInfo: Bf1PlayerReturn;
+  game?: string;
+  playerId?: string | number;
+  playerInfo?: Bf1PlayerReturn;
 }
 
 function rounding(number: number) {
@@ -583,7 +584,7 @@ function getWeapons(statsDict: {
 }): MainStatsWeapon[] {
   const weapons = [];
   for (const [_id, extra] of Object.entries(weapon_stats)) {
-    const weapon = extra;
+    const weapon: { [key: string]: number | string } = extra;
     const kills = Number.parseFloat(statsDict[`${_id}__kw_g`] ?? "0");
     const shotsHit = Number.parseFloat(statsDict[`${_id}__shw_g`] ?? "0");
     const shotsFired = Number.parseFloat(statsDict[`${_id}__sfw_g`] ?? "0");
@@ -609,7 +610,7 @@ function getWeapons(statsDict: {
     weapon["timeEquipped"] = seconds;
     weapons.push(weapon);
   }
-  return weapons;
+  return weapons as MainStatsWeapon[];
 }
 
 function getGamemodes(statsDict: {
@@ -617,14 +618,14 @@ function getGamemodes(statsDict: {
 }): MainStatsGamemode[] {
   const gamemodes = [];
   for (const [_id, extra] of Object.entries(gamemode_stats)) {
-    const gamemode = extra;
+    const gamemode: { [key: string]: string | number } = extra;
     gamemode["id"] = _id;
     gamemode["score"] =
       Number.parseFloat(statsDict[gamemode_score[_id] ?? ""] ?? "0") || 0;
     gamemodes.push(gamemode);
   }
 
-  return gamemodes;
+  return gamemodes as MainStatsGamemode[];
 }
 
 function getClasses(statsDict: {
@@ -632,7 +633,7 @@ function getClasses(statsDict: {
 }): MainStatsClasses[] {
   const kits = [];
   for (const [_id, extra] of Object.entries(classes_stats)) {
-    const kit = extra;
+    const kit: { [key: string]: string | number } = extra;
     const kills = Number.parseFloat(statsDict[`${_id}_ks_g`] ?? "0");
     const seconds = Number.parseFloat(statsDict[`${_id}_sa_g`] ?? "0");
     const killsPerMinute = rounding(kills / (seconds / 60));
@@ -649,13 +650,13 @@ function getClasses(statsDict: {
       Number.parseFloat(statsDict[classes_score[_id] ?? ""] ?? "0") || 0;
     kits.push(kit);
   }
-  return kits;
+  return kits as MainStatsClasses[];
 }
 
 export class ApiProvider extends JsonClient {
   private serverCache: ServerListReturn = { servers: [] };
-  private serverCacheAge: number;
-  private serverCacheGame: string;
+  private serverCacheAge: number | undefined;
+  private serverCacheGame: string | undefined;
 
   constructor() {
     super();
@@ -663,12 +664,12 @@ export class ApiProvider extends JsonClient {
 
   async stats({ game, playerId, playerInfo }: PlayerInfo): Promise<MainStats> {
     const r = await fetch(
-      game.includes("bf1")
+      game?.includes("bf1")
         ? `https://marne.io/api/stats/${playerId}/2`
         : `https://marne.io/api/v/stats/${playerId}/2`,
     );
     const item = await r.json();
-    const player: { [string: string]: string } = item[playerId];
+    const player: { [string: string]: string } = item[playerId || ""];
     const wins = Number.parseFloat(player["c_mwin__roo_g"] ?? "0");
     const losses = Number.parseFloat(player["c_mlos__roo_g"] ?? "0");
     const kills = Number.parseFloat(player["c___k_g"] ?? "0");
@@ -685,14 +686,14 @@ export class ApiProvider extends JsonClient {
     const killsPerMatch = rounding(kills / (shotsFired / 60));
 
     return {
-      avatar: playerInfo.avatar,
-      userName: playerInfo.userName,
+      avatar: playerInfo?.avatar,
+      userName: playerInfo?.userName,
       id: Number(playerId),
       weapons: getWeapons(player),
       gamemodes: getGamemodes(player),
       classes: getClasses(player),
       cache: false,
-      apiUrl: game.includes("bf1")
+      apiUrl: game?.includes("bf1")
         ? `https://marne.io/api/stats/${playerId}/2`
         : `https://marne.io/api/v/stats/${playerId}/2`,
       kills: kills,
@@ -731,7 +732,7 @@ export class ApiProvider extends JsonClient {
     searchTerm,
     regions,
     game,
-  }: ServerSearchInfo): Promise<DetailedServerInfo> {
+  }: ServerSearchInfo): Promise<DetailedServerInfo | ErrorResult> {
     if (
       this.serverCacheGame !== game ||
       this.serverCacheAge === undefined ||
@@ -739,7 +740,7 @@ export class ApiProvider extends JsonClient {
       (Date.now() - this.serverCacheAge) / 1000 > 30
     ) {
       const r = await fetch(
-        game.includes("bf1")
+        game?.includes("bf1")
           ? "https://marne.io/api/srvlst/"
           : "https://marne.io/api/v/srvlst/",
       );
@@ -777,12 +778,12 @@ export class ApiProvider extends JsonClient {
             return (
               server.prefix
                 .toLowerCase()
-                .includes(searchTerm.toLowerCase()) &&
-              (regions.includes(server.region.toLowerCase()) ||
-                regions.includes("all"))
+                .includes(searchTerm?.toLowerCase() || "") &&
+              (regions?.includes(server.region.toLowerCase()) ||
+                regions?.includes("all"))
             );
           });
-    return servers.length > 0 ? servers[0] : { errors: ["server not found"] };
+    return servers.length > 0 ? servers[0] as unknown as DetailedServerInfo : { errors: ["server not found"] };
   }
 }
 

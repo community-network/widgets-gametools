@@ -1,8 +1,9 @@
 import JsonClient from "./Json";
 import {
-  DetailedServerInfo,
-  MainStats,
-  seederPlayersReturn,
+  type DetailedServerInfo,
+  type ErrorResult,
+  type MainStats,
+  type seederPlayersReturn,
 } from "./ReturnTypes";
 import { battlebitApi } from "./battlebitApi";
 import { MarneApi } from "./marneApi";
@@ -15,21 +16,21 @@ interface SeederPlayerlist {
 }
 
 interface PlayerInfo {
-  game: string;
-  type: string;
-  getter: string;
-  userName: string;
-  lang: string;
+  game?: string;
+  type?: string;
+  getter?: string;
+  userName?: string;
+  lang?: string;
   platform?: string;
 }
 
 interface ServerInfo {
-  game: string;
-  getter: string;
-  serverName: string;
-  lang: string;
-  region?: string;
-  platform?: string;
+  game: string | undefined;
+  getter: string | undefined;
+  serverName: string | undefined;
+  lang: string | undefined;
+  region?: string | undefined;
+  platform?: string | undefined;
   with_ownername?: boolean;
 }
 
@@ -49,11 +50,11 @@ export class ApiProvider extends JsonClient {
     lang,
     platform = "pc",
   }: PlayerInfo): Promise<MainStats | undefined> {
-    if (game.includes("marne")) {
+    if (game?.includes("marne")) {
       let playerId, playerInfo;
       if (getter !== "playerid") {
         const result = await this.bf1PlayerSearch({
-          name: encodeURIComponent(userName),
+          name: encodeURIComponent(userName || ""),
         });
         playerInfo = result;
         playerId = result?.id;
@@ -78,7 +79,7 @@ export class ApiProvider extends JsonClient {
       });
     }
     return await this.getJsonMethod(`/${game}/${type}/`, {
-      name: encodeURIComponent(userName),
+      name: encodeURIComponent(userName || ""),
       lang: lang,
       platform: platform,
     });
@@ -116,11 +117,11 @@ export class ApiProvider extends JsonClient {
     region = "all",
     platform = "pc",
     with_ownername = true,
-  }: ServerInfo): Promise<DetailedServerInfo | undefined> {
+  }: ServerInfo): Promise<DetailedServerInfo | ErrorResult | undefined> {
     if (serverName == "undefined") {
       return undefined;
     }
-    const gameStuff = game.split(".");
+    const gameStuff = game?.split(".") || "";
     if (platform == "all") {
       platform = "pc";
     }
@@ -137,14 +138,14 @@ export class ApiProvider extends JsonClient {
         region,
       });
     }
-    if (game.includes("marne")) {
+    if (game?.includes("marne")) {
       return await MarneApi.serverList({
         game: game,
         searchTerm: serverName,
         regions: [region],
       });
     }
-    if ((getter == "gameid" || getter == "serverid") && ["bf2042", "bf6"].includes(game)) {
+    if ((getter == "gameid" || getter == "serverid") && ["bf2042", "bf6"].includes(game || "")) {
       return await this.getJsonMethod(`/${gameStuff[0]}/detailedserver/`, {
         serverid: serverName,
         ...defaultParams,
@@ -156,7 +157,7 @@ export class ApiProvider extends JsonClient {
       });
     } else if (getter == "serverip") {
       const result = await this.getJsonMethod(`/${gameStuff[0]}/servers`, {
-        name: encodeURIComponent(serverName),
+        name: encodeURIComponent(serverName || ""),
         type: "ip",
         service: gameStuff[1],
         platform: platform,
@@ -164,7 +165,7 @@ export class ApiProvider extends JsonClient {
       return result.servers[0];
     }
     return await this.getJsonMethod(`/${gameStuff[0]}/detailedserver/`, {
-      name: encodeURIComponent(serverName),
+      name: encodeURIComponent(serverName || ""),
       ...defaultParams,
     });
   }

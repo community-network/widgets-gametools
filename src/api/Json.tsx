@@ -1,7 +1,7 @@
 import "regenerator-runtime";
 
 export default class JsonClient {
-  constructParamStr(params: { [name: string]: string }): string {
+  constructParamStr(params: { [name: string]: string | undefined }): string {
     params = params || {};
     let paramStr = "";
     for (const s in params) {
@@ -10,20 +10,20 @@ export default class JsonClient {
     if (paramStr !== "") paramStr = "?" + paramStr;
     return paramStr;
   }
-  constructApiUrl(method: string, params: { [name: string]: string }): string {
+  constructApiUrl(method: string, params: { [name: string]: string | undefined }): string {
     const paramStr = this.constructParamStr(params);
-    const apiEP = process.env.gametools_endpoint;
+    const apiEP = import.meta.env.VITE_GAMETOOLS_ENDPOINT;
     return apiEP + method + paramStr;
   }
   async fetchMethod(
     method: string,
-    params: { [name: string]: string },
+    params: { [name: string]: string | undefined },
   ): Promise<Response> {
     return fetch(this.constructApiUrl(method, params));
   }
   getJsonMethod(
     method: string,
-    params: { [name: string]: string },
+    params: { [name: string]: string | undefined },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
     return this.errorHandler(this.fetchMethod(method, params));

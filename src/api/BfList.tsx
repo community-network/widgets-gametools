@@ -1,8 +1,8 @@
 import JsonClient from "./JsonBfList";
 
 interface PlayerInfo {
-  game: string;
-  userName: string;
+  game: string | undefined;
+  userName: string | undefined;
 }
 
 export interface PlayerInfoReturn {

@@ -3,7 +3,7 @@ import { Route, Routes, useMatch } from "react-router";
 import { GetBfRanked } from "../api/BfRanked";
 import { useQuery } from "@tanstack/react-query";
 import { bf6 } from "gametools-global-mapping"
-import * as styles from "./BfRanked.module.scss";
+import styles from "./BfRanked.module.scss";
 import { useTranslation } from "react-i18next";
 
 function Default(): React.ReactElement {
@@ -39,7 +39,8 @@ function Default(): React.ReactElement {
   });
 
   const rank = profile?.competitiveRanks?.find((d: { mode: string; }) => d.mode === "GraniteSquad0");
-  console.log(profileError)
+  const ranked_br_images_s4: { [key: string]: string } = bf6.ranked_br_images_s4;
+
   return (
     <div className={styles.content}>
       <div className={styles.block} style={{ paddingRight: profileError ? "1rem" : "0.25rem" }}>
@@ -62,7 +63,7 @@ function Default(): React.ReactElement {
                 {profileLoading ? t("loading") : rank?.name}
               </div>
             </div>
-            <img className={styles.rankIcon} src={bf6.ranked_br_images_s4[rank?.rank] || undefined} />
+            <img className={styles.rankIcon} src={ranked_br_images_s4[rank?.rank as string] || undefined} />
           </div>
         )}
       </div>

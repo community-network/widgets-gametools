@@ -15,12 +15,12 @@ i18n
     fallbackLng: "en-US",
   });
 
-export const apiLanguage = {
+export const apiLanguage: { [key: string]: string } = {
   "zh-cn": "zh-tw",
 };
 
 export const getLanguage = (): string => {
-  let language = window.localStorage.i18nextLng.toLowerCase();
+  let language: string = window.localStorage.i18nextLng.toLowerCase();
   if (language in apiLanguage) {
     language = apiLanguage[language];
   }

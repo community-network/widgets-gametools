@@ -8,7 +8,7 @@ export const platformGames = {
   xboxseries: ["bf2042", "bf6"],
 };
 
-export const differentWidth = {
+export const differentWidth: { [key: string]: string } = {
   bfh: "380px",
   bf2042: "320px",
 };
@@ -25,14 +25,14 @@ export const bflistGames = [
 ];
 export const frostbite3 = ["bf4", "bf1", "bfv"];
 
-export const platformImage = {
+export const platformImage: { [key: string]: string } = {
   pc: "pc",
   xboxone: "xbox",
   xbox360: "xbox",
   ps4: "psn",
   ps3: "psn",
 };
-export const shortName = {
+export const shortName: { [key: string]: string } = {
   bf3: "3",
   bf4: "4",
   bfh: "HARDLINE",
@@ -42,7 +42,7 @@ export const shortName = {
 };
 export const dice = ["bf3", "bf4", "bfh", "bf1", "bfv", "bf2042", "bf6"];
 
-export const gameStats = {
+export const gameStats: { [key: string]: { [key: string]: string } } = {
   bf3: {
     killsPerMinute: "killsPerMinute",
     scorePerMinute: "scorePerMinute",

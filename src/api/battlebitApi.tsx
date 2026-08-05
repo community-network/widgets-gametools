@@ -1,5 +1,5 @@
 import JsonClient from "./Json";
-import { DetailedServerInfo } from "./ReturnTypes";
+import type { DetailedServerInfo, ErrorResult } from "./ReturnTypes";
 
 export interface ServerInfoReturn {
   Name: string;
@@ -19,7 +19,7 @@ export interface ServerInfoReturn {
 }
 
 interface ServerSearchInfo {
-  searchTerm: string;
+  searchTerm?: string;
   region?: string;
   limit?: string;
 }
@@ -36,8 +36,8 @@ export class ApiProvider extends JsonClient {
   async serverList({
     searchTerm,
     region,
-  }: ServerSearchInfo): Promise<DetailedServerInfo> {
-    const modes = {
+  }: ServerSearchInfo): Promise<DetailedServerInfo | ErrorResult> {
+    const modes: { [key: string]: string } = {
       CONQ: "Conquest",
       FRONTLINE: "Frontlines",
       RUSH: "Rush",
@@ -52,7 +52,7 @@ export class ApiProvider extends JsonClient {
       CaptureTheFlag: "Capture the flag",
     };
 
-    const smallmodes = {
+    const smallmodes: { [key: string]: string } = {
       CONQ: "CQ",
       FRONTLINE: "FL",
       RUSH: "RS",
@@ -75,9 +75,8 @@ export class ApiProvider extends JsonClient {
       .map((server) => {
         const serverImageName = server.Map.replace("Old_", "");
         return {
-          prefix: `${server.IsOfficial ? "[Official]" : "[Community]"} - ${
-            server.Name
-          }`,
+          prefix: `${server.IsOfficial ? "[Official]" : "[Community]"} - ${server.Name
+            }`,
           currentMap: server.Map,
           currentMapImage: `https://cdn.gametools.network/maps/battlebit/${serverImageName}.webp`,
           url: `https://cdn.gametools.network/maps/battlebit/${serverImageName}.webp`,
@@ -99,11 +98,11 @@ export class ApiProvider extends JsonClient {
       })
       .filter((server) => {
         return (
-          server.prefix.toLowerCase().includes(searchTerm.toLowerCase()) &&
+          server.prefix.toLowerCase().includes(searchTerm?.toLowerCase() || "") &&
           (server.region === region || region === "all")
         );
       });
-    return servers.length > 0 ? servers[0] : { errors: ["server not found"] };
+    return servers.length > 0 ? servers[0] as unknown as DetailedServerInfo : { errors: ["server not found"] };
   }
 }
 

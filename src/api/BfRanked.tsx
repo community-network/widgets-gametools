@@ -37,7 +37,7 @@ export interface StatsReturn {
 export class ApiProvider extends JsonClient {
   async profile({
     id
-  }: { id: number | undefined }) {
+  }: { id: number | undefined | string }) {
     if (id === undefined) {
       return undefined;
     }
@@ -49,7 +49,7 @@ export class ApiProvider extends JsonClient {
 
   async lastSession({
     id
-  }: { id: number | undefined }) {
+  }: { id: string | undefined }) {
     if (id === undefined) {
       return undefined;
     }

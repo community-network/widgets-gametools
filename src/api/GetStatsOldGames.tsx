@@ -1,5 +1,5 @@
 import JsonClient from "./JsonOldGames";
-import { OldGames } from "./ReturnTypes";
+import { type OldGames } from "./ReturnTypes";
 
 export class ApiProvider extends JsonClient {
   constructor() {

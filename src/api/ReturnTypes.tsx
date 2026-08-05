@@ -35,6 +35,10 @@ export type DetailedServerInfo = {
   port?: number;
 };
 
+export type ErrorResult = {
+  errors: string[];
+}
+
 export type ServerOwnerResult = {
   id: string;
   name: string;
@@ -139,7 +143,7 @@ export type seederPlayer = {
 export type MainStats = {
   apiUrl: string;
   accuracy: number;
-  avatar: string;
+  avatar?: string;
   avengerKills?: number;
   awardScore: number;
   bestClass?: number;
@@ -182,7 +186,7 @@ export type MainStats = {
   timePlayed?: string;
   secondsPlayed?: number;
   totalRankProgress?: number;
-  userName: string;
+  userName?: string;
   vehicles?: MainStatsVehicle[];
   weapons: MainStatsWeapon[];
   winPercent: number;
