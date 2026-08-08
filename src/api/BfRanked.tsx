@@ -22,7 +22,7 @@ export interface Stats {
   placementLastPlayedGame: number;
 }
 
-export interface StatsReturn {
+export interface SessionReturn {
   id: number
   snapshotId: number
   previousSnapshotId: number
@@ -32,6 +32,13 @@ export interface StatsReturn {
   gameType: string
   timestampUtc: string
   stats: Stats
+}
+
+export interface StatsReturn {
+  killsRealPlayers: number;
+  deathsFinished: number;
+  wonGames: number;
+  lostGames: number;
 }
 
 export class ApiProvider extends JsonClient {
@@ -55,8 +62,20 @@ export class ApiProvider extends JsonClient {
     }
 
     const r = await fetch(`https://tracker.redseccentral.com/api/sessions?playerId=${id}&page=1&pageSize=1&ordering=NewestFirst`);
-    const result: StatsReturn[] = await r.json();
+    const result: SessionReturn[] = await r.json();
     return result?.find(d => d) || undefined;
+  }
+
+  async stats({
+    id
+  }: { id: string | undefined }) {
+    if (id === undefined) {
+      return undefined;
+    }
+
+    const r = await fetch(`https://tracker.redseccentral.com/api/stats?playerId=${id}&gameMode=GraniteSquad0&season=Season4&gameType=Competitive`);
+    const result: StatsReturn = await r.json();
+    return result;
   }
 }
 
