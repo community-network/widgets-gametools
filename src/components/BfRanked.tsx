@@ -20,6 +20,16 @@ const percentFormatter = new Intl.NumberFormat(undefined, {
   maximumFractionDigits: 1,
 });
 
+const decimalFormatter = new Intl.NumberFormat(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
+const formatDecimal = (value: unknown): string => {
+  const n = toFiniteNumber(value);
+  return n === null ? "—" : decimalFormatter.format(n);
+};
+
 const toFiniteNumber = (value: unknown): number | null => {
   if (typeof value === "number") return Number.isFinite(value) ? value : null;
   if (typeof value === "string" && value !== "") {
@@ -255,7 +265,7 @@ function Default(): React.ReactElement {
                         {t("bf-ranked.default.killDeath")}
                       </div>
                       <div className={styles.message}>
-                        {statsLoading ? t("loading") : formatRatio(calcKd(stats?.killsRealPlayers, stats?.deathsFinished))}
+                        {statsLoading ? t("loading") : formatDecimal(calcKd(stats?.killsRealPlayers, stats?.deathsFinished))}
                       </div>
                     </div>
                     {/* <div className={styles.block}>
