@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { bf6 } from "gametools-global-mapping"
 import styles from "./BfRanked.module.scss";
 import { useTranslation } from "react-i18next";
+// import { gsap } from "gsap";
 
 const currentInfoEnum = {
   session: 0,
@@ -62,6 +63,7 @@ const safeRatio = (
 };
 
 function Default(): React.ReactElement {
+  // const tl = gsap.timeline();
   const match = useMatch(`/bf-ranked/default/:id`);
   const query = new URLSearchParams(useLocation().search);
   const currentQuery = query.get("current");
@@ -256,14 +258,14 @@ function Default(): React.ReactElement {
                         {statsLoading ? t("loading") : formatRatio(calcKd(stats?.killsRealPlayers, stats?.deathsFinished))}
                       </div>
                     </div>
-                    <div className={styles.block}>
+                    {/* <div className={styles.block}>
                       <div className={styles.name}>
                         {t("bf-ranked.default.winStreak")}
                       </div>
                       <div className={styles.message}>
                         {statsLoading ? t("loading") : "?"}
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 )}
               </>
