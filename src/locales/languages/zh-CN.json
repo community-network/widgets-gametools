@@ -71,9 +71,14 @@
       "deaths": "死亡",
       "placement": "Placement",
       "prevRound": "Previous round",
+      "winRate": "Win rate",
+      "killDeath": "K/D",
+      "winStreak": "Win streak",
+      "overview": "Overview",
       "bfRotalSquad": "Battle Royale Squads Ranked",
       "error": {
         "lastSessionLoad": "Failed to load last session data",
+        "statsLoad": "Failed to load stats",
         "profileLoad": "Failed to load profile data"
       }
     }
