@@ -77,6 +77,7 @@ function Default(): React.ReactElement {
   const match = useMatch(`/bf-ranked/default/:id`);
   const query = new URLSearchParams(useLocation().search);
   const currentQuery = query.get("current");
+  const interval = query.get("interval") ?? 10;
   const { t } = useTranslation();
   const initalState = currentInfoEnum.stats;
   const currentRef = React.useRef<currentInfo>(initalState);
@@ -94,7 +95,7 @@ function Default(): React.ReactElement {
         } else {
           setCurrent(1);
         }
-      }, 10000);
+      }, (toNumber(interval) * 1000));
       return () => {
         window.clearInterval(timer);
       };
