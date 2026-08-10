@@ -46,13 +46,13 @@ const safeRatio = (
 };
 
 function Default(): React.ReactElement {
-  const currentTitle = useRef<HTMLDivElement>(undefined);
-  const firstTitle = useRef<HTMLDivElement>(undefined);
-  const secondTitle = useRef<HTMLDivElement>(undefined);
-  const thirdTitle = useRef<HTMLDivElement>(undefined);
-  const firstRef = useRef<HTMLDivElement>(undefined);
-  const secondRef = useRef<HTMLDivElement>(undefined);
-  const thirdRef = useRef<HTMLDivElement>(undefined);
+  const currentTitle = useRef<HTMLDivElement | null>(null);
+  const firstTitle = useRef<HTMLDivElement | null>(null);
+  const secondTitle = useRef<HTMLDivElement | null>(null);
+  const thirdTitle = useRef<HTMLDivElement | null>(null);
+  const firstRef = useRef<HTMLDivElement | null>(null);
+  const secondRef = useRef<HTMLDivElement | null>(null);
+  const thirdRef = useRef<HTMLDivElement | null>(null);
   const match = useMatch(`/bf-ranked/default/:id`);
   const query = new URLSearchParams(useLocation().search);
   const currentQuery = query.get("current");
@@ -170,7 +170,7 @@ function Default(): React.ReactElement {
       duration: 1.0,
       ease: "power2.out",
       onUpdate: function () {
-        if (firstRef.current !== undefined) {
+        if (firstRef.current !== null) {
           if (isLoading) {
             firstRef.current.textContent = t("loading")
           } else {
@@ -180,7 +180,7 @@ function Default(): React.ReactElement {
       },
       onComplete: function () {
         setFirst(firstRes);
-        if (firstRef.current !== undefined && currentRef.current == currentInfoEnum.stats && !isLoading) {
+        if (firstRef.current !== null && currentRef.current == currentInfoEnum.stats && !isLoading) {
           firstRef.current.textContent = `${Math.round(firstRes ?? 0)}`;
         }
       }
@@ -196,7 +196,7 @@ function Default(): React.ReactElement {
       duration: 1.0,
       ease: "power2.out",
       onUpdate: function () {
-        if (secondRef.current !== undefined) {
+        if (secondRef.current !== null) {
           if (isLoading) {
             secondRef.current.textContent = t("loading")
           } else {
@@ -206,7 +206,7 @@ function Default(): React.ReactElement {
       },
       onComplete: function () {
         setSecond(secondRes);
-        if (secondRef.current !== undefined && currentRef.current == currentInfoEnum.stats && !isLoading) {
+        if (secondRef.current !== null && currentRef.current == currentInfoEnum.stats && !isLoading) {
           secondRef.current.textContent = `${Math.round(secondRes || 0)}`;
         }
       }
@@ -222,7 +222,7 @@ function Default(): React.ReactElement {
       duration: 1.0,
       ease: "power2.out",
       onUpdate: function () {
-        if (thirdRef.current !== undefined) {
+        if (thirdRef.current !== null) {
           if (isLoading) {
             thirdRef.current.textContent = t("loading")
           } else {
@@ -236,7 +236,7 @@ function Default(): React.ReactElement {
       },
       onComplete: function () {
         setThird(thirdRes);
-        if (thirdRef.current !== undefined && currentRef.current == currentInfoEnum.stats && !isLoading) {
+        if (thirdRef.current !== null && currentRef.current == currentInfoEnum.stats && !isLoading) {
           thirdRef.current.textContent = `${thirdRes}`;
         }
       }
