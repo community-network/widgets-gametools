@@ -5,12 +5,18 @@ import { useQuery } from "@tanstack/react-query";
 import { bf6 } from "gametools-global-mapping"
 import styles from "./BfRanked.module.scss";
 import { useTranslation } from "react-i18next";
-// import { gsap } from "gsap";
+import { useRef } from 'react';
+import gsap from 'gsap';
+import TextPlugin from "gsap/TextPlugin";
+import { useGSAP } from '@gsap/react';
 
 const currentInfoEnum = {
   session: 0,
   stats: 1
 } as const;
+
+gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(TextPlugin)
 
 type currentInfo = (typeof currentInfoEnum)[keyof typeof currentInfoEnum];
 
@@ -73,7 +79,10 @@ const safeRatio = (
 };
 
 function Default(): React.ReactElement {
-  // const tl = gsap.timeline();
+  const currentTitle = useRef<HTMLDivElement>(undefined);
+  const firstTitle = useRef<HTMLDivElement>(undefined);
+  const secondTitle = useRef<HTMLDivElement>(undefined);
+  const thirdTitle = useRef<HTMLDivElement>(undefined);
   const match = useMatch(`/bf-ranked/default/:id`);
   const query = new URLSearchParams(useLocation().search);
   const currentQuery = query.get("current");
@@ -86,7 +95,6 @@ function Default(): React.ReactElement {
   React.useEffect(() => {
     currentRef.current = current;
   })
-
   React.useEffect(() => {
     if (currentQuery === null) {
       const timer = window.setInterval(() => {
@@ -95,6 +103,36 @@ function Default(): React.ReactElement {
         } else {
           setCurrent(1);
         }
+
+        if (currentTitle.current !== undefined) {
+          gsap.to(currentTitle.current, {
+            duration: 1,
+            text: currentRef.current === 0 ? t("bf-ranked.default.prevRound") : t("bf-ranked.default.overview"),
+            ease: "power2.out",
+          });
+        }
+        if (firstTitle.current !== undefined) {
+          gsap.to(firstTitle.current, {
+            duration: 1,
+            text: currentRef.current === 0 ? t("bf-ranked.default.kills") : t("bf-ranked.default.winRate"),
+            ease: "power2.out",
+          });
+        }
+        if (secondTitle.current !== undefined) {
+          gsap.to(secondTitle.current, {
+            duration: 1,
+            text: currentRef.current === 0 ? t("bf-ranked.default.deaths") : t("bf-ranked.default.killDeath"),
+            ease: "power2.out",
+          });
+        }
+        if (thirdTitle.current !== undefined) {
+          gsap.to(thirdTitle.current, {
+            duration: 1,
+            text: currentRef.current === 0 ? t("bf-ranked.default.placement") : t("bf-ranked.default.winStreak"),
+            ease: "power2.out",
+          });
+        }
+
       }, (toNumber(interval) * 1000));
       return () => {
         window.clearInterval(timer);
@@ -107,6 +145,7 @@ function Default(): React.ReactElement {
         setCurrent(currentInfoEnum.session);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuery]);
 
   const {
@@ -185,106 +224,79 @@ function Default(): React.ReactElement {
           <div className={styles.description}>
             {t("bf-ranked.default.bfRotalSquad")}
           </div>
-          <div className={styles.title}>
-            {
-              {
-                "0": (t("bf-ranked.default.prevRound")),
-                '1': (t("bf-ranked.default.overview")),
-              }[current]
-            }
+          <div ref={currentTitle} className={styles.title}>
+            {t("bf-ranked.default.prevRound")}
           </div>
         </div>
-        {
-          {
-            "0": ( // session
-              <>
-                {lastSessionError ? (
-                  <div className={styles.block}>
-                    <div className={styles.name}>
-                      {t("error")}
-                    </div>
-                    <div className={styles.errorMessage}>
-                      {t("bf-ranked.default.error.lastSessionLoad")}
-                    </div>
+        {(lastSessionError || statsError) ? (
+          <div className={styles.block}>
+            {
+              lastSessionError ? (
+                <>
+                  <div className={styles.name}>
+                    {t("error")}
                   </div>
+                  <div className={styles.errorMessage}>
+                    {t("bf-ranked.default.error.lastSessionLoad")}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className={styles.name}>
+                    {t("error")}
+                  </div>
+                  <div className={styles.errorMessage}>
+                    {t("bf-ranked.default.error.statsLoad")}
+                  </div>
+                </>
+              )
+            }
+          </div>
+        ) : (
+          <div className={styles.content}>
+            <div className={styles.block}>
+              <div ref={firstTitle} className={styles.name}>
+                {t("bf-ranked.default.kills")}
+              </div>
+              <div className={styles.message}>
+                {current == currentInfoEnum.session ? (
+                  lastSessionLoading ? t("loading") : lastSession?.stats?.killsRealPlayers
                 ) : (
-                  <div className={styles.content}>
-                    <div className={styles.block}>
-                      <div className={styles.name}>
-                        {t("bf-ranked.default.kills")}
-                      </div>
-                      <div className={styles.message}>
-                        {lastSessionLoading ? t("loading") : lastSession?.stats?.killsRealPlayers}
-                      </div>
-                    </div>
-                    <div className={styles.block}>
-                      <div className={styles.name}>
-                        {t("bf-ranked.default.deaths")}
-                      </div>
-                      <div className={styles.message}>
-                        {lastSessionLoading ? t("loading") : lastSession?.stats?.deathsFinished}
-                      </div>
-                    </div>
-                    <div className={styles.block}>
-                      <div className={styles.name}>
-                        {t("bf-ranked.default.placement")}
-                      </div>
-                      <div className={styles.message}>
-                        {lastSessionLoading ? t("loading") : lastSession?.stats?.placementLastPlayedGame}
-                      </div>
-                    </div>
-                  </div>
+                  statsLoading ? t("loading") : formatRatio(safeRatio(
+                    stats?.wonGames,
+                    toNumber(stats?.wonGames) + toNumber(stats?.lostGames),
+                  ))
                 )}
-              </>
-            ),
-            '1': ( // stats
-              <>
-                {statsError ? (
-                  <div className={styles.block}>
-                    <div className={styles.name}>
-                      {t("error")}
-                    </div>
-                    <div className={styles.errorMessage}>
-                      {t("bf-ranked.default.error.statsLoad")}
-                    </div>
-                  </div>
+              </div>
+            </div>
+            <div className={styles.block}>
+              <div ref={secondTitle} className={styles.name}>
+                {t("bf-ranked.default.deaths")}
+              </div>
+              <div className={styles.message}>
+                {current == currentInfoEnum.session ? (
+                  lastSessionLoading ? t("loading") : lastSession?.stats?.deathsFinished
                 ) : (
-                  <div className={styles.content}>
-                    <div className={styles.block}>
-                      <div className={styles.name}>
-                        {t("bf-ranked.default.winRate")}
-                      </div>
-                      <div className={styles.message}>
-                        {statsLoading ? t("loading") : formatRatio(safeRatio(
-                          stats?.wonGames,
-                          toNumber(stats?.wonGames) + toNumber(stats?.lostGames),
-                        ))}
-                      </div>
-                    </div>
-                    <div className={styles.block}>
-                      <div className={styles.name}>
-                        {t("bf-ranked.default.killDeath")}
-                      </div>
-                      <div className={styles.message}>
-                        {statsLoading ? t("loading") : formatDecimal(calcKd(stats?.killsRealPlayers, stats?.deathsFinished))}
-                      </div>
-                    </div>
-                    {/* <div className={styles.block}>
-                      <div className={styles.name}>
-                        {t("bf-ranked.default.winStreak")}
-                      </div>
-                      <div className={styles.message}>
-                        {statsLoading ? t("loading") : "?"}
-                      </div>
-                    </div> */}
-                  </div>
+                  statsLoading ? t("loading") : formatDecimal(calcKd(stats?.killsRealPlayers, stats?.deathsFinished))
                 )}
-              </>
-            )
-          }[current]
-        }
+              </div>
+            </div>
+            <div className={styles.block}>
+              <div ref={thirdTitle} className={styles.name}>
+                {t("bf-ranked.default.placement")}
+              </div>
+              <div className={styles.message}>
+                {current == currentInfoEnum.session ? (
+                  lastSessionLoading ? t("loading") : lastSession?.stats?.placementLastPlayedGame
+                ) : (
+                  statsLoading ? t("loading") : "?"
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
+    </div >
   )
 }
 
