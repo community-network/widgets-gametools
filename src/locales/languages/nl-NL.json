@@ -1,6 +1,6 @@
 {
   "loading": "Laden...",
-  "error": "Error",
+  "error": "Fout",
   "notApplicable": "N/A",
   "server": {
     "map": "Map",
@@ -69,17 +69,17 @@
       "rank": "Rank",
       "kills": "Kills",
       "deaths": "Deaths",
-      "placement": "Placement",
-      "prevRound": "Previous round",
+      "placement": "Plaatsing",
+      "prevRound": "Vorige ronde",
       "winRate": "Win rate",
       "killDeath": "K/D",
       "winStreak": "Win streak",
-      "overview": "Overview",
+      "overview": "Overzicht",
       "bfRotalSquad": "Battle Royale Squads Ranked",
       "error": {
-        "lastSessionLoad": "Failed to load last session data",
-        "statsLoad": "Failed to load stats",
-        "profileLoad": "Failed to load profile data"
+        "lastSessionLoad": "laden van laatste sessie mislukt.",
+        "statsLoad": "Statistieken laden mislukt",
+        "profileLoad": "Profiel laden mislukt"
       }
     }
   }
