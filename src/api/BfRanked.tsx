@@ -18,6 +18,7 @@ export interface ProfileReturn {
 
 export interface Stats {
   wonGames: number;
+  lostGames: number;
   killsRealPlayers: number;
   deathsFinished: number;
   placementLastPlayedGame: number;

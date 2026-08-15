@@ -214,7 +214,7 @@ function Default(): React.ReactElement {
     let winstreak = 0;
     if (sessionRef.current !== undefined) {
       for (const element of sessionRef.current) {
-        if (element.stats?.wonGames <= 0) {
+        if (element.stats?.lostGames > 0) {
           break;
         }
         winstreak += element.stats?.wonGames;
