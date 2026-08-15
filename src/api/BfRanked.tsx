@@ -5,6 +5,7 @@ export interface CompetitiveRanks {
   rank: string;
   division: string;
   name: string;
+  top250Position: number;
   timestampUtc: string;
 }
 

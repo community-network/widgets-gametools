@@ -295,7 +295,14 @@ function Default(): React.ReactElement {
                 {profileLoading ? t("loading") : rank?.name}
               </div>
             </div>
-            <img className={styles.rankIcon} src={ranked_br_images_s4[rank?.rank as string] || undefined} />
+            {(rank?.top250Position !== undefined && rank?.top250Position > 0) ? (
+              <div className={styles.rank}>
+                <img className={styles.rankIcon} src="https://cdn.gametools.network/ranks/bf6/ranked_br_divisions/season4/top250.webp" />
+                <div className={styles.rankNumber}>{rank?.top250Position}</div>
+              </div>
+            ) : (
+              <img className={styles.rankIcon} src={ranked_br_images_s4[rank?.rank as string] || undefined} />
+            )}
           </div>
         )}
       </div>

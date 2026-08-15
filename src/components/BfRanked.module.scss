@@ -13,8 +13,22 @@ body {
     color: #fff;
 }
 
+.rank {
+    position: relative;
+}
+
 .rankIcon {
     height: 8.5rem;
+}
+
+.rankNumber {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 86px;
+    left: 72px;
+    text-align: center;
+    color: black;
+    font-size: 30px;
 }
 
 .content {
