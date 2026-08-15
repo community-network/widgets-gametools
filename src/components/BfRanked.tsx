@@ -61,7 +61,7 @@ function Default(): React.ReactElement {
   const initalState = currentInfoEnum.stats;
   const currentRef = React.useRef<currentInfo>(initalState);
   const statsRef = React.useRef<StatsReturn | undefined>(undefined);
-  const sessionRef = React.useRef<SessionReturn | undefined>(undefined);
+  const sessionRef = React.useRef<SessionReturn[] | undefined>(undefined);
   const statsLoadingRef = React.useRef<boolean | undefined>(undefined);
   const sessionLoadingRef = React.useRef<boolean | undefined>(undefined);
   const [current, setCurrent] = React.useState<currentInfo>(initalState);
@@ -84,14 +84,14 @@ function Default(): React.ReactElement {
   });
 
   const {
-    isLoading: lastSessionLoading,
-    isError: lastSessionError,
-    data: lastSession,
+    isLoading: sessionsLoading,
+    isError: sessionsError,
+    data: sessions,
   } = useQuery({
     queryKey: ["bf-ranked-session" + match?.params.id],
     queryFn: () =>
-      GetBfRanked.lastSession({
-        id: match?.params.id,
+      GetBfRanked.sessions({
+        id: match?.params.id, amount: 21
       }),
     retry: 1,
     refetchInterval: 1 * 60 * 1000
@@ -114,9 +114,9 @@ function Default(): React.ReactElement {
   React.useEffect(() => {
     currentRef.current = current;
     statsRef.current = stats;
-    sessionRef.current = lastSession;
+    sessionRef.current = sessions;
     statsLoadingRef.current = statsLoading;
-    sessionLoadingRef.current = lastSessionLoading;
+    sessionLoadingRef.current = sessionsLoading;
   })
 
   const setState = () => {
@@ -156,9 +156,8 @@ function Default(): React.ReactElement {
     }
 
     const isLoading = currentRef.current == currentInfoEnum.session ? sessionLoadingRef.current : statsLoadingRef.current;
-    console.log(isLoading)
 
-    const firstRes = currentRef.current == currentInfoEnum.session ? sessionRef.current?.stats?.killsRealPlayers
+    const firstRes = currentRef.current == currentInfoEnum.session ? sessionRef.current?.[0]?.stats?.killsRealPlayers
       : (safeRatio(
         statsRef.current?.wonGames,
         toNumber(statsRef.current?.wonGames) + toNumber(statsRef.current?.lostGames),
@@ -188,7 +187,7 @@ function Default(): React.ReactElement {
 
 
 
-    const secondRes = currentRef.current == currentInfoEnum.session ? sessionRef.current?.stats?.deathsFinished : calcKd(statsRef.current?.killsRealPlayers, statsRef.current?.deathsFinished);
+    const secondRes = currentRef.current == currentInfoEnum.session ? sessionRef.current?.[0]?.stats?.deathsFinished : calcKd(statsRef.current?.killsRealPlayers, statsRef.current?.deathsFinished);
 
     const secondCounter = { value: second };
     gsap.to(secondCounter, {
@@ -212,9 +211,17 @@ function Default(): React.ReactElement {
       }
     });
 
+    let winstreak = 0;
+    if (sessionRef.current !== undefined) {
+      for (const element of sessionRef.current) {
+        if (element.stats?.wonGames <= 0) {
+          break;
+        }
+        winstreak += element.stats?.wonGames;
+      }
+    }
 
-
-    const thirdRes = currentRef.current == currentInfoEnum.session ? sessionRef.current?.stats?.placementLastPlayedGame : "?";
+    const thirdRes = currentRef.current == currentInfoEnum.session ? sessionRef.current?.[0]?.stats?.placementLastPlayedGame : winstreak;
 
     const thirdCounter = { value: third };
     gsap.to(thirdCounter, {
@@ -236,7 +243,7 @@ function Default(): React.ReactElement {
       },
       onComplete: function () {
         setThird(thirdRes);
-        if (thirdRef.current !== null && currentRef.current == currentInfoEnum.stats && !isLoading) {
+        if (thirdRef.current !== null && !isLoading) {
           thirdRef.current.textContent = `${thirdRes}`;
         }
       }
@@ -301,10 +308,10 @@ function Default(): React.ReactElement {
             {t("bf-ranked.default.prevRound")}
           </div>
         </div>
-        {(lastSessionError || statsError) ? (
+        {(sessionsError || statsError) ? (
           <div className={styles.block}>
             {
-              lastSessionError ? (
+              sessionsError ? (
                 <>
                   <div className={styles.name}>
                     {t("error")}

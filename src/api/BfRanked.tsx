@@ -17,6 +17,7 @@ export interface ProfileReturn {
 }
 
 export interface Stats {
+  wonGames: number;
   killsRealPlayers: number;
   deathsFinished: number;
   placementLastPlayedGame: number;
@@ -64,6 +65,19 @@ export class ApiProvider extends JsonClient {
     const r = await fetch(`https://tracker.redseccentral.com/api/sessions?playerId=${id}&page=1&pageSize=1&ordering=NewestFirst`);
     const result: SessionReturn[] = await r.json();
     return result?.find(d => d) || undefined;
+  }
+
+  async sessions({
+    id,
+    amount
+  }: { id: string | undefined, amount: number | undefined }) {
+    if (id === undefined) {
+      return undefined;
+    }
+
+    const r = await fetch(`https://tracker.redseccentral.com/api/sessions?playerId=${id}&page=1&pageSize=${amount}&ordering=NewestFirst`);
+    const result: SessionReturn[] = await r.json();
+    return result;
   }
 
   async stats({
