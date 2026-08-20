@@ -57,6 +57,7 @@ function Default(): React.ReactElement {
   const query = new URLSearchParams(useLocation().search);
   const currentQuery = query.get("current");
   const interval = query.get("interval") ?? 10;
+  const hideRank = query.get("hiderank") ?? "false";
   const { t } = useTranslation();
   const initalState = currentInfoEnum.stats;
   const currentRef = React.useRef<currentInfo>(initalState);
@@ -275,37 +276,39 @@ function Default(): React.ReactElement {
 
   return (
     <div className={styles.content}>
-      <div className={styles.block} style={{ paddingRight: profileError ? "1rem" : "0.25rem" }}>
-        {profileError ? (
-          <>
-            <div className={styles.name}>
-              {t("error")}
-            </div>
-            <div className={styles.errorMessage}>
-              {t("bf-ranked.default.error.profileLoad")}
-            </div>
-          </>
-        ) : (
-          <div className={styles.inner}>
-            <div>
+      {hideRank !== "true" && (
+        <div className={styles.block} style={{ paddingRight: profileError ? "1rem" : "0.25rem" }}>
+          {profileError ? (
+            <>
               <div className={styles.name}>
-                {t("bf-ranked.default.rank")}
+                {t("error")}
               </div>
-              <div className={styles.message}>
-                {profileLoading ? t("loading") : rank?.name}
+              <div className={styles.errorMessage}>
+                {t("bf-ranked.default.error.profileLoad")}
               </div>
+            </>
+          ) : (
+            <div className={styles.inner}>
+              <div>
+                <div className={styles.name}>
+                  {t("bf-ranked.default.rank")}
+                </div>
+                <div className={styles.message}>
+                  {profileLoading ? t("loading") : rank?.name}
+                </div>
+              </div>
+              {(rank?.top250Position !== undefined && rank?.top250Position > 0) ? (
+                <div className={styles.rank}>
+                  <img className={styles.rankIcon} src="https://cdn.gametools.network/ranks/bf6/ranked_br_divisions/season4/top250.webp" />
+                  <div className={styles.rankNumber}>{rank?.top250Position}</div>
+                </div>
+              ) : (
+                <img className={styles.rankIcon} src={ranked_br_images_s4[rank?.rank as string] || undefined} />
+              )}
             </div>
-            {(rank?.top250Position !== undefined && rank?.top250Position > 0) ? (
-              <div className={styles.rank}>
-                <img className={styles.rankIcon} src="https://cdn.gametools.network/ranks/bf6/ranked_br_divisions/season4/top250.webp" />
-                <div className={styles.rankNumber}>{rank?.top250Position}</div>
-              </div>
-            ) : (
-              <img className={styles.rankIcon} src={ranked_br_images_s4[rank?.rank as string] || undefined} />
-            )}
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
       <div>
         <div>
           <div className={styles.description}>
