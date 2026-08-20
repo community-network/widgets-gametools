@@ -81,6 +81,7 @@ function Default(): React.ReactElement {
         id: match?.params.id,
       }),
     retry: 1,
+    enabled: hideRank !== "true",
     refetchInterval: 1 * 60 * 1000
   });
 
